@@ -43,6 +43,10 @@ features:
 <!-- 引入自定义首页组件 -->
 <HomePage />
 
+<!-- 引入数据统计组件 -->
+<DataPanel />
+
 <script setup>
 import HomePage from '/pages/HomePage.vue'
+import DataPanel from '/pages/components/DataPanel/DataPanel.vue'
 </script>

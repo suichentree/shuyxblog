@@ -18,8 +18,8 @@
 <script setup>
 import { ref } from 'vue'
 import headimg from '/public/logo.png'
-import ArticleList from './components/ArticleList.vue';
-import AuthorInfo from './components/AuthorInfo.vue';
+import ArticleList from './ArticleList.vue';
+import AuthorInfo from './AuthorInfo.vue';
 
 const activeIndex = ref('1')
 const handleSelect = (key, keyPath) => {
