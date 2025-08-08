@@ -1,11 +1,11 @@
 import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
-// 站点元数据配置
+// 网站元数据配置
 export default defineConfig({
   lang: 'zh-CN',
-  title: "VitePress1111111111111", //站点名
-  description: "我的vitpress文档教程22222222222222",  //站点描述
+  title: "VitePress1111111111111", //网址名称 类似<title>网址名称</title>
+  description: "我的vitpress文档教程22222222222222",  //网站描述 类似<meta name="description" content="网站描述">
   //favicon图标
   head: [
     ['link',{ rel: 'icon', href: '/favicon.ico'}],
@@ -14,8 +14,6 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://你的网址.com',
   },
-  //开启更新时间配置，还需要在themeConfig中添加相关配置。首次配置不会立即生效，需git提交后爬取时间戳
-  lastUpdated: true, 
   //主题相关配置
   themeConfig: {
     //头部导航栏
@@ -33,11 +31,11 @@ export default defineConfig({
       },
       { text: 'VitePress外链', link: 'https://vitepress.dev/' },
     ],
-    // 头部导航栏的logo
+    // 头部导航栏的logo,会默认读取public目录下的logo.png文件。
     logo: '/logo.png',
     // 头部导航栏的标题
     siteTitle: 'shuyx blog',
-    // 头部导航栏的社交链接
+    // 头部导航栏的社交链接部分
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
       {
@@ -58,7 +56,7 @@ export default defineConfig({
       message: 'Released under the MIT License.', 
       // 自动更新时间
       copyright: `Copyright © 2017-${new Date().getFullYear()} present shuyx`, 
-      // 备案号的文本
+      // 带有备案号的文本
       // copyright: `Copyright © 2017-${new Date().getFullYear()} 备案号：<a href="https://beian.miit.gov.cn/" target="_blank">*****号</a>`, 
     },
     //文章展示页面的右侧的大纲目录 
@@ -76,14 +74,6 @@ export default defineConfig({
       code: 'your-carbon-code', 
       placement: 'your-carbon-placement', 
     },
-    //文章展示页面的底部显示最后更新时间
-    lastUpdated: {
-      text: '最后更新于',
-      formatOptions: {
-        dateStyle: 'short', // 可选值full、long、medium、short
-        timeStyle: 'medium' // 可选值full、long、medium、short
-      },
-    },
 
     //注释侧边栏，不用
     // sidebar: [
@@ -100,7 +90,9 @@ export default defineConfig({
   markdown:{
     image: {
       // 开启图片懒加载
-      lazyLoading: true
+      lazyLoading: true,
+      // 代码块显示行数
+      lineNumbers: true,
     },
     
   },

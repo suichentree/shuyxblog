@@ -19,6 +19,11 @@ VitePress provides Syntax Highlighting powered by [Shiki](https://github.com/shi
 
 <a href="https://www.baidu.com">这是一个链接</a>
 
+这是一个图片
+
+![这是一个图片](/logo.png)
+
+
 **Input**
 
 ````md

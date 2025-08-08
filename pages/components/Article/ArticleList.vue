@@ -1,8 +1,8 @@
 <template>
-  <el-space fill wrap>
-    <el-card v-for="i in 10" :key="i" :body-style="{ padding: '0px' }">
+  <el-space :fill="true" wrap>
+    <el-card v-for="i in 10" :key="i" :body-style="{ padding: '16px 20px'}" >
       <el-row>
-        <el-col :span="10" style="padding: 0px 5px;">
+        <el-col :span="10">
           <h3>default</h3>
           <div>
             <el-text>
@@ -26,7 +26,7 @@
           <el-image
             style="height:150px; width: 100%;"
             src="http://116.62.199.48:9000/weblog/c89cc6b66f0341c0b7854771ae063eac.jpg"
-            fit="cover"
+            fit="fill"
           />
         </el-col>
       </el-row>
