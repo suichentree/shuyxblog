@@ -9,6 +9,8 @@ import './beautiful.css'
 //引入element-plus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+//引入element-plus图标
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 //引入看板娘插件
 import { useLive2d } from 'vitepress-theme-website'
@@ -85,6 +87,11 @@ export default {
          busuanzi.fetch({ async: true })  //不蒜子监听计数
          NProgress.done() // 停止进度条显示
       }
+    }
+
+    //全局注册element-plus图标
+    for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+      app.component(key, component)
     }
 
   },

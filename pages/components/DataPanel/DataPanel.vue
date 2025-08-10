@@ -6,7 +6,8 @@
                     本站总访问量
                     <span id="busuanzi_value_site_pv" class="font-bold">--</span> 次
                 </span>
-                <img src="https://i.p-i.vip/47/20240920-66ed75c79f23d.gif" alt="heart" width="150" height="150" />
+                <!-- 随机显示动图 -->
+                <img :src="currentGif"  alt="heart" width="150" height="150" style="object-fit: contain;" />
                 <span class="text">
                     本站访客数
                     <span id="busuanzi_value_site_uv" class="font-bold">--</span> 人次
@@ -16,6 +17,22 @@
     </div>
 </template>
 <script setup>
+import { ref, onMounted } from 'vue';
+
+// 定义动图URL数组，可根据实际图片添加或修改
+const gifUrls = [
+  '/public/cat.gif',
+  '/public/pikaqiu_run.gif',
+];
+// 当前显示的动图URL
+const currentGif = ref('');
+
+onMounted(() => {
+  // 随机选择一个动图URL
+  const randomIndex = Math.floor(Math.random() * gifUrls.length);
+  currentGif.value = gifUrls[randomIndex];
+});
+
 
 </script>
 <style scoped>
@@ -45,6 +62,15 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     display: grid;
 }
+
+.container {
+    transition: transform 0.3s;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+}
+
 
 .text {
     font-size: 0.875rem;
