@@ -2,11 +2,14 @@
   <div>
     <!-- 文章列表 -->
     <div class="article-items">
+      <!--文章卡片-->
       <div v-for="article in articles" :key="article.id" class="custom-card">
         <div class="card-content">
           <!-- 左侧文本区域 -->
           <div class="article-text">
+            <!-- 标题 -->
             <h3 class="article-title">{{ article.title }}</h3>
+            <!-- 元数据 -->
             <div class="article-meta">
               <span class="meta-item">
                 <span class="meta-icon">👤</span>
@@ -21,7 +24,9 @@
                 <span class="meta-text">{{ article.views }} 阅读</span>
               </span>
             </div>
+            <!-- 摘要 -->
             <p class="article-excerpt">{{ article.excerpt }}</p>
+            <!-- 标签 -->
             <div class="article-tags">
               <span v-for="tag in article.tags" :key="tag.id" class="tag-item">{{ tag.name }}</span>
             </div>

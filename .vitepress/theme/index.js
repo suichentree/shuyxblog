@@ -23,7 +23,7 @@ import 'nprogress-v2/dist/index.css' // 进度条样式
 
 
 //引入文章日期组件
-import ArticleDate from '/pages/components/ArticleDate/ArticleDate.vue'
+import ArticleDateInfo from '/pages/components/ArticleDateInfo/ArticleDateInfo.vue'
 //引入回到顶部组件
 import Backtotop from '/pages/components/Backtotop/Backtotop.vue'
 //引入站点数据统计组件
@@ -62,7 +62,7 @@ export default {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
 
       // 指定组件使用doc-before插槽
-      'doc-before': () => h(ArticleDate),
+      'doc-before': () => h(ArticleDateInfo),
       // 指定组件使用doc-footer-before插槽
       'doc-footer-before': () => h(Backtotop),
       // 指定组件使用home-features-after插槽

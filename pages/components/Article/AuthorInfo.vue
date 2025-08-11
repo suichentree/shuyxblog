@@ -1,27 +1,37 @@
 <template>
     <!-- 作者信息卡片 -->
-    <div class="custom-card author-card">
+    <div class="custom-card">
+      <!-- 卡片头部 -->
+      <div class="card-header">
+        <h3 class="card-title">博客信息</h3>
+      </div>
+      <!-- 卡片内容 -->
       <div class="card-content">
+        <!-- 头像 -->
         <img 
           :src="author.avatar" 
           alt="Author Avatar" 
           class="author-avatar"
         >
-        <div class="author-profile">
-          <h3 class="author-name">{{ author.name }}</h3>
-          <p class="author-bio">{{ author.bio }}</p>
-          <div class="author-stats">
-            <div class="stat-item">
-              <span class="stat-value">{{ author.articleCount }}</span>
-              <span class="stat-label">文章</span>
+        <!-- 博客信息 -->
+        <div>
+          <h3 style="font-size: 18px;font-weight: 600;margin-bottom: 10px;">{{ author.name }}</h3>
+          <p  style="font-size: 14px;margin-bottom: 10px;">{{ author.bio }}</p>
+          <!-- 博客统计数据 -->
+          <!-- flex容器，子元素居中 -->
+          <div style="display: flex;justify-content: center;gap: 20px;font-size: 14px;">
+            <!-- flex容器，子元素垂直居中 -->
+            <div style="display: flex;flex-direction: column;">
+              <span>{{ author.articleCount }}</span>
+              <span>文章</span>
             </div>
-            <div class="stat-item">
-              <span class="stat-value">{{ author.tagCount }}</span>
-              <span class="stat-label">标签</span>
+            <div style="display: flex;flex-direction: column;">
+              <span>{{ author.tagCount }}</span>
+              <span>标签</span>
             </div>
-            <div class="stat-item">
-              <span class="stat-value">{{ author.viewCount }}</span>
-              <span class="stat-label">访问</span>
+            <div style="display: flex;flex-direction: column;">
+              <span>{{ author.viewCount }}</span>
+              <span>访问</span>
             </div>
           </div>
         </div>
@@ -29,26 +39,24 @@
     </div>
 
     <!-- 文章分类卡片 -->
-    <div class="custom-card category-card">
+    <div class="custom-card">
       <div class="card-header">
         <h3 class="card-title">文章分类</h3>
       </div>
       <div class="card-content">
-        <ul class="category-list">
-          <li v-for="category in categories" :key="category.id" class="category-item">
+          <div v-for="category in categories" :key="category.id" class="category-item">
             <a :href="'/category/' + category.slug" class="category-link">
               {{ category.name }}
               <span class="category-count">({{ category.count }})</span>
             </a>
-          </li>
-        </ul>
+          </div>
       </div>
     </div>
 
     <!-- 标签云卡片 -->
     <div class="custom-card tag-card">
       <div class="card-header">
-        <h3 class="card-title">标签云</h3>
+        <h3 class="card-title">文章标签</h3>
       </div>
       <div class="card-content">
         <div class="tag-cloud">
@@ -101,7 +109,7 @@ const tags = ref([
 
 <style scoped>
 
-/* 基础卡片样式 - 完全自定义，不依赖element-plus */
+/* 基础卡片样式  */
 .custom-card {
   border-radius: 12px;
   background-color: #fff;
@@ -114,97 +122,45 @@ const tags = ref([
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* 作者卡片样式 */
-.author-card .card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 30px 20px;
-}
-
+/* 卡片头部样式 */
 .card-header {
   padding: 15px 20px;
   border-bottom: 1px solid #f0f0f0;
 }
+/* 卡片头部标题样式 */
 .card-title {
   font-size: 16px;
   font-weight: 600;
   color: #333;
   margin: 0;
 }
+
+/* 卡片内容样式 */
 .card-content {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px 20px;
 }
 
+/* 作者头像样式 */
 .author-avatar {
-  width: 100px;
-  height: 100px;
+  width: 50%;
+  height: auto;
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid #f5f5f5;
-  margin-bottom: 15px;
-  transition: transform 0.3s ease;
 }
 
-.author-avatar:hover {
-  transform: scale(1.05);
-}
-
-.author-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 10px;
-}
-
-.author-bio {
-  color: #666;
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 0 0 20px;
-  padding: 0 10px;
-}
-
-.author-stats {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-value {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-}
-
-.stat-label {
-  font-size: 12px;
-  color: #999;
-}
-
-/* 分类列表样式 */
-.category-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
+/* 文章分类列表项区域的样式 */
 .category-item {
-  padding: 8px 0;
-  border-bottom: 1px dashed #f0f0f0;
+  width: 90%;
+  padding: 8px 0px;
+  border-bottom: 1px dashed #ccc;
 }
 
-.category-item:last-child {
-  border-bottom: none;
-}
-
+/* 列表项链接文本样式 */
 .category-link {
   display: flex;
   justify-content: space-between;
@@ -214,11 +170,11 @@ const tags = ref([
   font-size: 14px;
   transition: color 0.3s;
 }
-
 .category-link:hover {
   color: #42b983;
 }
 
+/* 列表项分类数量样式 */
 .category-count {
   background-color: #f5f5f5;
   color: #999;
@@ -227,24 +183,22 @@ const tags = ref([
   font-size: 12px;
 }
 
-/* 标签云样式 */
+/* 文章标签卡片样式 */
 .tag-cloud {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
-
+/* 文章标签项样式 */
 .tag-item {
   padding: 4px 10px;
   border-radius: 20px;
   transition: all 0.3s;
 }
-
 .tag-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 .tag-link {
   color: white;
   text-decoration: none;
