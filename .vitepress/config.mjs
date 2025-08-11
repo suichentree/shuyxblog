@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress'
 // 网站元数据配置
 export default defineConfig({
   lang: 'zh-CN',
-  title: "VitePress1111111111111", //网址名称 类似<title>网址名称</title>
+  title: "VitePress1111111111111", //网站名称 类似<title>网址名称</title>
   description: "我的vitpress文档教程22222222222222",  //网站描述 类似<meta name="description" content="网站描述">
   //favicon图标
   head: [
@@ -75,7 +75,7 @@ export default defineConfig({
       placement: 'your-carbon-placement', 
     },
 
-    //注释侧边栏，不用
+    //注释侧边栏，暂时不用
     // sidebar: [
     //   {
     //     text: 'Examples',
