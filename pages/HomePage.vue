@@ -16,8 +16,8 @@
     </div>
 </template>
 <script setup>
-import ArticleList from './components/Article/ArticleList.vue';
-import AuthorInfo from './components/Article/AuthorInfo.vue';
+import ArticleList from './views/Article/ArticleList.vue';
+import AuthorInfo from './views/Article/AuthorInfo.vue';
 </script>
 <style scoped>
 .panel {
