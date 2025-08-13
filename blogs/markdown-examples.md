@@ -1,3 +1,8 @@
+---
+outline: deep
+date: 2019-06-12
+---
+
 # Markdown Extension Examples
 
 This page demonstrates some of the built-in markdown extensions provided by VitePress.

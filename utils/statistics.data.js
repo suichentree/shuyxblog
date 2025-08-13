@@ -1,44 +1,45 @@
-// 统计各种数据
+import { createContentLoader } from 'vitepress'
 
 //统计blogs目录中的所有md文件中的各个数据
 export default createContentLoader("blogs/**/*.md", {
     transform(raw){
         //定义blogData对象
         const blogData = {
-            posts: [],
-            tags: [],
-            categories: [],
-            everyCategoryCount: {},
+            articles: [],           //所有的文章数据
+            tags: [],               //所有的标签数据
+            categories: [],         //所有的分类数据
+            everyCategoryCount: {}, //每个分类的文章数量
         };
         //遍历raw数组
         raw.forEach(({ url, frontmatter, excerpt }) => {
-            if (frontmatter.publish == undefined || frontmatter.publish) {
-                if (frontmatter.tags) blogData.tags.push(...frontmatter.tags);
-                if (frontmatter.categories) {
-                blogData.categories.push(...frontmatter.categories);
-                frontmatter.categories.forEach((category) => {
-                    if (blogData.everyCategoryCount[category]) {
-                    blogData.everyCategoryCount[category]++;
-                    } else {
-                    blogData.everyCategoryCount[category] = 1;
-                    }
-                });
+            if (frontmatter.tags) blogData.tags.push(...frontmatter.tags);
+            if (frontmatter.categories) {
+            blogData.categories.push(...frontmatter.categories);
+            frontmatter.categories.forEach((category) => {
+                if (blogData.everyCategoryCount[category]) {
+                blogData.everyCategoryCount[category]++;
+                } else {
+                blogData.everyCategoryCount[category] = 1;
                 }
-                blogData.posts.push({
-                    title: frontmatter.title,
-                    url,
-                    excerpt,
-                    date: frontmatter.date,
-                    frontmatter,
-                });
+            });
             }
+            blogData.articles.push({
+                title: frontmatter.title,
+                url,
+                excerpt,
+                date: frontmatter.date,
+                frontmatter,
+            });
         });
         //去重blogData.tags数据
         blogData.tags = removeDuplicates(blogData.tags);
         //去重blogData.categories数据
         blogData.categories = removeDuplicates(blogData.categories);
-        //对blogData.posts数据按照日期进行降序排序
-        blogData.posts.sort((a, b) => b.date.time - a.date.time);
+        //对blogData.articles数据按照日期进行降序排序
+        blogData.articles.sort((a, b) => b.date - a.date);
+        //打印blogData对象
+        console.log(blogData);
+        //返回blogData对象
         return blogData;
     },
 });
@@ -50,4 +51,4 @@ function removeDuplicates(arr) {
 }
 
 
-console.log(blogData);
+

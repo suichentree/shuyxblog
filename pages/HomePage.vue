@@ -19,6 +19,10 @@
 //引入文章列表和作者信息组件
 import ArticleList from './components/Article/ArticleList.vue';
 import AuthorInfo from './components/Article/AuthorInfo.vue';
+//引入统计数据
+import { data as blogData } from '/utils/statistics.data.js'
+
+console.log(blogData)
 
 </script>
 <style scoped>
