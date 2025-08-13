@@ -11,24 +11,29 @@
             <h3 class="article-title">{{ article.title }}</h3>
             <!-- 元数据 -->
             <div class="article-meta">
+              <!-- 作者 -->
               <span class="meta-item">
                 <span class="meta-icon">👤</span>
                 <span class="meta-text">suichentree</span>
               </span>
+              <!-- 日期 -->
               <span class="meta-item">
                 <span class="meta-icon">📅</span>
                 <span class="meta-text">{{ article.date }}</span>
               </span>
+              <!-- 分类 -->
               <span class="meta-item">
-                <span class="meta-icon">👁️</span>
-                <span class="meta-text">{{ article.views }} 阅读</span>
+                <span class="meta-icon">🗂️</span>
+                <span v-for="category in article.categories" class="meta-text">{{ category }}</span>
               </span>
             </div>
             <!-- 摘要 -->
             <p class="article-excerpt">{{ article.excerpt }}</p>
             <!-- 标签 -->
             <div class="article-tags">
-              <span v-for="tag in article.tags" :key="tag.id" class="tag-item">{{ tag.name }}</span>
+              <span v-for="tag in article.tags" class="tag-item">
+                <span class="meta-icon">🏷️</span>{{ tag }}
+              </span>
             </div>
           </div>
           <!-- 右侧图片区域 -->
@@ -49,10 +54,37 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref,computed } from 'vue';
+//引入统计数据
+import { data as rawData } from '/utils/statistics.data.js'
+
+const blogData = ref(rawData); // 使用ref包装原始数据
+console.log(blogData.value)
+
+
+//文章数据 articles 计算属性
+const articles = computed(() => {
+  // 确保blogData和article数组存在
+  if (!blogData.value || !Array.isArray(blogData.value.articles)) {
+    return [];
+  }
+  
+  // 处理文章数据
+  return blogData.value.articles.map((element, index) => ({
+    id: index,                      //文章id
+    title: element.title,           //文章标题
+    date: format_date(element.date),//日期
+    excerpt: element.excerpt,       //摘要
+    cover: random_cover_image(),    //封面图
+    categories: element.categories, //分类
+    tags: element.tags              //标签
+  }));
+});
+
+
 
 // 模拟文章数据
-const articles = ref([
+const articles111111111111 = ref([
   {
     id: 1,
     title: 'Vue3组合式API完全指南',
@@ -65,41 +97,38 @@ const articles = ref([
       { id: 103, name: 'JavaScript' }
     ],
     cover: '/public/cover4.png'
-  },
-  {
-    id: 1,
-    title: 'Vue3组合式API完全指南',
-    date: '2023-10-15',
-    views: 1245,
-    excerpt: '本文详细介绍了Vue3组合式API的使用方法，包括setup函数、响应式数据、生命周期钩子等核心概念...',
-    tags: [
-      { id: 101, name: 'Vue' },
-      { id: 102, name: '前端' },
-      { id: 103, name: 'JavaScript' }
-    ],
-    cover: '/public/cover6.jpeg'
-  },
-  {
-    id: 1,
-    title: 'Vue3组合式API完全指南',
-    date: '2023-10-15',
-    views: 1245,
-    excerpt: '本文详细介绍了Vue3组合式API的使用方法，包括setup函数、响应式数据、生命周期钩子等核心概念...',
-    tags: [
-      { id: 101, name: 'Vue' },
-      { id: 102, name: '前端' },
-      { id: 103, name: 'JavaScript' }
-    ],
-    cover: '/public/cover1.jpg'
-  },
-  // 更多文章数据...
+  }
 ]);
+
+
 
 // 分页数据
 const currentPage = ref(1);
 const totalPages = ref(5);
-</script>
 
+//格式化日期
+function format_date(date_string){
+  return date_string.split('T')[0];;
+}
+// 随机返回一个封面图片
+function random_cover_image(){
+  // 文章封面cover数组，可根据实际图片添加或修改
+  let cover_image_urls = [
+    '/public/cover1.jpg',
+    '/public/cover2.jpg',
+    '/public/cover3.jpg',
+    '/public/cover4.png',
+    '/public/cover5.jpeg',
+    '/public/cover6.jpeg',
+  ];
+  let randomIndex = Math.floor(Math.random() * cover_image_urls.length);
+  return cover_image_urls[randomIndex];
+}
+
+
+
+
+</script>
 <style scoped>
 
 /* 文章列表容器 */

@@ -8,42 +8,30 @@ export default createContentLoader("blogs/**/*.md", {
             articles: [],           //所有的文章数据
             tags: [],               //所有的标签数据
             categories: [],         //所有的分类数据
-            everyCategoryCount: {}, //分类的文章数量,存放每个分类和分类对应的文章数量
-            everyTagCount: {},      //存放每个标签和标签对应的文章数量
+            everyCategoryCount: {}, //每个分类的文章数量
         };
         //遍历raw数组
+        //url为md文件对应的页面映射路径
+        //frontmatter为md文件的frontmatter数据
+        //excerpt为md文件的摘要数据
         raw.forEach(({ url, frontmatter, excerpt }) => {
-            // 标签
-            if (frontmatter.tags) {
-                blogData.tags.push(...frontmatter.tags);
-                frontmatter.tags.forEach((tag) => {
-                    if (blogData.everyTagCount[tag]) {
-                    blogData.everyTagCount[tag]++;
-                    } else {
-                    blogData.everyTagCount[tag] = 1;
-                    }
-                });
-            }
-            // 分类
+            if (frontmatter.tags) blogData.tags.push(...frontmatter.tags);
             if (frontmatter.categories) {
-                blogData.categories.push(...frontmatter.categories);
-                frontmatter.categories.forEach((category) => {
-                    if (blogData.everyCategoryCount[category]) {
-                    blogData.everyCategoryCount[category]++;
-                    } else {
-                    blogData.everyCategoryCount[category] = 1;
-                    }
-                });
+            blogData.categories.push(...frontmatter.categories);
+            frontmatter.categories.forEach((category) => {
+                if (blogData.everyCategoryCount[category]) {
+                blogData.everyCategoryCount[category]++;
+                } else {
+                blogData.everyCategoryCount[category] = 1;
+                }
+            });
             }
-            //文章
             blogData.articles.push({
                 title: frontmatter.title,
-                tags: frontmatter.tags,
-                categories: frontmatter.categories,
                 url,
                 excerpt,
                 date: frontmatter.date,
-                metadata:frontmatter,
+                frontmatter,
             });
         });
         //去重blogData.tags数据
