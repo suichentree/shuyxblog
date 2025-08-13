@@ -19,8 +19,8 @@ export default defineConfig({
     //头部导航栏
     nav: [
       { text: '首页', link: '/' },
-      { text: '分类',link: '/markdown-examples'},
-      { text: '标签',link: '/markdown-examples'},
+      { text: '分类',link: '/pages/views/ArticleCategory'},
+      { text: '标签',link: '/pages/views/ArticleTag'},
       {
         text: '文档',
         items: [
@@ -64,16 +64,12 @@ export default defineConfig({
       level: 'deep', // 显示2-6级标题
       label: '当前页大纲目录' // 文字显示
     },
-    //文章展示页面的底部的编辑链接，可跳转到指定网址进行在线编辑。
-    editLink: { 
-      pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path', // 改成自己的仓库地址
-      text: '在线编辑'
-    },
-    //文章展示页面的底部的 Carbon 广告展示
-    carbonAds: { 
-      code: 'your-carbon-code', 
-      placement: 'your-carbon-placement', 
-    },
+
+    //文章展示页面的底部的 Carbon 广告展示，暂时不用
+    // carbonAds: { 
+    //   code: 'your-carbon-code', 
+    //   placement: 'your-carbon-placement', 
+    // },
 
     //注释侧边栏，暂时不用
     // sidebar: [

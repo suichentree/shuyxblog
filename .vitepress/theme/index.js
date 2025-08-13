@@ -28,7 +28,7 @@ import ArticleDateInfo from '/pages/components/ArticleDateInfo/ArticleDateInfo.v
 import Backtotop from '/pages/components/Backtotop/Backtotop.vue'
 //引入站点数据统计组件
 import DataPanel from '/pages/components/DataPanel/DataPanel.vue'
-//引入自定义首页组件
+//引入自定义的首页组件
 import HomePage from '/pages/HomePage.vue'
 
 
