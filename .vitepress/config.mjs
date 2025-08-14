@@ -21,6 +21,7 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '分类',link: '/pages/views/ArticleCategory'},
       { text: '标签',link: '/pages/views/ArticleTag'},
+      { text: '归档',link: '/pages/views/Archives.md'},
       {
         text: '文档',
         items: [

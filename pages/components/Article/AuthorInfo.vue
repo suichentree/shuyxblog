@@ -22,22 +22,21 @@
           <div style="display: flex;justify-content: center;gap: 20px;font-size: 14px;">
             <!-- flex容器，子元素垂直居中 -->
             <div style="display: flex;flex-direction: column;">
-              <span>{{ author.articleCount }}</span>
+              <span>{{ author.articlesSumCount }}</span>
               <span>文章</span>
             </div>
             <div style="display: flex;flex-direction: column;">
-              <span>{{ author.tagCount }}</span>
-              <span>标签</span>
+              <span>{{ author.categoriesSumCount }}</span>
+              <span>分类</span>
             </div>
             <div style="display: flex;flex-direction: column;">
-              <span>{{ author.viewCount }}</span>
-              <span>访问</span>
+              <span>{{ author.tagsSumCount }}</span>
+              <span>标签</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-
     <!-- 文章分类卡片 -->
     <div class="custom-card">
       <div class="card-header">
@@ -47,12 +46,13 @@
           <div v-for="category in categories" class="category-item">
             <a :href="'/category/'" class="category-link">
               {{ category.name }}
-              <span class="category-count">({{ category.count }})</span>
+              <span class="category-count" :style="{ backgroundColor: getRandomBrightColor() }">
+                {{ category.count }}
+              </span>
             </a>
           </div>
       </div>
     </div>
-
     <!-- 标签云卡片 -->
     <div class="custom-card tag-card">
       <div class="card-header">
@@ -63,7 +63,7 @@
           <span 
             v-for="tag in tags" 
             class="tag-item" 
-            :style="{ fontSize: tag.size + 'px', backgroundColor: tag.color }"
+            :style="{ backgroundColor: getRandomBrightColor() }"
           >
             <a :href="'/tag/' + tag.slug" class="tag-link">{{ tag.name }}</a>
           </span>
@@ -71,50 +71,50 @@
       </div>
     </div>
 </template>
-
 <script setup>
 import { ref } from 'vue';
 //引入统计数据
 import { data as rawData } from '/utils/statistics.data.js'
 const blogData = ref(rawData); // 使用ref包装原始数据
-console.log(blogData.value)
 
 // 模拟作者数据
 const author = ref({
   name: 'suichentree',
   avatar: '/public/logo.png',
-  bio: '前端开发工程师，热爱分享技术心得和学习经验',
-  articleCount: 42,
-  tagCount: 28,
-  viewCount: 15680
+  bio: '全栈开发工程师，热爱分享技术心得和学习经验',
+  articlesSumCount: blogData.value.articlesSumCount,
+  categoriesSumCount: blogData.value.categoriesSumCount,
+  tagsSumCount: blogData.value.tagsSumCount,
 });
 
-const categories = ref([]);
+//分类数据
+const categories = ref([
+  // { name: '前端开发', count: 18 },
+]);
 categories.value = blogData.value.categories;
 
 //标签数据
-const tags = ref([]);
+const tags = ref([
+  //  { name: 'Vue3',count: 10 },
+]);
 tags.value = blogData.value.tags;
 
-//模拟分类数据
-const categories_mock = ref([
-  { id: 1, name: '前端开发', slug: 'frontend', count: 18 },
-  { id: 2, name: 'Vue', slug: 'vue', count: 12 },
-  { id: 3, name: 'JavaScript', slug: 'javascript', count: 8 },
-  { id: 4, name: 'CSS', slug: 'css', count: 4 }
-]);
 
-//模拟标签数据
-const tags_mock = ref([
-  { id: 101, name: 'Vue3', slug: 'vue3', size: 16, color: '#42b983' },
-  { id: 102, name: 'TypeScript', slug: 'typescript', size: 14, color: '#007acc' },
-  { id: 103, name: 'CSS3', slug: 'css3', size: 15, color: '#2965f1' },
-  { id: 104, name: 'Webpack', slug: 'webpack', size: 13, color: '#8dd6f9' },
-  { id: 105, name: 'Vite', slug: 'vite', size: 14, color: '#646cff' },
-  { id: 106, name: 'React', slug: 'react', size: 12, color: '#61dafb' },
-  { id: 107, name: '性能优化', slug: 'performance', size: 13, color: '#f0db4f' },
-  { id: 108, name: '组件设计', slug: 'component', size: 15, color: '#b87333' }
-]);
+//随机获取一个颜色
+function getRandomBrightColor() {
+  // 预定义8种适合白色文字的柔和颜色
+  const colorArray = [
+    '#3498db', // 蓝色
+    '#2ecc71', // 绿色
+    '#9b59b6', // 紫色
+    '#e74c3c', // 红色
+    '#f39c12', // 橙色
+    '#1abc9c', // 青绿色
+  ];
+  // 随机获取数组中的颜色
+  const randomIndex = Math.floor(Math.random() * colorArray.length);
+  return colorArray[randomIndex];
+}
 </script>
 
 <style scoped>
@@ -186,10 +186,14 @@ const tags_mock = ref([
 
 /* 列表项分类数量样式 */
 .category-count {
-  background-color: #f5f5f5;
-  color: #999;
-  padding: 2px 8px;
-  border-radius: 10px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  color: white;
+  border-radius: 4px;
+  margin-left: 4px;
   font-size: 12px;
 }
 
