@@ -44,8 +44,8 @@
         <h3 class="card-title">文章分类</h3>
       </div>
       <div class="card-content">
-          <div v-for="category in categories" :key="category.id" class="category-item">
-            <a :href="'/category/' + category.slug" class="category-link">
+          <div v-for="category in categories" class="category-item">
+            <a :href="'/category/'" class="category-link">
               {{ category.name }}
               <span class="category-count">({{ category.count }})</span>
             </a>
@@ -62,7 +62,6 @@
         <div class="tag-cloud">
           <span 
             v-for="tag in tags" 
-            :key="tag.id" 
             class="tag-item" 
             :style="{ fontSize: tag.size + 'px', backgroundColor: tag.color }"
           >
@@ -75,6 +74,10 @@
 
 <script setup>
 import { ref } from 'vue';
+//引入统计数据
+import { data as rawData } from '/utils/statistics.data.js'
+const blogData = ref(rawData); // 使用ref包装原始数据
+console.log(blogData.value)
 
 // 模拟作者数据
 const author = ref({
@@ -86,16 +89,23 @@ const author = ref({
   viewCount: 15680
 });
 
-// 模拟分类数据
-const categories = ref([
+const categories = ref([]);
+categories.value = blogData.value.categories;
+
+//标签数据
+const tags = ref([]);
+tags.value = blogData.value.tags;
+
+//模拟分类数据
+const categories_mock = ref([
   { id: 1, name: '前端开发', slug: 'frontend', count: 18 },
   { id: 2, name: 'Vue', slug: 'vue', count: 12 },
   { id: 3, name: 'JavaScript', slug: 'javascript', count: 8 },
   { id: 4, name: 'CSS', slug: 'css', count: 4 }
 ]);
 
-// 模拟标签数据
-const tags = ref([
+//模拟标签数据
+const tags_mock = ref([
   { id: 101, name: 'Vue3', slug: 'vue3', size: 16, color: '#42b983' },
   { id: 102, name: 'TypeScript', slug: 'typescript', size: 14, color: '#007acc' },
   { id: 103, name: 'CSS3', slug: 'css3', size: 15, color: '#2965f1' },

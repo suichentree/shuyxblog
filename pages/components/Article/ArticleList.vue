@@ -43,7 +43,6 @@
         </div>
       </div>
     </div>
-
     <!-- 分页区域 -->
     <div class="pagination">
       <button class="page-btn prev-btn" :disabled="currentPage === 1">上一页</button>
@@ -57,31 +56,26 @@
 import { ref,computed } from 'vue';
 //引入统计数据
 import { data as rawData } from '/utils/statistics.data.js'
-
 const blogData = ref(rawData); // 使用ref包装原始数据
 console.log(blogData.value)
 
-
 //文章数据 articles 计算属性
 const articles = computed(() => {
-  // 确保blogData和article数组存在
-  if (!blogData.value || !Array.isArray(blogData.value.articles)) {
-    return [];
+  // 确保blogData存在
+  if (blogData.value) {
+    // 处理文章数据
+    return blogData.value.articles.map((element, index) => ({
+      id: index,                      //文章id
+      title: element.title,           //文章标题
+      date: format_date(element.date),//日期
+      // excerpt: element.excerpt,       //摘要
+      excerpt: '本文详细介绍了Vue3组合式API的使用方法，包括setup函数、响应式数据、生命周期钩子等核心概念...',       //摘要
+      cover: random_cover_image(),    //封面图
+      categories: element.categories, //分类
+      tags: element.tags              //标签
+    }));
   }
-  
-  // 处理文章数据
-  return blogData.value.articles.map((element, index) => ({
-    id: index,                      //文章id
-    title: element.title,           //文章标题
-    date: format_date(element.date),//日期
-    excerpt: element.excerpt,       //摘要
-    cover: random_cover_image(),    //封面图
-    categories: element.categories, //分类
-    tags: element.tags              //标签
-  }));
 });
-
-
 
 // 模拟文章数据
 const articles111111111111 = ref([
@@ -99,6 +93,9 @@ const articles111111111111 = ref([
     cover: '/public/cover4.png'
   }
 ]);
+
+
+
 
 
 
