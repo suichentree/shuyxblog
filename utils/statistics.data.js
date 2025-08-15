@@ -48,7 +48,8 @@ export default createContentLoader("blogs/**/*.md", {
                 tags: frontmatter.tags,           //文章标签
                 categories: frontmatter.categories,   //文章分类
                 url,                                   //文章url
-                date: frontmatter.date,             //文章日期
+                date: frontmatter.date,             //文章创建日期
+                lastUpdated: frontmatter.lastUpdated, //文章最后更新日期
                 metadata:frontmatter,               //文章的元数据
             });
         });

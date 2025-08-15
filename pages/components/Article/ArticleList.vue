@@ -3,7 +3,7 @@
     <!-- 文章列表 -->
     <div class="article-items">
       <!--文章卡片-->
-      <div v-for="article in articles" class="custom-card">
+      <div v-for="article in currentArticles" class="custom-card"  @click="navigateToArticle(article.url)">
         <div class="card-content">
           <!-- 左侧文本区域 -->
           <div class="article-text">
@@ -41,51 +41,84 @@
         </div>
       </div>
     </div>
-    <!-- 分页区域 -->
-    <div class="pagination">
-      <button class="page-btn prev-btn" :disabled="currentPage === 1">上一页</button>
-      <span class="page-info">第 {{ currentPage }} 页 / 共 {{ totalPages }} 页</span>
-      <button class="page-btn next-btn" :disabled="currentPage === totalPages">下一页</button>
-    </div>
+    <!-- 引入分页组件 -->
+    <Pagination
+      v-model:currentPage="currentPage"
+      :totalPages="totalPages"
+      :pageSize="pageSize"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref,computed} from 'vue';
+// 导入分页组件
+import Pagination from '/pages/components/Pagination/Pagination.vue';
 //引入统计数据
 import { data as rawData } from '/utils/statistics.data.js'
 const blogData = ref(rawData); // 使用ref包装原始数据
 console.log(blogData.value)
 
-//文章数据 articles 计算属性
+// 接收父组件传递的filter-category过滤条件
+const props = defineProps({
+  filterCategory: {
+    type: String,
+  }
+});
+
+//获取文章数据并转换为指定的对象格式
 const articles = computed(() => {
   // 确保blogData存在
-  if (blogData.value) {
-    // 处理文章数据
-    return blogData.value.articles.map(element => ({
+  if (blogData.value.articles) {
+    // 转换文章数据
+    let articleList =  blogData.value.articles.map(element => ({
+      url: element.url,               //文章url
       title: element.title,           //文章标题
       date: format_date(element.date),//日期
-      excerpt: '本文暂无摘要.................',       //摘要
       cover: random_cover_image(),    //封面图
       categories: element.categories, //分类
       tags: element.tags              //标签
     }));
 
-    //模拟数据展示
+    //模拟的文章数据展示
     // {
+    //   url: '/article/1',
     //   title: 'xxxxxxxxx',
     //   date: '2025-10-15',
-    //   excerpt: '本文详细介绍了XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX...',
-    //   tags: ["个人项目","Vue3","前端"],
+    //   tags: ["项目","Vue3","前端"],
+    //   categories: ["项目"],
     //   cover: '/public/cover4.png'
     // }
+
+    // 如果有过滤条件，则进行过滤
+    if (props.filterCategory) {
+      articleList = articleList.filter(article => 
+        article.categories.includes(props.filterCategory)
+      );
+    }
+    return articleList;
+  }else{
+    console.log('没有文章数据')
   }
 });
 
+// 计算出当前页的文章数据
+const currentArticles = computed(() => {
+  if (!articles.value) return [];
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return articles.value.slice(start, end);
+});
 
-// 分页数据
+//当前页
 const currentPage = ref(1);
-
+//每页显示的文章数量
+const pageSize = ref(5);
+//计算总页数
+const totalPages = computed(() => {
+  if (!articles.value) return 1;
+  return Math.ceil(articles.value.length / pageSize.value);
+});
 
 //格式化日期
 function format_date(date_string){
@@ -106,17 +139,23 @@ function random_cover_image(){
   return cover_image_urls[randomIndex];
 }
 
+const navigateToArticle = (url) => {
+  if (url) {
+    // 使用原生JavaScript实现页面跳转
+    window.location.href = url;
+    // 如需在新标签页打开，可使用：
+    // window.open(url, '_blank');
+  }
+};
 
 </script>
 <style scoped>
-
 /* 文章列表容器 */
 .article-items {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-
 /* 自定义卡片样式 */
 .custom-card {
   border: 2px solid #f0f0f0;
@@ -178,10 +217,10 @@ function random_cover_image(){
 
 /* 标签项 */
 .tag-item {
-  background-color: #f0f0f0;
+  background-color: #f6f6f7;
   color: #666;
   padding: 4px 10px;
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 12px;
   transition: all 0.3s;
 }
@@ -203,38 +242,4 @@ function random_cover_image(){
   border-radius: 8px;
 }
 
-
-/* 分页样式 */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-.page-btn {
-  padding: 8px 16px;
-  background-color: #f5f5f5;
-  border: none;
-  border-radius: 6px;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.page-btn:hover:not(:disabled) {
-  background-color: #e0e0e0;
-  color: #333;
-}
-
-.page-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.page-info {
-  color: #666;
-  font-size: 14px;
-}
 </style>

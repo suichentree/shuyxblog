@@ -110,6 +110,14 @@ function getRandomBrightColor() {
     '#e74c3c', // 红色
     '#f39c12', // 橙色
     '#1abc9c', // 青绿色
+    '#3eaf7c', // 深绿色
+    '#8e44ad', // 深紫色
+    '#499cef', // 深蓝色
+    '#dcba33', // 黄色
+    '#e67e22', // 棕色
+    '#16a085', // 深青色
+    '#2980b9', // 深蓝色
+    '#95a6b8', // 浅蓝色
   ];
   // 随机获取数组中的颜色
   const randomIndex = Math.floor(Math.random() * colorArray.length);
@@ -206,7 +214,7 @@ function getRandomBrightColor() {
 /* 文章标签项样式 */
 .tag-item {
   padding: 4px 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   transition: all 0.3s;
 }
 .tag-item:hover {

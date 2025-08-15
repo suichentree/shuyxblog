@@ -1,20 +1,14 @@
 <template>
   <div class="container">
     <div class="category-content">
-      <div 
-        v-for="category in categories" 
-        :key="category.name" 
-        class="category-item"
-        :class="{ 'active': activeCategory === category.name }"
-        @click="selectCategory(category.name)"
-      >
-        <a href="javascript:void(0)">
-          {{ category.name }}
-          <span class="category-count" :style="{ backgroundColor: getRandomBrightColor() }">
-            {{ category.count }}
-          </span>
-        </a>
-      </div>
+        <div v-for="category in categories" class="category-item">
+          <a :href="'/category/'">
+            {{ category.name }}
+            <span class="category-count" :style="{ backgroundColor: getRandomBrightColor() }">
+              {{ category.count }}
+            </span>
+          </a>
+        </div>
     </div>
     <div>
       <ArticleList :filter-category="activeCategory" />
@@ -23,15 +17,23 @@
 </template>
 <script setup>
 import { ref } from 'vue';
+//引入文章列表组件
 import ArticleList from './ArticleList.vue';
+//引入统计数据
 import { data as rawData } from '/utils/statistics.data.js'
 const blogData = ref(rawData); // 使用ref包装原始数据
 
-const categories = ref(blogData.value.categories);
-const activeCategory = ref('all');
+//分类数据
+const categories = ref([
+  //模拟数据展示
+  // { name: '前端开发', count: 18 },
+]);
+categories.value = blogData.value.categories;
 
-function selectCategory(category) {
-  activeCategory.value = category === activeCategory.value ? 'all' : category;
+const activeCategory = ref('all'); // 默认显示所有文章
+
+function selectCategory(id) {
+  activeCategory.value = id;
 }
 
 //随机获取一个颜色
@@ -99,9 +101,7 @@ function getRandomBrightColor() {
   font-size: 15px;
 }
 
-.active {
-  background-color: #3eaf7c;
-  color: #f0f0f0;
-}
+
+
 
 </style>
