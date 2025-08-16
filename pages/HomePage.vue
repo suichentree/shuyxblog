@@ -17,8 +17,8 @@
 </template>
 <script setup>
 //引入文章列表和作者信息组件
-import ArticleList from './components/Article/ArticleList.vue';
-import AuthorInfo from './components/Article/AuthorInfo.vue';
+import ArticleList from '/pages/components/ArticleList/ArticleList.vue';
+import AuthorInfo from '/pages/components/AuthorInfo/AuthorInfo.vue';
 </script>
 <style scoped>
 .panel {

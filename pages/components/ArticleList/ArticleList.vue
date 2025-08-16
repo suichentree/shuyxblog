@@ -44,7 +44,7 @@
     <!-- 引入分页组件 -->
     <Pagination
       v-model:currentPage="currentPage"
-      :totalPages="totalPages"
+      :total="total"
       :pageSize="pageSize"
     />
   </div>
@@ -59,9 +59,12 @@ import { data as rawData } from '/utils/statistics.data.js'
 const blogData = ref(rawData); // 使用ref包装原始数据
 console.log(blogData.value)
 
-// 接收父组件传递的filter-category过滤条件
+// 接收父组件传递的过滤条件
 const props = defineProps({
   filterCategory: {
+    type: String,
+  },
+  filterTag: {
     type: String,
   }
 });
@@ -76,8 +79,8 @@ const articles = computed(() => {
       title: element.title,           //文章标题
       date: format_date(element.date),//日期
       cover: random_cover_image(),    //封面图
-      categories: element.categories, //分类
-      tags: element.tags              //标签
+      categories: element.categories || [], //分类
+      tags: element.tags || []             //标签
     }));
 
     //模拟的文章数据展示
@@ -90,12 +93,24 @@ const articles = computed(() => {
     //   cover: '/public/cover4.png'
     // }
 
-    // 如果有过滤条件，则进行过滤
-    if (props.filterCategory) {
+    // 如果有过滤条件，则对文章数据进行过滤 (排除"全部")
+    if (props.filterCategory && props.filterCategory != "全部") {
       articleList = articleList.filter(article => 
         article.categories.includes(props.filterCategory)
       );
+      //每次重新过滤文章数据都将当前页设置为1
+      currentPage.value = 1;
     }
+
+    // 如果有过滤条件，则对文章数据进行过滤 (排除"全部")
+    if (props.filterTag && props.filterTag != "全部") {
+      articleList = articleList.filter(article => 
+        article.tags.includes(props.filterTag)
+      );
+      //每次重新过滤文章数据都将当前页设置为1
+      currentPage.value = 1;
+    }
+
     return articleList;
   }else{
     console.log('没有文章数据')
@@ -112,13 +127,13 @@ const currentArticles = computed(() => {
 
 //当前页
 const currentPage = ref(1);
-//每页显示的文章数量
-const pageSize = ref(5);
-//计算总页数
-const totalPages = computed(() => {
-  if (!articles.value) return 1;
-  return Math.ceil(articles.value.length / pageSize.value);
+//每页显示的文章数量，默认10条
+const pageSize = ref(10);
+//总文章数量
+const total = computed(() => {
+  return articles.value.length
 });
+
 
 //格式化日期
 function format_date(date_string){
@@ -178,8 +193,9 @@ const navigateToArticle = (url) => {
   flex: 16;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  margin: auto;
   padding: 20px;
-  gap: 16px;
 }
 
 /* 文章标题 */

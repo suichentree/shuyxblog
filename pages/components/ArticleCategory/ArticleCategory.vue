@@ -1,14 +1,20 @@
 <template>
   <div class="container">
-    <div class="category-content">
-        <div v-for="category in categories" class="category-item">
-          <a :href="'/category/'">
-            {{ category.name }}
-            <span class="category-count" :style="{ backgroundColor: getRandomBrightColor() }">
-              {{ category.count }}
-            </span>
-          </a>
-        </div>
+    <div class="content">
+      <div 
+        v-for="category in categories" 
+        :key="category.name" 
+        class="item"
+        :class="{ 'active': activeCategory === category.name }"
+        @click="selectCategory(category.name)"
+      >
+        <a href="javascript:void(0)">
+          {{ category.name }}
+          <span class="count" :style="{ backgroundColor: getRandomBrightColor() }">
+            {{ category.count }}
+          </span>
+        </a>
+      </div>
     </div>
     <div>
       <ArticleList :filter-category="activeCategory" />
@@ -17,23 +23,24 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-//引入文章列表组件
-import ArticleList from './ArticleList.vue';
-//引入统计数据
+import ArticleList from '/pages/components/ArticleList/ArticleList.vue';
 import { data as rawData } from '/utils/statistics.data.js'
 const blogData = ref(rawData); // 使用ref包装原始数据
 
-//分类数据
-const categories = ref([
-  //模拟数据展示
-  // { name: '前端开发', count: 18 },
-]);
-categories.value = blogData.value.categories;
+const categories = ref(blogData.value.categories);
+// 新增：检查是否已存在"全部"分类，不存在时再添加
+if (!categories.value.find(cat => cat.name === '全部')) {
+  categories.value.unshift({
+    name: '全部',
+    count: blogData.value.articlesSumCount
+  });
+}
 
-const activeCategory = ref('all'); // 默认显示所有文章
-
-function selectCategory(id) {
-  activeCategory.value = id;
+//默认选择全部分类
+const activeCategory = ref('全部');
+// 点击分类时，将当前分类设置为 activeCategory
+function selectCategory(category) {
+  activeCategory.value = category === activeCategory.value ? '全部' : category;
 }
 
 //随机获取一个颜色
@@ -60,9 +67,7 @@ function getRandomBrightColor() {
   return colorArray[randomIndex];
 }
 </script>
-
 <style scoped>
-
 .container{
   display: flex;
   flex-direction: column;
@@ -70,27 +75,28 @@ function getRandomBrightColor() {
   margin: auto;
 }
 
-.category-content{
+.content{
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin:20px;
   gap: 10px;
+  flex-wrap: wrap; /* 允许子元素换行 */
 }
 
-.category-item {
+.item {
   border: 1px solid #f0f0f0;
   padding: 8px;
   border-radius: 5px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
 }
-.category-item:hover {
+.item:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.category-count {
+.count {
   display: inline-block;
   width: 24px;
   line-height: 24px;
@@ -101,7 +107,9 @@ function getRandomBrightColor() {
   font-size: 15px;
 }
 
-
-
+.active {
+  background-color: #3eaf7c;
+  color: #f0f0f0;
+}
 
 </style>

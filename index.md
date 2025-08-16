@@ -21,11 +21,10 @@ hero:
   actions:
     - theme: brand
       text: Markdown Examples
-      link: /blogs/markdown-examples
+      link: /pages/views/ArticleCategory.md
     - theme: alt
       text: API Examples
-      link: /blogs/api-examples
-
+      link: /pages/views/ArticleTag.md
 # features区域的配置
 features:
   - icon: 📝

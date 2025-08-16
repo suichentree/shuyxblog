@@ -19,8 +19,8 @@ export default defineConfig({
       //头部导航栏
       nav: [
         { text: '首页', link: '/' },
-        { text: '分类',link: '/pages/views/ArticleCategory'},
-        { text: '标签',link: '/pages/views/ArticleTag'},
+        { text: '分类',link: '/pages/views/ArticleCategory.md'},
+        { text: '标签',link: '/pages/views/ArticleTag.md'},
         { text: '归档',link: '/pages/views/Archives.md'},
         {
           text: '文档',
@@ -62,7 +62,7 @@ export default defineConfig({
       },
       //文章展示页面的右侧的大纲目录
       outline: {
-        level: 'deep', // 显示2-6级标题
+        level: [1, 6], // 显示 h1 到 h6 的标题
         label: '当前页大纲目录' // 文字显示
       },
 

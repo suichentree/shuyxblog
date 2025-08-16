@@ -7,5 +7,5 @@ layout: page
 
 <script setup>
 //直接引入文章标签组件
-import ArticleTag from '/pages/components/Article/ArticleTag.vue'
+import ArticleTag from '/pages/components/ArticleTag/ArticleTag.vue'
 </script>

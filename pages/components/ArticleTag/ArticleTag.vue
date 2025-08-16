@@ -1,37 +1,46 @@
 <template>
   <div class="container">
-    <div class="category-content">
+    <div class="content">
       <div 
-        v-for="category in categories" 
-        :key="category.name" 
-        class="category-item"
-        :class="{ 'active': activeCategory === category.name }"
-        @click="selectCategory(category.name)"
+        v-for="tag in tags" 
+        :key="tag.name" 
+        class="item"
+        :class="{ 'active': activeTag === tag.name }"
+        @click="selectTag(tag.name)"
       >
         <a href="javascript:void(0)">
-          {{ category.name }}
-          <span class="category-count" :style="{ backgroundColor: getRandomBrightColor() }">
-            {{ category.count }}
+          {{ tag.name }}
+          <span class="count" :style="{ backgroundColor: getRandomBrightColor() }">
+            {{ tag.count }}
           </span>
         </a>
       </div>
     </div>
     <div>
-      <ArticleList :filter-category="activeCategory" />
+      <ArticleList :filter-tag="activeTag" />
     </div>
   </div>
 </template>
 <script setup>
 import { ref } from 'vue';
-import ArticleList from './ArticleList.vue';
+import ArticleList from '/pages/components/ArticleList/ArticleList.vue';
 import { data as rawData } from '/utils/statistics.data.js'
 const blogData = ref(rawData); // 使用ref包装原始数据
 
-const categories = ref(blogData.value.categories);
-const activeCategory = ref('all');
+const tags = ref(blogData.value.tags);
+// 新增：检查是否已存在"全部"标签，不存在时再添加
+if (!tags.value.find(cat => cat.name === '全部')) {
+  tags.value.unshift({
+    name: '全部',
+    count: blogData.value.articlesSumCount
+  });
+}
 
-function selectCategory(category) {
-  activeCategory.value = category === activeCategory.value ? 'all' : category;
+//默认选择全部分类
+const activeTag = ref('全部');
+// 点击分类时，将当前分类设置为 activeTag
+function selectTag(tag) {
+  activeTag.value = tag === activeTag.value ? '全部' : tag;
 }
 
 //随机获取一个颜色
@@ -58,9 +67,7 @@ function getRandomBrightColor() {
   return colorArray[randomIndex];
 }
 </script>
-
 <style scoped>
-
 .container{
   display: flex;
   flex-direction: column;
@@ -68,27 +75,28 @@ function getRandomBrightColor() {
   margin: auto;
 }
 
-.category-content{
+.content{
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin:20px;
   gap: 10px;
+  flex-wrap: wrap; /* 允许子元素换行 */
 }
 
-.category-item {
+.item {
   border: 1px solid #f0f0f0;
   padding: 8px;
   border-radius: 5px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
 }
-.category-item:hover {
+.item:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.category-count {
+.count {
   display: inline-block;
   width: 24px;
   line-height: 24px;

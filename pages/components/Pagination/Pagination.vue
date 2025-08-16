@@ -1,19 +1,15 @@
 <template>
   <div class="pagination-container">
     <div class="pagination">
-      <button
-        class="page-btn prev-btn"
-        :disabled="currentPage === 1"
-        @click="prevPage"
-      >
+      <button class="page-btn prev-btn"  :disabled="currentPage === 1"  @click="prevPage" >
         上一页
       </button>
       <span class="page-info">
-        第 {{ currentPage }} 页 / 共 {{ props.totalPages }} 页
+        第 {{ currentPage }} 页 / 共 {{ totalPages }} 页 （共 {{ props.total }} 篇）
       </span>
       <button
         class="page-btn next-btn"
-        :disabled="currentPage >= props.totalPages"
+        :disabled="currentPage >= totalPages"
         @click="nextPage"
       >
         下一页
@@ -24,7 +20,7 @@
           type="number"
           v-model.number="inputPage"
           min="1"
-          :max="props.totalPages"
+          :max="totalPages"
           @keydown.enter="jumpToPage"
         >
         <button class="jump-btn" @click="jumpToPage">确定</button>
@@ -33,14 +29,15 @@
   </div>
 </template>
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
+
 
 // 更新props定义，接收文章总数和每页大小
 const props = defineProps({
   currentPage: {
     type: Number,
   },
-  totalPages: {
+  total: {
     type: Number,
   },
   pageSize: {
@@ -50,6 +47,12 @@ const props = defineProps({
 
 // 向父组件发送事件
 const emit = defineEmits(['update:currentPage']);
+//计算总页数
+const totalPages = computed(() => {
+  if (!props.total || !props.pageSize) return 1;
+  return Math.ceil(props.total / props.pageSize);
+});
+
 // 输入框页码
 const inputPage = ref(props.currentPage);
 // 监听父组件的currentPage变化，同步到inputPage
@@ -69,7 +72,7 @@ const prevPage = () => {
 };
 // 下一页
 const nextPage = () => {
-  if (props.currentPage < props.totalPages) {
+  if (props.currentPage < totalPages.value) {
     emit('update:currentPage', props.currentPage + 1);
   }
 };
@@ -79,7 +82,7 @@ const jumpToPage = () => {
   let page = Number(inputPage.value);
   // 输入验证
   if (isNaN(page) || page < 1) page = 1;
-  if (page > props.totalPages) page = props.totalPages;
+  if (page > totalPages.value) page = totalPages.value;
   // 更新页码
   emit('update:currentPage', page);
 };
