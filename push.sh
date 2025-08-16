@@ -27,6 +27,16 @@ function check_and_add_remote {
     fi
 }
 
+# 新增：拉取最新代码函数
+function pull_latest {
+    echo "正在拉取远程仓库 origin 的最新代码..."
+    git pull origin main
+    if [ $? -ne 0 ]; then
+        echo "错误：拉取代码失败，可能存在冲突，请手动解决后重新运行脚本。"
+        exit 1
+    fi
+    echo "拉取最新代码成功"
+}
 
 # 定义commit方法
 function commit() {
@@ -46,50 +56,40 @@ function commit() {
 function push(){
     # 推送文件到远程仓库origin的main分支
     git push origin main
-    # $?可以获取git push 命令是否运行成功，成功返回0，否则非0。
     if [ $? -eq 0 ] 
     then
-        # 输出上传成功消息
-        echo "SUCCESS , git push success"
+        echo "SUCCESS , git push origin main 成功"
     else     
-        # 上传失败，重新执行上传命令
-        echo "ERROR , git push  fail"
-        # 延迟5秒
+        echo "ERROR , git push origin main 失败"
         sleep 5s
-        # 重新执行push方法
-        echo "Push Code to Remote Repository Again -------------------"
+        echo "重新推送 origin main 分支 -------------------"
         push
     fi
 
     # 推送文件到远程仓库github-origin的main分支
     git push github-origin main
-    # $?可以获取git push 命令是否运行成功，成功返回0，否则非0。
     if [ $? -eq 0 ] 
     then
-        # 输出上传成功消息
-        echo "SUCCESS , git push success"
+        echo "SUCCESS , git push github-origin main 成功"
     else     
-        # 上传失败，重新执行上传命令
-        echo "ERROR , git push fail"
-        # 延迟5秒
+        echo "ERROR , git push github-origin main 失败"
         sleep 5s
-        # 重新执行push方法
-        echo "Push Code to Remote Repository Again -------------------"
+        echo "重新推送 github-origin main 分支 -------------------"
         push
     fi
-
 }
 
-# 脚本从这里开始--------------
+# 脚本主流程，从这里开始--------------
 echo "start run push.sh -------------------"
 
-echo "check remote repository -------------------"
-
-# 检查并添加远程仓库
+echo "检查远程仓库 -------------------"
 check_and_add_remote "origin" "https://gitee.com/suichenTree/shuyxblog.git"
 check_and_add_remote "github-origin" "https://github.com/suichentree/shuyxblog.git"
+echo "远程仓库检查完成 -------------------"
 
-echo "check remote repository finish -------------------"
+# 新增：拉取最新代码（关键修改）
+echo "开始拉取最新代码 -------------------"
+pull_latest
 
 # 将所有改变的文件添加到本地暂存区
 git add -A
@@ -98,17 +98,14 @@ git add -A
 check_commit=`git status`
 if [[ $check_commit =~ "Changes to be committed:" ]] 
 then 
-    # 还有文件要提交
-    echo "YES,some file need commit."
-    # 执行提交方法
+    echo "存在待提交文件，开始提交..."
     commit
 else     
-    # 没有文件需要提交
-    echo "NO, no file need commit"
+    echo "无待提交文件"
 fi
 
 # 执行push方法
+echo "开始推送代码 -------------------"
 push
 
-# 脚本从这里结束--------------
-echo "push.sh run finish -------------------"
+echo "push.sh 运行完成 -------------------"
