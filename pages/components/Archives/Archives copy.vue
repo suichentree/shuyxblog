@@ -1,26 +1,60 @@
 <template>
   <div class="archives-container">
-    <!-- 时间线容器 -->
-    <div class="timeline">
-      <!-- 按年份分组遍历 -->
-      <div v-for="(yearGroup, year) in groupedArticles" :key="year" class="timeline-year">
-        <!-- 年份标题 -->
-        <h2 class="year-title">{{ year }}</h2>
-        <!-- 月份时间线项 -->
-        <div v-for="(monthGroup, month) in yearGroup" :key="month" class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <!-- 月份标题 -->
+    <!-- 左右分栏主容器 -->
+    <div class="main-content">
+      <!-- 左侧文章内容区 -->
+      <div class="articles-section">
+        <!-- 年份内容块 -->
+        <div 
+          v-for="year in sortedYears" 
+          :key="year" 
+          :id="'year-' + year" 
+          class="year-block"
+        >
+          <h2 class="year-title">
+            <span class="year-dot"></span> {{ year }}年（共{{ yearTotal[year] }}篇）
+          </h2>
+          
+          <!-- 月份分组 -->
+          <div 
+            v-for="(month, index) in sortedMonths(year).value" 
+            :key="index" 
+            class="month-section"
+          >
             <h3 class="month-title">{{ month }}月</h3>
+            
             <!-- 文章列表 -->
             <div class="article-list">
-              <div v-for="article in monthGroup" :key="article.url" class="article-item">
+              <div 
+                v-for="article in groupedArticles[year][month]" 
+                :key="article.url" 
+                class="article-item"
+              >
                 <a :href="article.url" class="article-link">
-                  {{ article.title }}
-                  <span class="article-date">{{ formatDate(article.date) }}</span>
+                  <span class="article-title">{{ article.title }}</span>
+                  <time class="article-date">{{ formatDate(article.date) }}</time>
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧时间轴 -->
+      <div class="timeline-section">
+        <div class="timeline-sticky">
+          <h3 class="timeline-title">文章时间轴</h3>
+          <div class="year-tags">
+            <button 
+              v-for="year in sortedYears" 
+              :key="year" 
+              :class="{ active: selectedYear === year }"
+              @click="handleYearClick(year)"
+              class="year-tag"
+            >
+              {{ year }}年
+              <span class="year-count">（{{ yearTotal[year] }}）</span>
+            </button>
           </div>
         </div>
       </div>
@@ -32,98 +66,135 @@
 import { ref, computed } from 'vue';
 import { data as rawData } from '/utils/statistics.data.js';
 
-// 获取已排序的文章数据（statistics.data.js已按日期降序排序）
+// 基础数据处理
 const blogData = ref(rawData);
-const articles = computed(() => blogData.value?.articles || []);
+const articles = computed(() => blogData.value.articles || []);
 
-// 按「年-月」分组文章
+// 安全文章数据（确保url存在）
+const safeArticles = computed(() => {
+  return articles.value.map(article => ({
+    ...article,
+    url: article.url || `/article/${encodeURIComponent(article.title)}` // 无url时生成默认链接
+  }));
+});
+
+// 时间分组（年-月）
 const groupedArticles = computed(() => {
   const groups = {};
-  articles.value.forEach(article => {
+  safeArticles.value.forEach(article => {
     const date = new Date(article.date);
+    if (isNaN(date.getTime())) return; // 跳过无效日期
+    
     const year = date.getFullYear();
-    const month = date.getMonth() + 1; // 月份从0开始，+1转为1-12
-    // 初始化年份分组
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     if (!groups[year]) groups[year] = {};
-    // 初始化月份分组
     if (!groups[year][month]) groups[year][month] = [];
-    // 添加文章到对应分组
     groups[year][month].push(article);
   });
   return groups;
 });
 
-// 格式化日期（仅保留月-日）
+console.log("groupedArticles.value", groupedArticles.value);
+
+// 年份倒序排序
+const sortedYears = computed(() => {
+  return Object.keys(groupedArticles.value)
+    .map(Number)
+    .filter(year => !isNaN(year))
+    .sort((a, b) => b - a);
+});
+
+console.log("sortedYears.value", sortedYears.value);
+
+// 月份倒序排序
+const sortedMonths = (year) => computed(() => {
+  const yearData = groupedArticles.value[year];
+  if (!yearData) return []; 
+  return Object.keys(yearData)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .map(m => String(m).padStart(2, '0'));
+});
+
+console.log("sortedMonths.value", sortedMonths.value);
+
+// 年份文章总数
+const yearTotal = computed(() => {
+  return Object.fromEntries(
+    sortedYears.value.map(year => [
+      year, 
+      Object.values(groupedArticles.value[year] || {}).flat().length
+    ])
+  );
+});
+
+// 交互状态管理
+const selectedYear = ref(null);
+
+// 处理年份点击（滚动定位）
+const handleYearClick = (year) => {
+  selectedYear.value = year;
+  const target = document.getElementById(`year-${year}`);
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+// 日期格式化
 const formatDate = (dateStr) => {
   const date = new Date(dateStr);
-  return `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 };
 </script>
 
 <style scoped>
 .archives-container {
-  display: flex;
-  flex-direction: column;
-  max-width: 70%;
+  margin: 10px auto;
   padding: 20px;
-  margin: auto;
+  width: 80%;
 }
 
-.timeline {
-  position: relative;
-  padding: 20px 0;
+.main-content {
+  display: flex;
+  gap: 32px;
 }
 
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 24px;
-  width: 2px;
-  height: 100%;
-  background: #e5e7eb;
-}
-
-.timeline-year {
+/* 左侧文章内容区 */
+.articles-section {
+  flex: 16; /* 占4/5宽度 */
   margin-bottom: 40px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.year-block {
+  padding: 20px;
 }
 
 .year-title {
   font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  margin-left: 20px;
-  margin-bottom: 20px;
+  color: #2c3e50;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.timeline-item {
-  position: relative;
-  margin-bottom: 24px;
-  padding-left: 60px;
-}
-
-.timeline-marker {
-  position: absolute;
-  top: 8px;
-  left: 16px;
-  width: 16px;
-  height: 16px;
+.year-dot {
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: #3eaf7c;
-  border: 2px solid #fff;
-}
-
-.timeline-content {
-  background: #fff;
-  padding: 16px 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
 }
 
 .month-title {
   font-size: 18px;
-  color: #333;
-  margin-bottom: 12px;
+  color: #34495e;
+  margin: 16px 0 12px;
+  padding-left: 12px;
+  border-left: 3px solid #3eaf7c;
 }
 
 .article-list {
@@ -133,25 +204,93 @@ const formatDate = (dateStr) => {
 }
 
 .article-item {
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.article-item:hover {
+  background: #eef0f2;
+  transform: translateX(4px);
 }
 
 .article-link {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #666;
+  color: #2c3e50;
   text-decoration: none;
-  transition: color 0.3s;
+  font-size: 15px;
 }
 
-.article-link:hover {
-  color: #3eaf7c;
+.article-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .article-date {
+  color: #7f8c8d;
+  font-size: 14px;
+  margin-left: 16px;
+  flex-shrink: 0;
+}
+
+/* 右侧时间轴 */
+.timeline-section {
+  flex: 8; /* 占1/5宽度 */
+  min-width: 200px;
+}
+
+.timeline-sticky {
+  position: sticky;
+  top: 40px; /* 滚动时距离顶部40px固定 */
+}
+
+.timeline-title {
+  font-size: 18px;
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+.year-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.year-tag {
+  width: 100%;
+  padding: 10px 12px;
+  background: #f8f9fa;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.year-tag:hover {
+  background: #eef0f2;
+}
+
+.year-tag.active {
+  background: #3eaf7c;
+  color: white;
+  font-weight: 600;
+}
+
+.year-count {
   font-size: 12px;
-  color: #888;
+  color: #7f8c8d;
+}
+
+.year-tag.active .year-count {
+  color: #ffffffcc;
 }
 </style>
