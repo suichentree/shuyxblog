@@ -75,23 +75,13 @@ const articles = computed(() => {
   if (blogData.value.articles) {
     // 转换文章数据
     let articleList =  blogData.value.articles.map(element => ({
-      url: element.url,               //文章url
-      title: element.title,           //文章标题
-      date: format_date(element.date),//日期
-      cover: random_cover_image(),    //封面图
-      categories: element.categories || [], //分类
-      tags: element.tags || []             //标签
+      url: element.url,                         //文章url 格式 '/article/1',
+      title: element.title,                     //文章标题 'xxxxxxxxx',
+      date: format_date(element.date),          //日期 '2025-10-15',
+      cover: random_cover_image(),              //封面图  '/public/cover4.png'
+      categories: element.categories || [],     //分类 ["项目"],
+      tags: element.tags || []                  //标签 ["项目","Vue3","前端"],
     }));
-
-    //模拟的文章数据展示
-    // {
-    //   url: '/article/1',
-    //   title: 'xxxxxxxxx',
-    //   date: '2025-10-15',
-    //   tags: ["项目","Vue3","前端"],
-    //   categories: ["项目"],
-    //   cover: '/public/cover4.png'
-    // }
 
     // 如果有过滤条件，则对文章数据进行过滤 (排除"全部")
     if (props.filterCategory && props.filterCategory != "全部") {
@@ -110,7 +100,6 @@ const articles = computed(() => {
       //每次重新过滤文章数据都将当前页设置为1
       currentPage.value = 1;
     }
-
     return articleList;
   }else{
     console.log('没有文章数据')
@@ -137,7 +126,11 @@ const total = computed(() => {
 
 //格式化日期
 function format_date(date_string){
-  return date_string.split('T')[0];;
+  if (date_string){
+    return date_string.split('T')[0];
+  }else{
+    return "暂无"
+  }
 }
 // 随机返回一个封面图片
 function random_cover_image(){
@@ -185,7 +178,9 @@ const navigateToArticle = (url) => {
 /* 卡片内容区域 - 使用flex实现左右布局 */
 .card-content {
   display: flex;
-  width: 100%;
+  flex-direction: row;
+  max-height: 200px; /* 限制卡片内容最大高度 */
+  overflow: hidden; /* 超出部分隐藏 */
 }
 
 /* 左侧文本区域 */
@@ -245,8 +240,6 @@ const navigateToArticle = (url) => {
 .article-image {
   flex: 8;
   display: flex;
-  align-items: center;
-  justify-content: center;
   margin: 5px;
 }
 

@@ -8,12 +8,10 @@
         :class="{ 'active': activeCategory === category.name }"
         @click="selectCategory(category.name)"
       >
-        <a href="javascript:void(0)">
-          {{ category.name }}
-          <span class="count" :style="{ backgroundColor: getRandomBrightColor() }">
-            {{ category.count }}
-          </span>
-        </a>
+        <span>{{ category.name }}</span>
+        <span class="count" :style="{ backgroundColor: category.color }">
+          {{ category.count }}
+        </span>
       </div>
     </div>
     <div>
@@ -25,14 +23,24 @@
 import { ref } from 'vue';
 import ArticleList from '/pages/components/ArticleList/ArticleList.vue';
 import { data as rawData } from '/utils/statistics.data.js'
+import { getRandomBrightColor } from '/utils/common.js'
+
 const blogData = ref(rawData); // 使用ref包装原始数据
 
-const categories = ref(blogData.value.categories);
+// 初始化时标签数据
+const categories = ref(blogData.value.categories.map(category => ({
+  ...category,
+  //生成颜色并存储到标签对象中
+  color: getRandomBrightColor()
+})));
+
 // 新增：检查是否已存在"全部"分类，不存在时再添加
-if (!categories.value.find(cat => cat.name === '全部')) {
+if (!categories.value.find(category => category.name === '全部')) {
   categories.value.unshift({
     name: '全部',
-    count: blogData.value.articlesSumCount
+    count: blogData.value.articlesSumCount,
+    // 为"全部"标签生成颜色
+    color: getRandomBrightColor()
   });
 }
 
@@ -43,29 +51,6 @@ function selectCategory(category) {
   activeCategory.value = category === activeCategory.value ? '全部' : category;
 }
 
-//随机获取一个颜色
-function getRandomBrightColor() {
-  // 预定义8种适合白色文字的柔和颜色
-  const colorArray = [
-    '#3498db', // 蓝色
-    '#2ecc71', // 绿色
-    '#9b59b6', // 紫色
-    '#e74c3c', // 红色
-    '#f39c12', // 橙色
-    '#1abc9c', // 青绿色
-    '#3eaf7c', // 深绿色
-    '#8e44ad', // 深紫色
-    '#499cef', // 深蓝色
-    '#dcba33', // 黄色
-    '#e67e22', // 棕色
-    '#16a085', // 深青色
-    '#2980b9', // 深蓝色
-    '#95a6b8', // 浅蓝色
-  ];
-  // 随机获取数组中的颜色
-  const randomIndex = Math.floor(Math.random() * colorArray.length);
-  return colorArray[randomIndex];
-}
 </script>
 <style scoped>
 .container{
@@ -78,33 +63,32 @@ function getRandomBrightColor() {
 .content{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   margin:20px;
-  gap: 10px;
+  gap: 5px;
   flex-wrap: wrap; /* 允许子元素换行 */
 }
 
 .item {
   border: 1px solid #f0f0f0;
-  padding: 8px;
+  padding: 5px;
   border-radius: 5px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  gap:5px
 }
 .item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .count {
-  display: inline-block;
-  width: 24px;
-  line-height: 24px;
-  text-align: center;
+  min-width: 20px;
+  padding: 0px 5px;
   color: white;
   border-radius: 4px;
-  margin-left: 4px;
-  font-size: 15px;
 }
 
 .active {

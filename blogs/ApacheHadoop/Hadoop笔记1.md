@@ -113,11 +113,11 @@ MapReduce框架内部提供了两大接口。
 - Map分散接口，由服务器对数据进行分布式处理。
 - Reduce聚合接口，将分布式的处理结果进行汇总统计。
 
-<font color="red">
+<span style="color: red;">
 注意：MapReduce提供了Map分散接口和Reduce聚合接口，给开发者使用。但是由于年代久远，MapReduce框架的代码，性能已经过时了。
 
 因此，现在主要使用Apache Hive框架来进行分布式计算。Apache Hive框架底层使用的就是MapReduce框架，所以我们只需对MapReduce框架简单了解即可。
-</font>
+</span>
 
 > MapReduce的运行机制
 
@@ -397,7 +397,7 @@ HDFS集群配置需要对如下文件的修改
 - core-site.xml 是hadoop的核心配置，需要指定hadoop的基本配置信息。
 - hdfs-site.xml 是hadoop中的HDFS组件的配置文件。
 
-<font color="red">先配置hadoop01容器，然后将hadoop01容器中的hadoop目录整体复制到其他hadoop容器中即可。下面是在hadoop01容器中进行HDFS集群配置</font>
+<span style="color: red;">先配置hadoop01容器，然后将hadoop01容器中的hadoop目录整体复制到其他hadoop容器中即可。下面是在hadoop01容器中进行HDFS集群配置</span>
 
 > ① 配置 workers 文件
 
@@ -680,7 +680,7 @@ scp -r /usr/local/hadoop hadoop03:/usr/local
 
 ### 5.启动HDFS集群
 
-<font color="red">注意：下面只需要在NameNode主角色节点的Hadoop容器（即hadoop01容器）终端中执行下面命令即可。</font>
+<span style="color: red;">注意：下面只需要在NameNode主角色节点的Hadoop容器（即hadoop01容器）终端中执行下面命令即可。</span>
 
 > 格式化HDFS集群
 

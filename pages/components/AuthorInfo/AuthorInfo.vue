@@ -53,7 +53,7 @@
           </div>
       </div>
     </div>
-    <!-- 标签云卡片 -->
+    <!-- 文章标签卡片 -->
     <div class="custom-card tag-card">
       <div class="card-header">
         <h3 class="card-title">文章标签</h3>
@@ -75,6 +75,7 @@
 import { ref } from 'vue';
 //引入统计数据
 import { data as rawData } from '/utils/statistics.data.js'
+import { getRandomBrightColor } from '/utils/common.js'
 const blogData = ref(rawData); // 使用ref包装原始数据
 
 // 模拟作者数据
@@ -100,29 +101,6 @@ const tags = ref([
 tags.value = blogData.value.tags;
 
 
-//随机获取一个颜色
-function getRandomBrightColor() {
-  // 预定义8种适合白色文字的柔和颜色
-  const colorArray = [
-    '#3498db', // 蓝色
-    '#2ecc71', // 绿色
-    '#9b59b6', // 紫色
-    '#e74c3c', // 红色
-    '#f39c12', // 橙色
-    '#1abc9c', // 青绿色
-    '#3eaf7c', // 深绿色
-    '#8e44ad', // 深紫色
-    '#499cef', // 深蓝色
-    '#dcba33', // 黄色
-    '#e67e22', // 棕色
-    '#16a085', // 深青色
-    '#2980b9', // 深蓝色
-    '#95a6b8', // 浅蓝色
-  ];
-  // 随机获取数组中的颜色
-  const randomIndex = Math.floor(Math.random() * colorArray.length);
-  return colorArray[randomIndex];
-}
 </script>
 
 <style scoped>
@@ -209,7 +187,7 @@ function getRandomBrightColor() {
 .tag-cloud {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
 }
 /* 文章标签项样式 */
 .tag-item {
@@ -224,6 +202,6 @@ function getRandomBrightColor() {
 .tag-link {
   color: white;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 12px;
 }
 </style>

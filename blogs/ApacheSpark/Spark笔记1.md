@@ -1,7 +1,6 @@
 ---
 title: Spark笔记1
 date: 2024-07-16
-lastUpdated: 2024-07-16
 sidebar: 'auto'
 categories: 
  - 大数据
@@ -180,7 +179,7 @@ RDD 是 Spark 提供的一种基础数据结构，它具有以下特性和优势
 4. 惰性计算：RDD 支持惰性计算（lazy evaluation），只有在需要计算结果时才会真正执行计算操作，这种延迟计算的机制有助于优化整体的执行流程和性能。
 5. 可操作性：RDD 提供了多种操作（transformations 和 actions），可以对数据进行转换（如 map、filter、reduce 等）和获取结果（如 collect、count 等），支持复杂的数据处理任务。
 
-<span style="color:red">简而言之，RDD相当于java中的一个集合。RDD这个集合底层使用了特殊的数据结构，从而实现了各种特性。并且RDD这个集合也封装了一些方法，用来处理RDD中的数据。</span>
+<span style="color: red;">简而言之，RDD相当于java中的一个集合。RDD这个集合底层使用了特殊的数据结构，从而实现了各种特性。并且RDD这个集合也封装了一些方法，用来处理RDD中的数据。</span>
 
 > RDD 支持两类操作：
 1. Transformations（转换操作）：转换操作会从一个 RDD 创建一个新的 RDD，常见的转换操作有 map、filter、flatMap、reduceByKey 等。这些操作不会立即计算出结果，而是定义一个计算流程。

@@ -20,7 +20,7 @@ tags:
 
 Spark SQL 是 Apache Spark 中的一个模块，主要针对结构化数据处理。它提供了用于处理结构化数据的高级抽象和工具，使得开发人员可以使用 SQL 或类似 SQL 的语言（如DataFrame API 和 Dataset API）来查询和分析数据。  
 
-<font color="red">Spark SQL本质上是对RDD的封装。RDD，DataFrame，Dataset都是Spark平台下的分布式弹性数据集，为处理超大型数据提供便利。</font>
+<span style="color: red;">Spark SQL本质上是对RDD的封装。RDD，DataFrame，Dataset都是Spark平台下的分布式弹性数据集，为处理超大型数据提供便利。</span>
 
 > Spark SQL的主要功能和特性如下
 1. SQL接口: 允许用户通过标准的 SQL 查询语言来查询数据。
@@ -183,7 +183,7 @@ public class SparkSQL01 {
 
 注意：需要先把udf函数注册到spark中，才能在SQL中使用该函数。
 
-<font color="red">注意：udf函数会对表格中的每行数据都进行单独处理。即每一行数据都使用一次udf函数。但是不会将每行数据进行聚合处理</font>
+<span style="color: red;">注意：udf函数会对表格中的每行数据都进行单独处理。即每一行数据都使用一次udf函数。但是不会将每行数据进行聚合处理</span>
 
 案例代码1如下。查询所有name的值，并给name值加上前缀。
 ```java
@@ -252,7 +252,7 @@ public class SparkSQL01 {
 
 ### 自定义udaf函数
 
-<font color="red">udaf函数相比udf函数会对表格中的每行数据进行聚合处理。即对所有行的数据进行处理，从而产生一个结果。</font>
+<span style="color: red;">udaf函数相比udf函数会对表格中的每行数据进行聚合处理。即对所有行的数据进行处理，从而产生一个结果。</span>
 
 Spark 3.x 版本推荐使用新建类，并继承 Aggregator类的方式来自定义udaf函数。
 
@@ -320,7 +320,7 @@ public class SparkSQL01 {
 {"id": "12145","name": "xiaosa","age": 23}
 ```
 
-<font color="red">注意：这个文件中的每一行内容符合json格式，但是组合在一起不符合json文件的格式。因此这个json文件会报错。本质原因是SparkSQL是对RDD的封装，而RDD读取文件的方式是Hadoop的方式，即按行读取。</font>
+<span style="color: red;">注意：这个文件中的每一行内容符合json格式，但是组合在一起不符合json文件的格式。因此这个json文件会报错。本质原因是SparkSQL是对RDD的封装，而RDD读取文件的方式是Hadoop的方式，即按行读取。</span>
 
 ② 编写代码
 ```java
@@ -485,7 +485,7 @@ Apache Spark Streaming中的DStream（Discretized Stream，离散化流）是一
 7. 停止操作：
     - stop()：停止接收新数据，并停止处理现有数据。
 
-<font color="red">注意：这些方法看起来是处理整个DStream流，但是每个DStream流的内部是由许多RDD批次组成的，因此这些方法实际上是处理到每个RDD的。</font>
+<span style="color: red;">注意：这些方法看起来是处理整个DStream流，但是每个DStream流的内部是由许多RDD批次组成的，因此这些方法实际上是处理到每个RDD的。</span>
 
 ### Spark Streaming的使用
 
