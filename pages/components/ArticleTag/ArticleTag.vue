@@ -55,7 +55,7 @@ function selectTag(tag) {
 .container{
   display: flex;
   flex-direction: column;
-  max-width: 70%;
+  width: 60%;
   margin: auto;
 }
 

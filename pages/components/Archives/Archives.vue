@@ -33,7 +33,7 @@
           </h2>
           <!-- 月份分组 -->
           <div v-for="(month, index) in sortedMonths(year).value" :key="index">
-            <h3 class="month-title">{{ month }}月</h3>
+            <h3 class="month-title">{{ month }}月 </h3>
             <!-- 文章列表 -->
             <div class="article-list">
               <div 
