@@ -4,8 +4,8 @@ import { defineConfig } from 'vitepress'
 // 网站元数据配置
 export default defineConfig({
     lang: 'zh-CN',
-    title: "VitePress1111111111111", //网站名称 类似<title>网址名称</title>
-    description: "我的vitpress文档教程22222222222222",  //网站描述 类似<meta name="description" content="网站描述">
+    title: "Shuyx Blog", //网站名称 类似<title>网址名称</title>
+    description: "Shuyx Blog 是一个基于 VuePress 的静态博客网站。",  //网站描述 类似<meta name="description" content="网站描述">
     //favicon图标
     head: [
       ['link',{ rel: 'icon', href: '/favicon.ico'}],
@@ -35,7 +35,7 @@ export default defineConfig({
       // 头部导航栏的logo,会默认读取public目录下的logo.png文件。
       logo: '/logo.png',
       // 头部导航栏的标题
-      siteTitle: 'shuyx blog',
+      siteTitle: 'Shuyx Blog',
       // 头部导航栏的社交链接部分
       socialLinks: [
         { icon: 'github', link: 'https://github.com/vuejs/vitepress' },

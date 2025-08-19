@@ -3,38 +3,38 @@
     <!-- 时间轴区域 -->
     <div class="timeline-content">
       <div class="timeline-sticky">
-        <h3 style="font-size: 18px;color: #2c3e50;padding: 10px;">文章时间轴</h3>
-        <div class="year-tags">
-          <button 
-            v-for="year in sortedYears" 
-            :key="year" 
-            :class="{ active: selectedYear === year }"
-            @click="handleYearClick(year)"
-            class="year-tag"
-          >
-            <span>{{ year }}年</span>
-            <span>{{ yearTotal[year] }} 篇 </span>
-          </button>
-        </div>
+          <h3 class="timeline-title">文章时间轴</h3>
+          <div class="time-tags">
+            <div v-for="year in sortedYears" :key="year">
+              <a 
+                :href="`#year-${year}`"
+                 class="time-tag"
+                :class="{ active: selectedYear === year }"
+                @click="handleYearClick(year)"
+              >
+                <span>{{ year }}年</span>
+                <span>{{ yearTotal[year] }} 篇 </span>
+              </a>
+            </div>
+          </div>
       </div>
     </div>
     <!-- 文章区域-->
-    <div class="main-content">
+    <div class="article-content">
         <!-- 年份内容块 -->
         <div 
           v-for="year in sortedYears" 
           :key="year" 
           :id="'year-' + year" 
-          style="padding: 10px;"
-        >
-          <h2 class="year-title">
-            <span class="year-dot"></span> 
-            <span style="font-size: 24px;">{{ year }}年（共{{ yearTotal[year] }}篇）</span>
-          </h2>
-          <!-- 月份分组 -->
+        > 
+          <!--年份标题-->
+          <div class="year-title">
+            📅 <span>{{ year }}年（共{{ yearTotal[year] }}篇）</span>
+          </div>
+          <!-- 月份 -->
           <div v-for="(month, index) in sortedMonths(year)" :key="index">
             <h3 class="month-title">{{ month }}月 </h3>
-            <!-- 文章列表 -->
+            <!-- 文章 -->
             <div class="article-list">
               <div 
                 v-for="article in groupedArticles[year][month]" 
@@ -109,22 +109,9 @@ const sortedYears = computed(() => {
     .filter(year => !isNaN(year))
     .sort((a, b) => b - a);
 });
-
 console.log("sortedYears.value", sortedYears.value);
 
-// 传入年份，获取该年份中所有月份（降序）的数组
-function sortedMonths(year){
-  const yearData = groupedArticles.value[year];
-  if (!yearData) return []; 
-  return Object.keys(yearData)
-    .map(Number)
-    .sort((a, b) => b - a)
-    .map(m => String(m).padStart(2, '0'));
-}
-
-console.log("sortedMonths(2025)", sortedMonths(2025));
-
-// 年份文章总数
+// 计算每个年份的文章总数,返回一个对象
 const yearTotal = computed(() => {
   return Object.fromEntries(
     sortedYears.value.map(year => [
@@ -136,21 +123,29 @@ const yearTotal = computed(() => {
 
 console.log("yearTotal.value", yearTotal.value);
 
+// 方法。根据年份获取该年份中所有月份（降序）的数组
+function sortedMonths(year){
+  const yearData = groupedArticles.value[year];
+  if (!yearData) return []; 
+  return Object.keys(yearData)
+    .map(Number)
+    .sort((a, b) => b - a)
+    .map(m => String(m).padStart(2, '0'));
+}
+
+console.log("sortedMonths(2025)", sortedMonths(2025));
+
 // 交互状态管理
 const selectedYear = ref(null);
 
-// 处理年份点击（滚动定位）
+// 年份点击方法
 const handleYearClick = (year) => {
   selectedYear.value = year;
-  const target = document.getElementById(`year-${year}`);
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
 };
 
 // 日期格式化
 const formatDate = (dateStr) => {
-  const date = new Date(dateStr);
+  let date = new Date(dateStr);
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 };
 </script>
@@ -160,7 +155,7 @@ const formatDate = (dateStr) => {
   margin: 10px auto;
   display: flex;
   flex-direction: row;
-  width: 80%;
+  width: 70%;
   gap: 20px;
 }
 
@@ -170,122 +165,63 @@ const formatDate = (dateStr) => {
   position: relative; /* 为时间线定位 */
 }
 
-/* 粘性定位容器（关键修改区域） */
-.timeline-sticky {
+.timeline-sticky{
+  padding: 10px;
+  /* sticky定位实现滚动时保持位置 */
   position: sticky;
   top: 50%;
   transform: translateY(-50%);
-  padding: 20px 10px 20px 30px; /* 左侧内边距增大，为时间线预留空间 */
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* 增强阴影 */
-  max-height: 90vh;
-  overflow-y: auto;
+  background-color: var(--vp-c-bg-soft);
+  border-radius: 10px;
 }
 
-/* 贯穿时间线（新增） */
-.timeline-sticky::before {
-  content: '';
-  position: absolute;
-  top: 20px;
-  left: 12px; /* 固定在左侧12px位置 */
-  width: 2px;
-  height: calc(100% - 40px); /* 上下留20px边距 */
-  background: #e5e7eb; /* 浅灰色轴线 */
-  border-radius: 1px;
+/* 时间轴标题 */
+.timeline-title {
+  font-weight: 800;
+  padding: 10px;
+  text-align: center;
 }
 
-/* 年份按钮样式（关键修改） */
-.year-tag {
-  padding: 12px 16px;
-  background: #ffffff; /* 白色背景 */
-  border: 1px solid #f3f4f6; /* 浅边框 */
-  border-radius: 8px;
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  transition: all 0.3s;
-  position: relative; /* 为节点标记定位 */
-}
-
-/* 年份节点标记（新增） */
-.year-tag::after {
-  content: '';
-  position: absolute;
-  left: -24px; /* 与时间线位置对齐 */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #3eaf7c; /* 主题色节点 */
-  border: 2px solid #f0f8f4; /* 浅色边框 */
-  box-shadow: 0 2px 4px rgba(62, 175, 124, 0.2); /* 轻微阴影 */
-  transition: all 0.3s;
-}
-
-/* 悬停状态 */
-.year-tag:hover {
-  background: #f8fafc; /* 浅灰色悬停 */
-  transform: translateX(4px);
-  border-color: #e5e7eb;
-}
-
-/* 激活状态 */
-.year-tag.active {
-  background: linear-gradient(135deg, #3eaf7c 0%, #42c98d 100%); /* 渐变背景 */
-  color: white;
-  font-weight: 600;
-  border-color: transparent; /* 隐藏边框 */
-}
-
-/* 激活时节点标记增大 */
-.year-tag.active::after {
-  width: 12px;
-  height: 12px;
-  border-width: 3px;
-}
-
-.year-tags {
+/* 年份容器 */
+.time-tags {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.year-tag {
+/* 年份按钮 */
+.time-tag {
   padding: 10px;
-  background: #f8f9fa;
-  border-radius: 6px;
-  text-align: left;
+  border: 2px solid var(--vp-c-default-soft);
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   transition: all 0.3s;
 }
 
-.year-tag:hover {
-  background: #eef0f2;
-  transform: translateX(4px);
+/* 年份按钮-悬停状态 */
+.time-tag:hover {
+  transform: translateX(5px);
+}
+/* 年份按钮-激活状态 */
+.time-tag.active {
+  background: #3eaf7c;
+  color: #f0f0f0;
 }
 
-.year-tag.active {
-  background: #3eaf7c;
-  color: white;
-  font-weight: 600;
-}
 
 /* 右侧文章内容区 */
-.main-content {
+.article-content {
   flex: 16;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: var(--vp-c-bg-soft);
+  border-radius: 10px;
+  padding: 10px;
 }
 
+/* 年份标题 */
 .year-title {
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  padding: 10px;
+  font-size: 25px;
 }
 
 .year-dot {
@@ -298,35 +234,32 @@ const formatDate = (dateStr) => {
 
 .month-title {
   font-size: 18px;
-  margin: 10px;
-  padding-left: 12px;
+  padding: 10px;
   border-left: 3px solid #3eaf7c;
 }
 
 .article-list {
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .article-item {
   padding: 10px;
-  background: #f8f9fa;
-  border-radius: 6px;
+  border: 2px solid var(--vp-c-default-soft);
+  border-radius: 5px;
   transition: all 0.3s;
 }
-
 .article-item:hover {
-  background: #eef0f2;
-  transform: translateX(4px);
+  background-color: #3eaf7c;
 }
 
 .article-link {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #2c3e50;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 

@@ -8,6 +8,11 @@
   -webkit-text-fill-color: transparent;
 }
 
+.VPHero{
+  background-image: url('/bg.svg');
+  background-size: cover;
+}
+
 
 /* 给首页的 VPFeatures 页卡添加悬浮效果 */
 .VPFeatures .items .item {
