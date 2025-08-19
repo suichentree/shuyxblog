@@ -15,11 +15,11 @@
         >
         <!-- 博客信息 -->
         <div>
-          <h3 style="font-size: 18px;font-weight: 600;margin-bottom: 10px;">{{ author.name }}</h3>
-          <p  style="font-size: 14px;margin-bottom: 10px;">{{ author.bio }}</p>
+          <h3 style="font-weight: 600;margin-bottom: 10px;">{{ author.name }}</h3>
+          <p  style="margin-bottom: 10px;">{{ author.bio }}</p>
           <!-- 博客统计数据 -->
           <!-- flex容器，子元素居中 -->
-          <div style="display: flex;justify-content: center;gap: 20px;font-size: 14px;">
+          <div style="display: flex;justify-content: center;gap: 20px;">
             <!-- flex容器，子元素垂直居中 -->
             <div style="display: flex;flex-direction: column;">
               <span>{{ author.articlesSumCount }}</span>
@@ -54,7 +54,7 @@
       </div>
     </div>
     <!-- 文章标签卡片 -->
-    <div class="custom-card tag-card">
+    <div class="custom-card">
       <div class="card-header">
         <h3 class="card-title">文章标签</h3>
       </div>
@@ -65,7 +65,7 @@
             class="tag-item" 
             :style="{ backgroundColor: getRandomBrightColor() }"
           >
-            <a :href="'/tag/' + tag.slug" class="tag-link">{{ tag.name }}</a>
+            <a :href="'/tag/' + tag.slug">{{ tag.name }}</a>
           </span>
         </div>
       </div>
@@ -107,28 +107,24 @@ tags.value = blogData.value.tags;
 
 /* 基础卡片样式  */
 .custom-card {
-  border-radius: 12px;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
   transition: all 0.3s ease;
+  background-color: var(--vp-c-bg-soft);
   margin-bottom: 20px;
 }
 .custom-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* 卡片头部样式 */
 .card-header {
-  padding: 15px 20px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 20px;
+  border-bottom: 2px solid var(--vp-c-default-soft);
 }
 /* 卡片头部标题样式 */
 .card-title {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
-  margin: 0;
 }
 
 /* 卡片内容样式 */
@@ -137,7 +133,7 @@ tags.value = blogData.value.tags;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 10px 20px;
+  padding: 10px;
 }
 
 /* 作者头像样式 */
@@ -146,13 +142,13 @@ tags.value = blogData.value.tags;
   height: auto;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #f5f5f5;
+  border: 2px solid #f5f5f5;
 }
 
 /* 文章分类列表项区域的样式 */
 .category-item {
-  width: 90%;
-  padding: 8px 0px;
+  width: 100%;
+  padding: 10px 0px;
   border-bottom: 1px dashed #ccc;
 }
 
@@ -160,9 +156,6 @@ tags.value = blogData.value.tags;
 .category-link {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  color: #666;
-  text-decoration: none;
   font-size: 14px;
   transition: color 0.3s;
 }
@@ -176,11 +169,9 @@ tags.value = blogData.value.tags;
   width: 24px;
   height: 24px;
   line-height: 24px;
-  text-align: center;
   color: white;
-  border-radius: 4px;
-  margin-left: 4px;
-  font-size: 12px;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 /* 文章标签卡片样式 */
@@ -191,17 +182,13 @@ tags.value = blogData.value.tags;
 }
 /* 文章标签项样式 */
 .tag-item {
-  padding: 4px 10px;
-  border-radius: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
   transition: all 0.3s;
+  color: white;
+  font-size: 14px;
 }
 .tag-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.tag-link {
-  color: white;
-  text-decoration: none;
-  font-size: 12px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <!-- 时间轴区域 -->
+    <!-- 时间轴 -->
     <div class="timeline-content">
       <div class="timeline-sticky">
         <h3 style="font-size: 18px;color: #2c3e50;padding: 10px;">文章时间轴</h3>
@@ -32,7 +32,7 @@
             <span style="font-size: 24px;">{{ year }}年（共{{ yearTotal[year] }}篇）</span>
           </h2>
           <!-- 月份分组 -->
-          <div v-for="(month, index) in sortedMonths(year)" :key="index">
+          <div v-for="(month, index) in sortedMonths(year).value" :key="index">
             <h3 class="month-title">{{ month }}月 </h3>
             <!-- 文章列表 -->
             <div class="article-list">
@@ -56,53 +56,30 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { data as rawData } from '/utils/statistics.data.js';
-//处理统计数据
+
+// 基础数据处理
 const blogData = ref(rawData);
-const articles = computed(() => blogData.value.articles);
+const articles = computed(() => blogData.value.articles || []);
 
-console.log("articles.value", articles.value);
-
-//将文章数据按照年份和月份进行分组处理并返回为一个对象
-//对象格式示例
-//{
-//  2025: {
-//    01: [article1, article2],
-//    02: [article3]
-//  },
-//  2024: {
-//    01: [article4]
-//  }
-//  。。。。。。。。。。。
-//}
+// 时间分组（年-月）
 const groupedArticles = computed(() => {
-    const groups = {};
-
-    //遍历文章数据
-    articles.value.forEach(article => {
-      //读取文章的date数据
-      let date = new Date(article.date);
-      if (isNaN(date.getTime())){
-        //跳过无效date数据
-        return;
-      }else{
-        //获取年份
-        let year = date.getFullYear();
-        //获取月份
-        let month = String(date.getMonth() + 1).padStart(2, '0');
-        //如果groups对象中对应年份不存在，则创建
-        if (!groups[year]) groups[year] = {};
-        //如果groups对象中对应月份不存在，则创建
-        if (!groups[year][month]) groups[year][month] = [];
-        //将文章添加到对应月份数组中
-        groups[year][month].push(article);
-      }
-    });
-    return groups;
+  const groups = {};
+  articles.value.forEach(article => {
+    const date = new Date(article.date);
+    if (isNaN(date.getTime())) return; // 跳过无效日期
+    
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    if (!groups[year]) groups[year] = {};
+    if (!groups[year][month]) groups[year][month] = [];
+    groups[year][month].push(article);
+  });
+  return groups;
 });
 
 console.log("groupedArticles.value", groupedArticles.value);
 
-// 按groupedArticles数据中提取年份，并按降序排序成一个年份数组
+// 年份倒序排序
 const sortedYears = computed(() => {
   return Object.keys(groupedArticles.value)
     .map(Number)
@@ -112,17 +89,17 @@ const sortedYears = computed(() => {
 
 console.log("sortedYears.value", sortedYears.value);
 
-// 传入年份，获取该年份中所有月份（降序）的数组
-function sortedMonths(year){
+// 月份倒序排序
+const sortedMonths = (year) => computed(() => {
   const yearData = groupedArticles.value[year];
   if (!yearData) return []; 
   return Object.keys(yearData)
     .map(Number)
     .sort((a, b) => b - a)
     .map(m => String(m).padStart(2, '0'));
-}
+});
 
-console.log("sortedMonths(2025)", sortedMonths(2025));
+console.log("sortedMonths.value", sortedMonths.value);
 
 // 年份文章总数
 const yearTotal = computed(() => {
@@ -133,8 +110,6 @@ const yearTotal = computed(() => {
     ])
   );
 });
-
-console.log("yearTotal.value", yearTotal.value);
 
 // 交互状态管理
 const selectedYear = ref(null);
@@ -166,84 +141,19 @@ const formatDate = (dateStr) => {
 
 /* 左侧时间轴 */
 .timeline-content {
-  flex: 8;
-  position: relative; /* 为时间线定位 */
+  flex: 8; 
 }
 
-/* 粘性定位容器（关键修改区域） */
 .timeline-sticky {
   position: sticky;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 20px 10px 20px 30px; /* 左侧内边距增大，为时间线预留空间 */
+  top: 50%; /* 关键修改：相对于视口顶部50% */
+  transform: translateY(-50%); /* 关键修改：自身高度的50%向上偏移，实现垂直居中 */
+  padding: 10px;
   background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* 增强阴影 */
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-/* 贯穿时间线（新增） */
-.timeline-sticky::before {
-  content: '';
-  position: absolute;
-  top: 20px;
-  left: 12px; /* 固定在左侧12px位置 */
-  width: 2px;
-  height: calc(100% - 40px); /* 上下留20px边距 */
-  background: #e5e7eb; /* 浅灰色轴线 */
-  border-radius: 1px;
-}
-
-/* 年份按钮样式（关键修改） */
-.year-tag {
-  padding: 12px 16px;
-  background: #ffffff; /* 白色背景 */
-  border: 1px solid #f3f4f6; /* 浅边框 */
   border-radius: 8px;
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  transition: all 0.3s;
-  position: relative; /* 为节点标记定位 */
-}
-
-/* 年份节点标记（新增） */
-.year-tag::after {
-  content: '';
-  position: absolute;
-  left: -24px; /* 与时间线位置对齐 */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #3eaf7c; /* 主题色节点 */
-  border: 2px solid #f0f8f4; /* 浅色边框 */
-  box-shadow: 0 2px 4px rgba(62, 175, 124, 0.2); /* 轻微阴影 */
-  transition: all 0.3s;
-}
-
-/* 悬停状态 */
-.year-tag:hover {
-  background: #f8fafc; /* 浅灰色悬停 */
-  transform: translateX(4px);
-  border-color: #e5e7eb;
-}
-
-/* 激活状态 */
-.year-tag.active {
-  background: linear-gradient(135deg, #3eaf7c 0%, #42c98d 100%); /* 渐变背景 */
-  color: white;
-  font-weight: 600;
-  border-color: transparent; /* 隐藏边框 */
-}
-
-/* 激活时节点标记增大 */
-.year-tag.active::after {
-  width: 12px;
-  height: 12px;
-  border-width: 3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-height: 90vh; /* 可选：限制最大高度为视口高度的90%，防止内容过长溢出 */
+  overflow-y: auto; /* 可选：内容过长时显示滚动条 */
 }
 
 .year-tags {

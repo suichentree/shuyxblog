@@ -55,7 +55,7 @@ function selectTag(tag) {
 .container{
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 70%;
   margin: auto;
 }
 
@@ -63,13 +63,13 @@ function selectTag(tag) {
   display: flex;
   flex-direction: row;
   justify-content: start;
-  margin:20px;
+  padding:20px;
   gap: 5px;
   flex-wrap: wrap; /* 允许子元素换行 */
 }
 
 .item {
-  border: 1px solid #f0f0f0;
+  border: 2px solid var(--vp-c-default-soft);
   padding: 5px;
   border-radius: 5px;
   transition: all 0.3s ease;
@@ -84,12 +84,10 @@ function selectTag(tag) {
 }
 
 .count {
-  min-width: 20px;
-  padding: 0px 5px;
-  color: white;
-  border-radius: 4px;
+  min-width: 24px;
+  border-radius: 5px;
+  color: #f0f0f0;
 }
-
 .active {
   background-color: #3eaf7c;
   color: #f0f0f0;

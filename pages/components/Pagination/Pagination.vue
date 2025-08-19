@@ -1,30 +1,27 @@
 <template>
   <div class="pagination-container">
     <div class="pagination">
-      <button class="page-btn prev-btn"  :disabled="currentPage === 1"  @click="prevPage" >
+      <button class="page-btn" :disabled="currentPage === 1"  @click="prevPage" >
         上一页
       </button>
-      <span class="page-info">
-        第 {{ currentPage }} 页 / 共 {{ totalPages }} 页 （共 {{ props.total }} 篇）
-      </span>
+      <span>第 {{ currentPage }} 页 / 共 {{ totalPages }} 页 （共 {{ props.total }} 篇）</span>
       <button
-        class="page-btn next-btn"
+        class="page-btn"
         :disabled="currentPage >= totalPages"
         @click="nextPage"
       >
         下一页
       </button>
-      <div class="jump-container">
-        <span>跳至</span>
-        <input
-          type="number"
-          v-model.number="inputPage"
-          min="1"
-          :max="totalPages"
-          @keydown.enter="jumpToPage"
-        >
-        <button class="jump-btn" @click="jumpToPage">确定</button>
-      </div>
+      <span>跳至</span>
+      <input
+        class="jump-input"
+        type="number"
+        v-model.number="inputPage"
+        min="1"
+        :max="totalPages"
+        @keydown.enter="jumpToPage"
+      >
+      <button class="jump-btn" @click="jumpToPage">确定</button>
     </div>
   </div>
 </template>
@@ -97,68 +94,41 @@ const jumpToPage = () => {
 .pagination {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 10px 20px;
-  background: #fff;
+  gap: 10px;
+  padding: 10px;
+  background-color: var(--vp-c-bg-soft);
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
+/* 分页按钮 */
 .page-btn {
-  padding: 8px 16px;
-  background-color: #f0f0f0;
-  border: none;
+  padding: 10px;
   border-radius: 6px;
-  color: #666;
-  cursor: pointer;
   transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
-
 .page-btn:hover:not(:disabled) {
   background-color: #42b983;
-  color: white;
 }
-
 .page-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  background-color: #cccccc;
 }
 
-.page-info {
-  color: #333;
-  font-size: 14px;
-  padding: 0 5px;
-}
-
-.jump-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: 10px;
-}
-
-.jump-container input {
-  width: 60px;
-  padding: 6px 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+/* 跳转输入框 */
+.jump-input {
+  padding: 5px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
   text-align: center;
 }
 
+/* 跳转按钮 */
 .jump-btn {
-  padding: 6px 12px;
+  padding: 6px;
   background-color: #42b983;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  border-radius: 5px;
 }
-
 .jump-btn:hover {
   background-color: #359469;
 }

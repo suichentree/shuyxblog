@@ -166,13 +166,13 @@ const navigateToArticle = (url) => {
 }
 /* 自定义卡片样式 */
 .custom-card {
-  border: 2px solid #f0f0f0;
+  border: 2px solid var(--vp-c-default-soft);
   border-radius: 15px;
   transition: all 0.3s ease;
+  background-color: var(--vp-c-bg-soft);
 }
 .custom-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* 卡片内容区域 - 使用flex实现左右布局 */
@@ -180,7 +180,6 @@ const navigateToArticle = (url) => {
   display: flex;
   flex-direction: row;
   max-height: 200px; /* 限制卡片内容最大高度 */
-  overflow: hidden; /* 超出部分隐藏 */
 }
 
 /* 左侧文本区域 */
@@ -188,16 +187,15 @@ const navigateToArticle = (url) => {
   flex: 16;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   margin: auto;
   padding: 20px;
 }
 
 /* 文章标题 */
 .article-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
-  color: #333;
   text-align: left;
 }
 
@@ -205,7 +203,6 @@ const navigateToArticle = (url) => {
 .article-meta {
   display: flex;
   gap: 15px;
-  color: #888;
   font-size: 13px;
 }
 /* 元数据项 */
@@ -216,24 +213,20 @@ const navigateToArticle = (url) => {
 }
 /* 元数据图标 */
 .meta-icon {
-  font-size: 14px;
+  font-size: 18px;
 }
 
 /* 标签区域 */
 .article-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 5px;
 }
 
 /* 标签项 */
 .tag-item {
-  background-color: #f6f6f7;
-  color: #666;
-  padding: 4px 10px;
-  border-radius: 10px;
+  padding: 5px;
   font-size: 12px;
-  transition: all 0.3s;
 }
 
 /* 右侧图片区域 */
