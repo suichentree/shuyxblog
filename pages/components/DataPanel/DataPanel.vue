@@ -1,5 +1,5 @@
 <template>
-    <div class="panel">
+  <div class="panel">
         <div class="container">
             <section class="grid">
                 <span class="text">
@@ -49,6 +49,10 @@ onMounted(() => {
     max-width: 1152px;
     margin-left: auto;
     margin-right: auto;
+    transition: transform 0.3s;
+}
+.container:hover {
+    transform: translateY(-5px);
 }
 
 .grid {
@@ -62,15 +66,6 @@ onMounted(() => {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     display: grid;
 }
-
-.container {
-    transition: transform 0.3s;
-}
-
-.container:hover {
-    transform: translateY(-5px);
-}
-
 
 .text {
     font-size: 0.875rem;

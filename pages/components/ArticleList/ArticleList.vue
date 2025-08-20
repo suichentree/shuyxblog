@@ -142,6 +142,7 @@ function random_cover_image(){
     '/public/cover4.png',
     '/public/cover5.jpeg',
     '/public/cover6.jpeg',
+    '/public/cover7.png',
   ];
   let randomIndex = Math.floor(Math.random() * cover_image_urls.length);
   return cover_image_urls[randomIndex];

@@ -9,22 +9,24 @@ layout: home
 navbar: true
 
 # hero区域的配置
-hero:
-  # 文本
-  name: "A11111"
-  text: "A22222"
-  tagline: My great project tagline
-  # 图片
-  image:
-    src: /logo.png
-    alt: logo.png
-  actions:
-    - theme: brand
-      text: Markdown Examples
-      link: /pages/views/ArticleCategory.md
-    - theme: alt
-      text: API Examples
-      link: /pages/views/ArticleTag.md
+#hero:
+#  # 文本
+#  name: "A11111"
+#  text: "A22222"
+#  tagline: My great project tagline
+#  # 图片
+#  image:
+#    src: /logo.png
+#    alt: logo.png
+#  # actions按钮
+#  actions:
+#    - theme: brand
+#      text: Markdown Examples
+#      link: /pages/views/ArticleCategory.md
+#    - theme: alt
+#      text: API Examples
+#      link: /pages/views/ArticleTag.md
+      
 # features区域的配置
 features:
   - icon: 📝
