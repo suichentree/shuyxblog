@@ -82,7 +82,7 @@ const blogData = ref(rawData); // 使用ref包装原始数据
 const author = ref({
   name: 'suichentree',
   avatar: '/public/logo.png',
-  bio: '全栈开发工程师，热爱分享技术心得和学习经验',
+  bio: '全栈开发工程师，热爱记录技术心得和学习经验',
   articlesSumCount: blogData.value.articlesSumCount,
   categoriesSumCount: blogData.value.categoriesSumCount,
   tagsSumCount: blogData.value.tagsSumCount,

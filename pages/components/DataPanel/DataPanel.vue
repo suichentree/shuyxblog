@@ -1,5 +1,5 @@
 <template>
-  <div class="panel">
+    <div class="panel">
         <div class="container">
             <section class="grid">
                 <span class="text">
@@ -32,7 +32,6 @@ onMounted(() => {
   const randomIndex = Math.floor(Math.random() * gifUrls.length);
   currentGif.value = gifUrls[randomIndex];
 });
-
 
 </script>
 <style scoped>
