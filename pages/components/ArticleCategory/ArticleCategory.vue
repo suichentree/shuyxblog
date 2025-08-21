@@ -67,6 +67,7 @@ function selectCategory(category) {
   flex-direction: column;
   width: 70%;
   margin: auto;
+  max-width: 1152px;
 }
 
 .content{

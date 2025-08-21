@@ -36,7 +36,7 @@ onMounted(() => {
     typeSpeed: 150,         // 打字速度（毫秒/字符）
     backSpeed: 150,          // 回退速度（毫秒/字符）
     loop: true,             // 是否循环播放
-    startDelay: 3000,        // 开始前的延迟时间（毫秒）
+    startDelay: 1500,        // 开始前的延迟时间（毫秒）
     backDelay: 5000,       // 每段文字打完后的暂停时间（毫秒）
     // 可添加更多配置（如显示HTML、光标样式等）
     showCursor: true, // 显示光标
@@ -71,20 +71,6 @@ onUnmounted(() => {
 .title {
   font-size: 2rem;
   font-weight: 500;
-  /* 新增：应用渐显+滑动动画 */
-  animation: fadeInUp 0.8s ease-out forwards;
-  opacity: 0; /* 初始透明 */
-}
-/* 定义关键帧动画 */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(-20px); /* 初始向上偏移20px */
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0); /* 最终回到原位置 */
-  }
 }
 
 /* 打字机样式 */

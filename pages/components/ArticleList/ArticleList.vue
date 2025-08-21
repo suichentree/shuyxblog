@@ -56,6 +56,9 @@ import { ref,computed} from 'vue';
 import Pagination from '/pages/components/Pagination/Pagination.vue';
 //引入统计数据
 import { data as rawData } from '/utils/statistics.data.js'
+// 引入js
+import { random_cover_image } from '/utils/common.js'
+
 const blogData = ref(rawData); // 使用ref包装原始数据
 console.log(blogData.value)
 
@@ -132,21 +135,7 @@ function format_date(date_string){
     return "暂无"
   }
 }
-// 随机返回一个封面图片
-function random_cover_image(){
-  // 文章封面cover数组
-  let cover_image_urls = [
-    '/public/cover1.jpg',
-    '/public/cover2.jpg',
-    '/public/cover3.jpg',
-    '/public/cover4.png',
-    '/public/cover5.jpeg',
-    '/public/cover6.jpeg',
-    '/public/cover7.png',
-  ];
-  let randomIndex = Math.floor(Math.random() * cover_image_urls.length);
-  return cover_image_urls[randomIndex];
-}
+
 
 const navigateToArticle = (url) => {
   if (url) {
