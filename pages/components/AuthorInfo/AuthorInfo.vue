@@ -44,12 +44,12 @@
       </div>
       <div class="card-content">
           <div v-for="category in categories" class="category-item">
-            <a :href="'/category/'" class="category-link">
+            <div class="category-link" @click="toCategory(category.name)">
               {{ category.name }}
               <span class="category-count" :style="{ backgroundColor: getRandomBrightColor() }">
                 {{ category.count }}
               </span>
-            </a>
+            </div>
           </div>
       </div>
     </div>
@@ -60,19 +60,25 @@
       </div>
       <div class="card-content">
         <div class="tag-cloud">
-          <span 
-            v-for="tag in tags" 
-            class="tag-item" 
+          <div
+            v-for="tag in tags"
+            class="tag-item"
             :style="{ backgroundColor: getRandomBrightColor() }"
           >
-            <a :href="'/tag/' + tag.slug">{{ tag.name }}</a>
-          </span>
+            <div @click="toTag(tag.name)">{{ tag.name }}</div>
+          </div>
         </div>
       </div>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue';
+//引入vitepress内置的路由，数据等
+import { useRouter,useRoute,useData } from 'vitepress'
+const router = useRouter();
+const route = useRoute();
+const data = useData();
+
 //引入统计数据
 import { data as rawData } from '/utils/statistics.data.js'
 import { getRandomBrightColor } from '/utils/common.js'
@@ -100,11 +106,16 @@ const tags = ref([
 ]);
 tags.value = blogData.value.tags;
 
-
+//点击跳转到文章分类页面
+function toCategory(categoryName){
+  router.go('/pages/views/ArticleCategory?name='+categoryName)
+}
+//点击跳转到文章标签页面
+function toTag(tagName){
+  router.go('/pages/views/ArticleTag?name='+tagName)
+}
 </script>
-
 <style scoped>
-
 /* 基础卡片样式  */
 .custom-card {
   border-radius: 10px;

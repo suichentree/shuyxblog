@@ -20,12 +20,15 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref} from 'vue';
+//引入文章列表组件
 import ArticleList from '/pages/components/ArticleList/ArticleList.vue';
+//引入js
 import { data as rawData } from '/utils/statistics.data.js'
 import { getRandomBrightColor } from '/utils/common.js'
 
-const blogData = ref(rawData); // 使用ref包装原始数据
+// 使用ref包装原始数据
+const blogData = ref(rawData);
 
 // 初始化时标签数据
 const categories = ref(blogData.value.categories.map(category => ({
@@ -33,8 +36,7 @@ const categories = ref(blogData.value.categories.map(category => ({
   //生成颜色并存储到标签对象中
   color: getRandomBrightColor()
 })));
-
-// 新增：检查是否已存在"全部"分类，不存在时再添加
+// 检查是否已存在"全部"分类，不存在时再添加
 if (!categories.value.find(category => category.name === '全部')) {
   categories.value.unshift({
     name: '全部',
@@ -44,8 +46,15 @@ if (!categories.value.find(category => category.name === '全部')) {
   });
 }
 
-//默认选择全部分类
-const activeCategory = ref('全部');
+//获取页面链接末尾的name参数值，否则设置为全部
+const queryName = ref('')
+queryName.value = new URLSearchParams(window.location.search).get('name') // 获取 name 参数值
+if (queryName.value === null){
+  queryName.value = '全部'
+}
+//当前选中的分类，默认为页面链接name参数值
+const activeCategory = ref(queryName.value);
+
 // 点击分类时，将当前分类设置为 activeCategory
 function selectCategory(category) {
   activeCategory.value = category === activeCategory.value ? '全部' : category;

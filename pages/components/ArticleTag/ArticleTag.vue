@@ -43,8 +43,15 @@ if (!tags.value.find(cat => cat.name === '全部')) {
   });
 }
 
-//默认选择全部分类
-const activeTag = ref('全部');
+//获取页面链接末尾的name参数值，否则设置为全部
+const queryName = ref('')
+queryName.value = new URLSearchParams(window.location.search).get('name') // 获取 name 参数值
+if (queryName.value === null){
+  queryName.value = '全部'
+}
+//当前选中的分类，默认为页面链接name参数值
+const activeTag = ref(queryName.value);
+
 // 点击分类时，将当前分类设置为 activeTag
 function selectTag(tag) {
   activeTag.value = tag === activeTag.value ? '全部' : tag;
@@ -70,7 +77,7 @@ function selectTag(tag) {
 
 .item {
   border: 2px solid var(--vp-c-default-soft);
-  padding: 5px;
+  padding: 2px;
   border-radius: 5px;
   transition: all 0.3s ease;
   display: flex;

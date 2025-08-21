@@ -1,6 +1,7 @@
 
 <template>
-  <span class="fdate">📝 文章创建时间： {{ format_date(frontmatter.date) }} 🔥 文章最后更新时间：{{ format_date(frontmatter.lastUpdated) }}</span>
+  <div class="fdate">📝 文章创建时间： {{ format_date(frontmatter.date) }} </div>
+  <div class="fdate">🔥 文章最后更新时间：{{ format_date(frontmatter.lastUpdated) }}</div>
 </template>
 <script setup>
 import { useData } from 'vitepress'

@@ -19,7 +19,7 @@ onMounted(() => {
   const config = {
     cellSize: 16,   // 每个单元格的大小
     cellGap: 2,     // 单元格间距
-    title: '贡献统计日历图',
+    title: '贡献日历图',
     margin: { top: 30, right: 20, bottom: 20, left: 30 },
     colors: ['#ebedf0', '#c6e48b', '#7bc96f', '#239a3b', '#196127'],
     weekLabels: ['日', '一', '二', '三', '四', '五', '六']
@@ -91,9 +91,9 @@ onMounted(() => {
     .attr('height', config.cellSize)
     .attr('fill', d => colorScale(d.count))
     .append('title')
-    .text(d => `${d.date}: ${d.count} 次贡献`);
+    .text(d => `${d.date} - ${d.count} 次贡献`);
 
-  // 关键修复3：生成完整的12个月标签并精确定位
+  // 生成完整的12个月标签并精确定位
   const months = [];
   for (let i = 0; i < 12; i++) {
     const month = new Date(startDate.getFullYear(), startDate.getMonth() + i, 1);
