@@ -153,8 +153,7 @@ onMounted(() => {
 
 <style scoped>
 .panel {
-    margin-top: 12px;
-    margin-bottom: 8px;
+    margin: 20px;
 }
 
 .container {

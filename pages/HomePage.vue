@@ -1,17 +1,17 @@
-<!-- HomePage页面用于在首页展示各个不同组件页面。例如文章列表，文章信息，以及其他组件页面。 -->
+<!-- HomePage页面用于在首页展示文章列表和文章信息组件页面。 -->
 <template>
     <div class="panel">
       <div class="container">
-          <el-row :gutter="20">
-              <el-col :span="18">
-                <!--文章列表-->
+          <div class="row">
+              <div class="col-18">
+                <!--文章列表部分-->
                 <ArticleList/>
-              </el-col>
-              <el-col :span="6">
-                <!-- 文章信息 -->
+              </div>
+              <div class="col-6">
+                <!-- 文章信息部分 -->
                 <AuthorInfo/>
-              </el-col>
-          </el-row>
+              </div>
+          </div>
       </div>
     </div>
 </template>
@@ -22,10 +22,8 @@ import AuthorInfo from '/pages/components/AuthorInfo/AuthorInfo.vue';
 </script>
 <style scoped>
 .panel {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px;
 }
-
 .container {
     border-radius: 8px;
     width: 100%;
@@ -33,5 +31,28 @@ import AuthorInfo from '/pages/components/AuthorInfo/AuthorInfo.vue';
     max-width: 1152px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Flex布局实现行排列 */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.col-18 {
+    flex: 0 0 calc(75% - 10px);
+}
+.col-6 {
+    flex: 0 0 calc(25% - 10px);
+}
+
+/* 移动端适配（屏幕≤768px） */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column; /* 改为垂直排列 */
+    }
+    .col-18, .col-6 {
+        flex: 0 0 100%; /* 宽度占满 */
+    }
 }
 </style>

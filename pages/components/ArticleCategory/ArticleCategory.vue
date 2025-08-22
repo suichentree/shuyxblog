@@ -74,7 +74,7 @@ function selectCategory(category) {
   display: flex;
   flex-direction: row;
   justify-content: start;
-  padding:20px;
+  padding:10px;
   gap: 5px;
   flex-wrap: wrap; /* 允许子元素换行 */
 }
@@ -102,5 +102,19 @@ function selectCategory(category) {
 .active {
   background-color: #3eaf7c;
   color: #f0f0f0;
+}
+
+/* 移动端适配（屏幕≤768px） */
+@media (max-width: 768px) {
+  .container {
+    width: 95%; /* 移动端宽度更宽 */
+  }
+  .item {
+    font-size: 12px; /* 缩小字体 */
+  }
+  .count {
+    min-width: 20px; /* 缩小计数区域 */
+    padding: 5px;
+  }
 }
 </style>

@@ -152,7 +152,7 @@ const navigateToArticle = (url) => {
 .article-items {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
 }
 /* 自定义卡片样式 */
 .custom-card {
@@ -165,7 +165,7 @@ const navigateToArticle = (url) => {
   transform: translateY(-5px);
 }
 
-/* 卡片内容区域 - 使用flex实现左右布局 */
+/* 卡片内容区域 - 默认左右布局（PC端） 使用flex实现左右布局 */
 .card-content {
   display: flex;
   flex-direction: row;
@@ -234,4 +234,18 @@ const navigateToArticle = (url) => {
   border-radius: 8px;
 }
 
+
+/* 移动端适配（屏幕≤768px） */
+@media (max-width: 768px) {
+  .article-image {
+    display: none; /* 隐藏图片区域 */
+  }
+  .card-content {
+    max-height: unset; /* 移除最大高度限制，避免文本截断 */
+  }
+  .article-text {
+    flex: 1; /* 文本区域占满宽度 */
+    padding: 15px; /* 缩小内边距 */
+  }
+}
 </style>

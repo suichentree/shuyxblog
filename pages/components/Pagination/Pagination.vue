@@ -1,33 +1,34 @@
 <template>
-  <div class="pagination-container">
-    <div class="pagination">
-      <button class="page-btn" :disabled="currentPage === 1"  @click="prevPage" >
-        上一页
-      </button>
-      <span>第 {{ currentPage }} 页 / 共 {{ totalPages }} 页 （共 {{ props.total }} 篇）</span>
-      <button
-        class="page-btn"
-        :disabled="currentPage >= totalPages"
-        @click="nextPage"
-      >
-        下一页
-      </button>
-      <span>跳至</span>
-      <input
-        class="jump-input"
-        type="number"
-        v-model.number="inputPage"
-        min="1"
-        :max="totalPages"
-        @keydown.enter="jumpToPage"
-      >
-      <button class="jump-btn" @click="jumpToPage">确定</button>
-    </div>
+  <div class="panel">
+      <div class="container">
+          <div class="pagination">
+            <button class="page-btn" :disabled="currentPage === 1"  @click="prevPage" >
+              上一页
+            </button>
+            <span>第 {{ currentPage }} 页 / 共 {{ totalPages }} 页 （共 {{ props.total }} 篇）</span>
+            <button
+              class="page-btn"
+              :disabled="currentPage >= totalPages"
+              @click="nextPage"
+            >
+              下一页
+            </button>
+            <span>跳至</span>
+            <input
+              class="jump-input"
+              type="number"
+              v-model.number="inputPage"
+              min="1"
+              :max="totalPages"
+              @keydown.enter="jumpToPage"
+            >
+            <button class="jump-btn" @click="jumpToPage">确定</button>
+          </div>
+      </div>
   </div>
 </template>
 <script setup>
 import { ref, watch, computed } from 'vue';
-
 
 // 更新props定义，接收文章总数和每页大小
 const props = defineProps({
@@ -85,19 +86,30 @@ const jumpToPage = () => {
 };
 </script>
 <style scoped>
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
+.panel {
+    margin: 20px;
+}
+
+.container {
+    background-color: var(--vp-c-bg-soft);
+    border-radius: 10px;
+    width: 100%;
+    min-height: 32px;
+    max-width: 1152px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: transform 0.3s;
+}
+.container:hover {
+    transform: translateY(-5px);
 }
 
 .pagination {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  padding: 10px;
-  background-color: var(--vp-c-bg-soft);
-  border-radius: 8px;
+  padding:10px;
 }
 
 /* 分页按钮 */
