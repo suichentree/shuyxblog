@@ -26,6 +26,7 @@
           v-for="year in sortedYears" 
           :key="year" 
           :id="'year-' + year" 
+          class="year-content"
         > 
           <!--年份标题-->
           <div class="year-title">
@@ -213,8 +214,13 @@ const formatDate = (dateStr) => {
 /* 右侧文章内容区 */
 .article-content {
   flex: 16;
+}
+
+/* 年份内容 */
+.year-content{
   background-color: var(--vp-c-bg-soft);
   border-radius: 10px;
+  margin-bottom: 20px;
   padding: 10px;
 }
 
@@ -262,5 +268,46 @@ const formatDate = (dateStr) => {
   font-size: 14px;
 }
 
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    flex-direction: column;
+    gap: 15px;
+  }
 
+  .timeline-content,
+  .article-content {
+    flex: none;
+    width: 100%;
+  }
+
+  .timeline-sticky {
+    position: static;
+    transform: none;
+    margin-bottom: 20px;
+  }
+
+  .year-title {
+    font-size: 20px;
+    padding: 8px 5px;
+  }
+
+  .month-title {
+    font-size: 16px;
+    padding: 8px 5px;
+  }
+
+  .article-link {
+    font-size: 13px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .time-tag {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+}
 </style>

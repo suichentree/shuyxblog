@@ -4,7 +4,24 @@
     <h1 class="page-title">常用导航合集</h1>
     <!-- 左右分栏容器 -->
     <div class="main-wrapper">
-      <!-- 左侧主内容 -->
+      <!-- 左侧目录侧边栏 -->
+      <div class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-title">导航目录</div>
+          <nav class="toc">
+            <!-- 动态生成目录项（锚点链接） -->
+            <a
+              v-for="(category, index) in NavData"
+              :key="index"
+              :href="'#category-' + index"
+              class="toc-item"
+            >
+              {{ category.title }}
+            </a>
+          </nav>
+        </div>
+      </div>
+      <!-- 右侧主内容 -->
       <div class="main-content">
         <!-- 遍历所有分类 -->
         <div
@@ -51,24 +68,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 右侧目录侧边栏 -->
-      <div class="sidebar">
-        <div class="sidebar-sticky">
-          <div class="sidebar-title">导航目录</div>
-          <nav class="toc">
-            <!-- 动态生成目录项（锚点链接） -->
-            <a
-              v-for="(category, index) in NavData"
-              :key="index"
-              :href="'#category-' + index"
-              class="toc-item"
-            >
-              {{ category.title }}
-            </a>
-          </nav>
-        </div>
-      </div>
   </div>
     </div>
 </template>
@@ -107,7 +106,7 @@ const handleIconError = (e) => {
   gap: 20px;
 }
 
-/* 左部分容器 */
+/* 右部分容器 */
 .main-content {
   flex: 20;  /* 左侧主内容占满剩余空间 */
 }
@@ -184,7 +183,7 @@ const handleIconError = (e) => {
 }
 
 
-/* 右边侧边栏部分的样式 */
+/* 左边侧边栏部分的样式 */
 .sidebar {
   flex: 4;
 }
@@ -209,4 +208,74 @@ const handleIconError = (e) => {
   padding: 5px;
 }
 
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 10px;
+  }
+
+  .page-title {
+    font-size: 24px;
+    margin: 15px 0;
+  }
+
+  .main-wrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .sidebar {
+    flex: none;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .sidebar-sticky {
+    position: static;
+    top: auto;
+    max-height: none;
+  }
+
+  .toc {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .toc-item {
+    padding: 5px 10px;
+    border: 1px solid var(--vp-c-default-soft);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .site-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+
+  .site-name {
+    font-size: 16px;
+  }
+
+  .site-desc {
+    font-size: 12px;
+  }
+
+  .card-content {
+    gap: 8px;
+  }
+
+  .site-icon-wrap {
+    min-width: 30px;
+  }
+
+  .site-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
 </style>

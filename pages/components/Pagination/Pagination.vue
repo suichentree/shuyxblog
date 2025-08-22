@@ -145,4 +145,12 @@ const jumpToPage = () => {
   background-color: #359469;
 }
 
+
+/* 移动端适配（屏幕≤768px） */
+@media (max-width: 768px) {
+  .panel {
+    margin: 10px;
+  }
+}
+
 </style>

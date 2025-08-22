@@ -71,7 +71,7 @@ function selectTag(tag) {
   display: flex;
   flex-direction: row;
   justify-content: start;
-  padding:20px;
+  padding:10px;
   gap: 5px;
   flex-wrap: wrap; /* 允许子元素换行 */
 }
@@ -101,4 +101,11 @@ function selectTag(tag) {
   color: #f0f0f0;
 }
 
+
+/* 移动端适配（屏幕≤768px） */
+@media (max-width: 768px) {
+  .container {
+    width: 95%; /* 移动端宽度更宽 */
+  }
+}
 </style>

@@ -109,12 +109,5 @@ function selectCategory(category) {
   .container {
     width: 95%; /* 移动端宽度更宽 */
   }
-  .item {
-    font-size: 12px; /* 缩小字体 */
-  }
-  .count {
-    min-width: 20px; /* 缩小计数区域 */
-    padding: 5px;
-  }
 }
 </style>
