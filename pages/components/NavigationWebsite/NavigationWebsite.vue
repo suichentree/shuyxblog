@@ -73,7 +73,7 @@
 </template>
 
 <script setup>
-import { NavData } from './navigation_data.js'; // 导入导航数据
+import { NavData } from './navigation_data.js'; // 获取导航网址数据
 
 // 处理图片加载失败事件
 const handleIconError = (e) => {

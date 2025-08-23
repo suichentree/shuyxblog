@@ -27,7 +27,6 @@ export const NavData = [
         link: 'https://tool.lu'
       },
       {
-        icon: '/icons/json-cn.ico',
         title: 'Json 中文网',
         desc: 'JSON 在线解析及格式化验证',
         link: 'https://www.json.cn'
@@ -35,10 +34,54 @@ export const NavData = [
     ]
   },
   {
+    title: '收藏的博客网址',
+    items: [
+      {
+        icon: 'https://axolo.github.io/logo.svg',
+        title: '方跃明的博客',
+        desc: '方跃明的个人博客',
+        link: 'https://axolo.github.io/'
+      },
+      {
+        title: '無名小栈',
+        desc: '無名小栈',
+        link: 'https://blog.imsyy.top/'
+      },
+      {
+        icon: 'https://vitepress.yiov.top/logo.png',
+        title: 'VitePress 快速上手中文教程',
+        desc: 'VitePress 快速上手中文教程',
+        link: 'https://vitepress.yiov.top/'
+      },
+      {
+        icon: '	https://huangmingfu.github.io/my-blog/logo.jpg',
+        title: 'a无名的博客',
+        desc: 'a无名的博客',
+        link: 'https://huangmingfu.github.io/my-blog/'
+      },
+      {
+        title: 'xyx404的博客',
+        desc: 'xyx404的个人博客',
+        link: 'https://xyx404.github.io/'
+      },
+      {
+        title: '安知鱼的博客',
+        desc: '安知鱼的个人博客',
+        link: 'https://blog.anheyu.com/'
+      },
+      {
+        icon: 'https://blog.nighttea.space/images/C.png',
+        title: '开茶会的树洞的博客',
+        desc: '开茶会的树洞的个人博客',
+        link: 'https://blog.nighttea.space/'
+      },
+      
+    ]
+  },
+  {
     title: 'AI 导航',
     items: [
       {
-        icon: '/icons/chatgpt.png',
         title: 'ChatGPT（最强）',
         link: 'https://chat.openai.com/chat'
       },
@@ -48,7 +91,6 @@ export const NavData = [
         link: 'https://www.notion.so'
       },
       {
-        icon: 'https://www.midjourney.com/apple-touch-icon.png',
         title: 'Midjourney（绘画）',
         link: 'https://www.midjourney.com'
       },
@@ -150,13 +192,11 @@ export const NavData = [
     title: 'CSS 相关',
     items: [
       {
-        icon: 'https://sass-lang.com/assets/img/logos/logo-b6e1ef6e.svg',
         title: 'Sass',
         desc: '一个成熟，稳定，功能强大的专业级 CSS 扩展语言',
         link: 'https://sass-lang.com'
       },
       {
-        icon: 'https://www.tailwindcss.cn/apple-touch-icon.png',
         title: 'TailwindCSS 中文网',
         desc: '一个功能类优先的 CSS 框架',
         link: 'https://www.tailwindcss.cn'
@@ -196,7 +236,6 @@ export const NavData = [
     title: 'NodeJS 相关',
     items: [
       {
-        icon: 'http://www.w3.org/2000/svg',
         title: 'Node.Js中文网',
         desc: 'Node.js 是一个免费的、开源的、跨平台的 JavaScript 运行时环境，允许开发人员在浏览器之外编写命令行工具和服务器端脚本.',
         link: 'https://nodejs.p2hp.com/'
@@ -208,7 +247,6 @@ export const NavData = [
         link: 'https://expressjs.com'
       },
       {
-        icon: '/icons/koa.svg',
         title: 'Koa',
         desc: '基于 Node.js 平台的下一代 web 开发框架',
         link: 'https://koajs.com'
@@ -329,13 +367,11 @@ export const NavData = [
     title: '前端参考学习资料',
     items: [
       {
-        icon: 'https://developer.mozilla.org/apple-touch-icon.6803c6f0.png',
         title: 'MDN | Web 开发者指南',
         desc: 'Mozilla 的开发者平台，提供了大量关于 HTML、CSS 和 JavaScript 的详细文档以及广泛的 Web API 参考资料',
         link: 'https://developer.mozilla.org/zh-CN'
       },
       {
-        icon: 'https://static.runoob.com/images/favicon.ico',
         title: '菜鸟教程',
         desc: '学的不仅是技术，更是梦想！',
         link: 'https://www.runoob.com'

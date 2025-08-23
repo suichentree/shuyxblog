@@ -87,11 +87,12 @@ const jumpToPage = () => {
 </script>
 <style scoped>
 .panel {
-    margin: 20px;
+  margin: 10px 0px;
 }
 
 .container {
     background-color: var(--vp-c-bg-soft);
+    border: 2px solid var(--vp-c-default-soft);
     border-radius: 10px;
     width: 100%;
     min-height: 32px;
@@ -106,10 +107,11 @@ const jumpToPage = () => {
 
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding:10px;
+  padding:5px;
 }
 
 /* 分页按钮 */
@@ -148,8 +150,8 @@ const jumpToPage = () => {
 
 /* 移动端适配（屏幕≤768px） */
 @media (max-width: 768px) {
-  .panel {
-    margin: 10px;
+  .pagination {
+    
   }
 }
 
