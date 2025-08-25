@@ -23,8 +23,7 @@ D：删除 | DELETE请求
 
 因此RESTful风格就是使用同一个 URL ，通过约定不同的 HTTP 方法来实施不同的业务功能。下图为例：
 
-![20210106150646.png](blog_img/20210106150646.png)
-
+![20210106150646.png](../blog_img/20210106150646.png)
 
 ### springboot中编写RESTful风格接口：
 

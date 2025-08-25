@@ -327,8 +327,8 @@ server {
 ```
 
 `/api`配置会将所有指向/api路径下的请求都转发到某个服务器上8099端口对应的服务上，在浏览器上显示请求路径本身不会发生变化
-
-<span style="color: red;">即http://localhost:8080/api/getUser的请求会被转发到http://xxx.xxx.xxx:8099/api/getUser接口上。</span>
+ 
+<span style="color: red;">即 ```http://localhost:8080/api/getUser``` 的请求会被转发到 ```http://xxx.xxx.xxx:8099/api/getUser``` 接口上。</span>
 
 
 若把`/api` 改为 `/api/`。则转发后的请求路径只会保留/api之后的部分，即/api/getUser的请求会被转发到8099服务的/getUser接口上。

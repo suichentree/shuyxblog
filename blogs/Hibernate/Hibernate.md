@@ -77,9 +77,7 @@ public class User{
 	private Integer id;
 	private String name;
 	private Integer age;
-	
 	public User(){}
-	
 	~
 }
 
@@ -104,7 +102,6 @@ User.hbm.xml
      <property name="age" type="java.lang.Integer" column="age"></property>  
   </class>  
 </hibernate-mapping>
-
 ```
 
 <h3>⑥：test</h3>
@@ -246,8 +243,8 @@ public class hibernate_test {
  
 在Hibernate的配置文件 hibernate.cfg.xml 中：
 ```xml
- <!-- 指定程序运行时，是否在数据库中自动生成数据表 -->
-  <property name="hbm2ddl.auto">update</property>
+<!-- 指定程序运行时，是否在数据库中自动生成数据表 -->
+<property name="hbm2ddl.auto">update</property>
 ```
 
 **name属性：有4种取值。create , update, create-drop, validate。**
@@ -317,20 +314,20 @@ hibernate-release-5.2.12.Final\lib\optional\c3p0
 
 hibernate.cfg.xml
 ```xml
-        <!-- 配置C3P0数据库连接池
-        	hibernate.c3p0.max_size:  最大连接数 
-        	hibernate.c3p0.min_size： 最小连接数 
-        	c3p0.acquire_increment：  当连接池里面的连接快用完的时候，C3P0同一时刻内可以同时获取的新的连接数的数量
-        	c3p0.idle_test_period： 每隔2秒检查连接池里的连接对象是否超时，若超时，会有专门的线程每隔一段时间销毁超时的连接对象.
-        	c3p0.timeout:  连接数多长时间没有使用后，被销毁
-        	c3p0.max_statements: 缓存的Statement的最大数量
-         -->
-       <property name="hibernate.c3p0.max_size">10</property>
-       <property name="hibernate.c3p0.min_size">5</property>
-       <property name="c3p0.acquire_increment">2</property>
-       <property name="c3p0.idle_test_period">2000</property>
-       <property name="c3p0.timeout">2000</property>
-       <property name="c3p0.max_statements">10</property>
+<!-- 配置C3P0数据库连接池
+    hibernate.c3p0.max_size:  最大连接数 
+    hibernate.c3p0.min_size： 最小连接数 
+    c3p0.acquire_increment：  当连接池里面的连接快用完的时候，C3P0同一时刻内可以同时获取的新的连接数的数量
+    c3p0.idle_test_period： 每隔2秒检查连接池里的连接对象是否超时，若超时，会有专门的线程每隔一段时间销毁超时的连接对象.
+    c3p0.timeout:  连接数多长时间没有使用后，被销毁
+    c3p0.max_statements: 缓存的Statement的最大数量
+ -->
+<property name="hibernate.c3p0.max_size">10</property>
+<property name="hibernate.c3p0.min_size">5</property>
+<property name="c3p0.acquire_increment">2</property>
+<property name="c3p0.idle_test_period">2000</property>
+<property name="c3p0.timeout">2000</property>
+<property name="c3p0.max_statements">10</property>
 ```
 
 ### 2.配置批量操作（CRUD）的属性（主要适用于Oracle数据库）：
@@ -338,14 +335,14 @@ hibernate.cfg.xml
 hibernate.cfg.xml
 ```xml
 <!-- 
-   			这两个属性主要适用于Oracle数据库， Mysql数据库不支持fetch_size特性
-   			hibernate.jdbc.fetch_size:  该属性 设定jdbc的Statement 读取数据的时候每次从数据库取出的记录条数。
-   			例如：当一次性查询10000条数据时，一条一条的查询，内存消耗小，但速度慢。
-   			而100条100条的查询，速度快，但内存消耗大。因此取合适的值100。
-   			hibernate.jdbc.batch_size： 对数据库进行批量删除，更新，插入时的每个批次的数量大小。
-   		 -->
-   		<property name="hibernate.jdbc.fetch_size">100</property>
-   		<property name="hibernate.jdbc.batch_size">50</property>
+    这两个属性主要适用于Oracle数据库， Mysql数据库不支持fetch_size特性
+    hibernate.jdbc.fetch_size:  该属性 设定jdbc的Statement 读取数据的时候每次从数据库取出的记录条数。
+    例如：当一次性查询10000条数据时，一条一条的查询，内存消耗小，但速度慢。
+    而100条100条的查询，速度快，但内存消耗大。因此取合适的值100。
+    hibernate.jdbc.batch_size： 对数据库进行批量删除，更新，插入时的每个批次的数量大小。
+ -->
+<property name="hibernate.jdbc.fetch_size">100</property>
+<property name="hibernate.jdbc.batch_size">50</property>
 ```
 
 
@@ -842,10 +839,9 @@ delete from ord where oid=?
 > 事实上，Hibernate的内置集合类封装了JDK中的集合类，这使得Hibernate能够对缓存中的集合对象进行脏检查，按照集合对象的状态来同步更新数据库。
 > ③：在定义集合属性时，通常把它初始化为集合实现类的一个实例，这样可以提高程序的健壮性，避免应用程序访问取值为null的集合的方法。
 
-```
+```java
 例如：private Set<Order> orders = new HashSet<Order>();
 ```
-
 
 <h2>demo:</h2>
 
@@ -863,7 +859,6 @@ public class Order {
     private Customer customer;
 //省去get和set
 }
-
 ```
 
 ②：映射文件：
@@ -916,7 +911,6 @@ set标签：
     </class>
 </hibernate-mapping>  
 
-
 <!--
 该标签用于映射多对一关联关系
 
@@ -940,7 +934,7 @@ set标签：
 
 <h3>①基于主键: </h3>
 
-<font clor="red">如果采用基于主键的映射策略，则一端的主键生成器需要使用foreign策略，表明将根据对方的主键来生成自己的主键，本实体不能拥有自己的主键声称策略。</span>
+<span style="color: red">如果采用基于主键的映射策略，则一端的主键生成器需要使用foreign策略，表明将根据对方的主键来生成自己的主键，本实体不能拥有自己的主键声称策略。</span>
 
 ```xml
 <!-- 

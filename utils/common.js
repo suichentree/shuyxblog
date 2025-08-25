@@ -38,7 +38,6 @@ export function random_cover_image(){
     '/public/cover10.jpg',
     '/public/cover11.jpeg',
     '/public/cover12.jpeg',
-    '/public/cover13.jpg',
   ];
   let randomIndex = Math.floor(Math.random() * cover_image_urls.length);
   return cover_image_urls[randomIndex];

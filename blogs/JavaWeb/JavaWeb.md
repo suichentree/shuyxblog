@@ -142,7 +142,7 @@ WebContent:放进写入的jsp页面。
 </html>
 ```
 
-6. 启动tomcat 服务器，在浏览器 输入网址：http://localhost:8080/ 项目工程名 / jsp页面名称.jsp 。
+6. 启动tomcat 服务器，在浏览器 输入网址：```http://localhost:8080/``` 项目工程名 / jsp页面名称.jsp 。
 
 7. 效果图：
 ![jsp_4.png](../blog_img/javaweb_img_jsp_4.png)
@@ -814,7 +814,7 @@ web.xml
 ```
 
 **浏览器 调用servlet的步骤：**
-&emsp;&emsp;①：首先浏览器通过http://localhost:8080/blog_jsp/mys来找到web.xml中的url-pattern。
+&emsp;&emsp;①：首先浏览器通过 ```http://localhost:8080/blog_jsp/mys``` 来找到web.xml中的url-pattern。
 &emsp;&emsp;②：匹配到了url-pattern后，就会找到servlet的名字myservlet，知道了名字，就可以通过servlet-name找到第三步。
 &emsp;&emsp;③：到了第三步，也就能够知道servlet类的位置了。然后到其中找到对应的处理方式进行处理。
 

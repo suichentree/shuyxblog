@@ -51,7 +51,7 @@ public class SwaggerConfig {
 }
 ```
 
-3. 启动项目，访问网址http://localhost:9090/swagger-ui.html。即可看到最初是swagger模板
+3. 启动项目，访问网址 ```http://localhost:9090/swagger-ui.html``` 。即可看到最初是swagger模板
 
 **如果配置https证书，你需要用https来访问该链接**
 

@@ -118,7 +118,7 @@ server {
 
 <span style="color: red;">根据访问链接的不同要改不同的地方</span>
 
-> ①若访问链接为：http://localhost:9099/chronic-pay/xxx
+> ①若访问链接为： ```http://localhost:9099/chronic-pay/xxx```
 
 1. 首先判断打包后的工程是否通过某个域名下的子路径访问。例如：chronic-pay子路径
 2. 若通过子路径访问页面，则要在vue-router中添加history模式，添加base路径
@@ -150,7 +150,7 @@ server {
     }
 ```
 
-> ②若访问链接为：http://localhost:9099/xxx
+> ②若访问链接为： ```http://localhost:9099/xxx```
 
 1. 上面的链接就是直接通过根路径访问页面
 2. 在vue-router中添加history模式，添加base路径

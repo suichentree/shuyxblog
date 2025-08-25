@@ -269,7 +269,7 @@ Mybatis的执行流程如下
 
 ### MyBatis 配置文件（mybatis-config.xml）
 
-MyBatis 配置文件的结构如下。<span style="color: red;">注意，配置文件中的各个标签的先后位置，不能弄错，否则报错。</font >
+MyBatis 配置文件的结构如下。<span style="color: red;">注意，配置文件中的各个标签的先后位置，不能弄错，否则报错。</span>
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

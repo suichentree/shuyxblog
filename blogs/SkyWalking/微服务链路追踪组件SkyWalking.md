@@ -73,7 +73,7 @@ skywalking是分布式系统的应用程序性能监视工具，专为微服务�
 
 ② 点击运行/apache-skywalking-apm-bin/bin/startup.bat 文件。该文件会一起运行同目录下的oapService.bat（Skywalking oapservice服务端）和webappService.bat（skywalking webapp 前端界面）。
 
-③ 访问http://localhost:8899/ 地址。查看skywalking webapp 前端界面
+③ 访问 ```http://localhost:8899/``` 地址。查看skywalking webapp 前端界面
 
 注意：
 1. Skywalking oapservice服务端启动后，会暴露11800和12800 两个端口，分别为收集监控数据的端口11800和接受前端请求的端口12800。可以在/config/applicaiton.yml配置文件中修改这两个端口。

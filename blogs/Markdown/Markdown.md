@@ -89,12 +89,12 @@ _你也 **组合** 这些符号_
 ## 添加图片
 
 ```markdown
-![GitHub Logo](url)
-Format: ![Alt Text](url)
+![GitHub Logo](https://www.xx.xx/images/logo.png)
+Format: ![Alt Text](https://www.xx.xx/images/logo.png)
 ```
 
-![GitHub Logo](/images/logo.png)
-Format: ![Alt Text](url)
+![GitHub Logo](https://www.xx.xx/images/logo.png)
+Format: ![Alt Text](https://www.xx.xx/images/logo.png)
 
 ## 链接
 

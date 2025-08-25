@@ -313,7 +313,6 @@ Share images, automate workflows, and more with a free Docker ID:
 
 For more examples and ideas, visit:
  https://docs.docker.com/get-started/
-
 ```
 
 ### ubuntu 设置 docker 权限
@@ -347,7 +346,6 @@ sudo docker images
 ```shell
 cat /etc/group
 ```
-
 若存在docker用户组，则可以在文件内找到docker字段。例如`docker:x:999:`
 
 2. 若不存在docker用户组，那么先添加docker用户组到文件内
@@ -369,7 +367,6 @@ newgrp docker
 ```
 
 5. 验证效果。正常情况下可以执行docker命令，不再添加`sudo`了。
-
 
 ## Centos7安装docker
 
@@ -475,7 +472,6 @@ docker --help
 
 # 查询docker某个具体命令的帮助文档
 docker 具体命令 --help
-
 ```
 
 ### docker 镜像命令
@@ -626,6 +622,7 @@ docker run -d --name ubuntu01 ubuntu
 ```
 
 如图所示，当Ubuntu容器启动后，就进入到了ubuntu容器的终端中。
+
 ![docker_20231010164854.png](../blog_img/docker_20231010164854.png)
 
 
@@ -678,7 +675,6 @@ docker restart 容器ID或容器名称
 > 删除容器
 
 ```shell
-# 语法
 # 删除容器
 docker rm 容器ID或容器名称
 # 强制删除容器
@@ -686,12 +682,12 @@ docker rm -f 容器ID或容器名称
 # 一次性删除全部容器
 docker rm -f $(docker ps -a -q)
 docker ps -a -q | xargs docker rm 
-
 ```
 
 > 从容器的终端中退出
 
 当你进入到某个容器的终端的时候，有两种方式从容器终端中退出。
+
 ```shell
 # 方式1，退出并停止容器。这种方式会导致容器停止。
 exit
@@ -741,7 +737,7 @@ docker inspect 容器ID或容器名称
 ```shell
 # 语法如下
 #将容器内特定路径下的文件复制到主机的特定路径中
-docker cp <容器id或容器名称>: 容器内路径 目的主机路径		
+docker cp [容器id或容器名称]: 容器内路径 目的主机路径		
 
 #例子：将ubuntu01容器中home目录中为java文件拷贝到主机的root目录中
 docker cp ubuntu01:/home/a.java /root
@@ -798,12 +794,12 @@ docker默认会把容器内部第一个进程，也就是pid=1的进程作为容
 # 命令 docker commit 来将容器构建为一个新镜像
 # 语法格式
 docker commit -m="备注" -a="作者" 容器ID 用户名称/镜像名称:版本标签
-
 # 例子
 docker commit -m="add some file" -a="shuyx" feqfe21esdq shuyx/ubuntu001:v1
 ```
 
 如图所示，通过docker commit命令，将某个容器构建为一个新的镜像。
+
 ![docker_20231011151318.png](../blog_img/docker_20231011151318.png)
 
 ## dockerhub 官方仓库
@@ -899,7 +895,6 @@ docker run --name="A" -v /home/webapps:/usr/local/tomcat/webapps tomcat
 docker run --name="B"  --volumes-from A tomcat
 ```
 
-
 ## docker安装常用软件
 
 ### docker安装tomcat
@@ -941,14 +936,13 @@ docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/doc
 # -v 设置数据卷
 
 # --privileged=true 是否在容器中开启root管理员权限。容器默认是不开启root权限的
-
 ```
 
-之后，访问http://localhost:9000/，即可进入portainer界面
+之后，访问 ```http://localhost:9000/``` ,即可进入portainer界面
 
 ### docker安装redis
 
-<font color='red'>注意：不同版本的redis所对应的配置文件也是不同的。例如redis7版本搭配redis6的配置文件，可能会导致redis容器无法启动。</span>
+<span style='color:red'>注意：不同版本的redis所对应的配置文件也是不同的。例如redis7版本搭配redis6的配置文件，可能会导致redis容器无法启动。</span>
 
 1. 先创建redis容器映射目录
 
@@ -967,6 +961,7 @@ wget http://download.redis.io/redis-stable/redis.conf
 2. 修改redis.conf配置文件
 
 先更改配置文件的权限。然后用文本编辑器修改配置文件
+
 ```shell
 # 进入到配置文件目录中
 cd /home/redis01/conf/
@@ -976,6 +971,7 @@ chmod 777 redis.conf
 ```
 
 主要修改以下部分。
+
 ```shell
 # 注意，这个要注释掉，使redis可以外部访问
 # bind 127.0.0.1 
@@ -1021,8 +1017,6 @@ docker exec -it redis01 /bin/bash
 
 在redis的配置文件中，daemonize是关于守护进程的配置。daemonize 设置成yes是将redis以守护线程的方式启动，redis会自动后台运行，但是这个设置的前提是用在宿主机直接启动redis。如果使用docker启动redis时，设置为no即可，否则启动的redis容器就无事可干了，那么容器就会自动关闭。
 
-
-
 ## docker 安装软件集群
 
 ### docker mysql主从集群
@@ -1052,6 +1046,7 @@ mkdir /home/mysql02/slave/log
 2. 先在mysql容器的配置目录中创建配置文件my.cnf
 
 主my.cnf配置文件如下
+
 ```shell
 [mysqld]
 #主服务器唯一ID
@@ -1063,6 +1058,7 @@ binlog_format=STATEMENT
 ```
 
 从my.cnf配置文件如下
+
 ```shell
 [mysqld]
 #从服务器唯一ID
@@ -1078,7 +1074,6 @@ relay-log=mysql-relay
 ```shell
 # 创建并启动主mysql容器
 docker run -d -p 33306:3306 --name="mysql02-master" -e MYSQL_ROOT_PASSWORD=123456 -v /home/mysql02/master/log:/var/log/mysql -v /home/mysql02/master/data:/var/lib/mysql -v /home/mysql02/master/conf/my.cnf:/etc/mysql/my.cnf mysql:5.7
-
 
 # 创建并启动从mysql容器
 docker run -d -p 33307:3306 --name="mysql02-slave" -e MYSQL_ROOT_PASSWORD=123456 -v /home/mysql02/slave/log:/var/log/mysql -v /home/mysql02/slave/data:/var/lib/mysql -v /home/mysql02/slave/conf/my.cnf:/etc/mysql/my.cnf mysql:5.7

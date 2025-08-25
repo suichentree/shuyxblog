@@ -113,11 +113,14 @@ MapReduce框架内部提供了两大接口。
 - Map分散接口，由服务器对数据进行分布式处理。
 - Reduce聚合接口，将分布式的处理结果进行汇总统计。
 
-<span style="color: red;">
+<p style="color: red;">
 注意：MapReduce提供了Map分散接口和Reduce聚合接口，给开发者使用。但是由于年代久远，MapReduce框架的代码，性能已经过时了。
-
+</p>
+<p style="color: red;">
 因此，现在主要使用Apache Hive框架来进行分布式计算。Apache Hive框架底层使用的就是MapReduce框架，所以我们只需对MapReduce框架简单了解即可。
-</span>
+</p>
+
+
 
 > MapReduce的运行机制
 

@@ -207,9 +207,10 @@ ps:
 3. title：提供在图像可见时对图像的描述(鼠标滑过图片时显示的文本)；
 4. 图像可以是GIF，PNG，JPEG格式的图像文件。
 
-举例：
-`<img src ="myimage.gif" alt = "My Image" title ="My Image" />`
-<img src ="myimage.gif" alt ="MyImage" title ="My Image" />
+举例
+`<img src ="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" alt = "My Image" title ="My Image" />`
+
+<img src ="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" alt ="MyImage" title ="My Image" />
 
 ### 24.表单标签`<form>`（与用户进行交互）:
 **表单标签是可以把浏览者输入的数据传送到服务器端**，这样服务器端程序就可以处理表单传过来的数据。

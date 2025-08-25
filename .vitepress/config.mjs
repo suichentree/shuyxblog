@@ -3,6 +3,10 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 // 网站元数据配置
 export default defineConfig({
+    //网站部署的路径。默认为根目录 /
+    //若配置为目录 /vitepress/ 则需要部署到网站的vitepress目录中
+    //另外如果配置为非根目录，则图片的访问路径也要改变。例如从 /aaa.png -> /vitepress/aaa.png
+    base: '/',
     lang: 'zh-CN',
     title: "Shuyx Blog", //网站名称 类似<title>网址名称</title>
     description: "Shuyx Blog 是一个基于 VuePress 的静态博客网站。",  //网站描述 类似<meta name="description" content="网站描述">

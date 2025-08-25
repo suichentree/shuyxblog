@@ -67,7 +67,7 @@ Nacos是一种工具，帮助您快速实现动态服务发现、服务配置、
 ![20220728175719.png](../blog_img/20220728175719.png)
 ![20220728175810.png](../blog_img/20220728175810.png)
 
-4. 控制台界面地址：http://xxxxx:8848/nacos/index.html。
+4. 控制台界面地址：```http://xxxxx:8848/nacos/index.html```。
 
 登录页面输入用户名和密码就可以，默认的用户名和密码都是 nacos
 
@@ -189,7 +189,7 @@ docker logs myNacos
 
 步骤④：访问nacos控制台界面
 
-控制台界面地址：http://localhost:8848/nacos/index.html
+控制台界面地址：```http://localhost:8848/nacos/index.html```
 
 登录页面输入用户名和密码就可以，默认的用户名和密码都是 nacos
 
