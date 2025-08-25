@@ -61,8 +61,6 @@ import { data as rawData } from '/utils/statistics.data.js';
 const blogData = ref(rawData);
 const articles = computed(() => blogData.value.articles);
 
-console.log("articles.value", articles.value);
-
 //将文章数据按照年份和月份进行分组处理并返回为一个对象
 //对象格式示例
 //{
@@ -77,7 +75,6 @@ console.log("articles.value", articles.value);
 //}
 const groupedArticles = computed(() => {
     const groups = {};
-
     //遍历文章数据
     articles.value.forEach(article => {
       //读取文章的date数据
@@ -101,18 +98,17 @@ const groupedArticles = computed(() => {
     return groups;
 });
 
-console.log("groupedArticles.value", groupedArticles.value);
-
 // 按groupedArticles数据中提取年份，并按降序排序成一个年份数组
+// [2025, 2024, 2023,........]
 const sortedYears = computed(() => {
   return Object.keys(groupedArticles.value)
     .map(Number)
     .filter(year => !isNaN(year))
     .sort((a, b) => b - a);
 });
-console.log("sortedYears.value", sortedYears.value);
 
 // 计算每个年份的文章总数,返回一个对象
+// { "2016": 3, "2017": 3,"2018": 9, "2019": 12,。。。。。}
 const yearTotal = computed(() => {
   return Object.fromEntries(
     sortedYears.value.map(year => [
@@ -122,9 +118,8 @@ const yearTotal = computed(() => {
   );
 });
 
-console.log("yearTotal.value", yearTotal.value);
-
-// 方法。根据年份获取该年份中所有月份（降序）的数组
+// 传入年份，根据年份获取该年份中所有的月份（降序）组成的数组
+// 示例：sortedMonths(2025) => ["12", "08", "07", "03","01"]
 function sortedMonths(year){
   const yearData = groupedArticles.value[year];
   if (!yearData) return []; 
@@ -133,8 +128,6 @@ function sortedMonths(year){
     .sort((a, b) => b - a)
     .map(m => String(m).padStart(2, '0'));
 }
-
-console.log("sortedMonths(2025)", sortedMonths(2025));
 
 // 交互状态管理
 const selectedYear = ref(null);

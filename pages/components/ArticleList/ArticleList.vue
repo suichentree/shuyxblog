@@ -60,7 +60,6 @@ import { data as rawData } from '/utils/statistics.data.js'
 import { random_cover_image } from '/utils/common.js'
 
 const blogData = ref(rawData); // 使用ref包装原始数据
-console.log(blogData.value)
 
 // 接收父组件传递的过滤条件
 const props = defineProps({
