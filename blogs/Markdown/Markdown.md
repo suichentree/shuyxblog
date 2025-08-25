@@ -10,19 +10,21 @@ tags:
 
 # Markdown基础语法
 
-## 概述：
+## 概述
 
 &emsp;Markdown 是一种用来写作的轻量级「标记语言」，它用简洁的语法代替排版，而不像一般我们用的字处理软件 Word 或 Pages 有大量的排版、字体设置。它使我们专心于码字，用「标记」语法，来代替常见的排版格式。例如此文从内容到格式，甚至插图，键盘就可以通通搞定了。
-**注意：**
-①<span style="color: red;">兼容 HTML</span>，不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。不需要额外标注这是 HTML 或是 Markdown；只要直接加标签就可以了。
 
-## 在markdown中打出标签：
+**注意：**
+ 
+① <span style="color: red;">兼容 HTML</span>，不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。不需要额外标注这是 HTML 或是 Markdown；只要直接加标签就可以了。
+
+## 在markdown中打出标签
+
 常用转义字符表为：
 
 ![转义字符表](../blog_img/markdown_img_markdown_1.png)
 
-
-## 标题:
+## 标题
 
 ```markdown
 # 这是 <h1> 一级标题
@@ -32,7 +34,7 @@ tags:
 ##### 这是 <h5> 五级标题
 ###### 这是 <h6> 六级标题
 ```
-## 强调:
+## 强调
 
 ```
 *这会是 斜体 的文字*
@@ -157,16 +159,17 @@ ___
 
 ## 行内代码与代码块:
 
-1. 行内代码：
+1. 行内代码
+
 ```markdown
 `student stu=new Student();`
 ```
+
 `student stu=new Student();`
 
-2. 代码块：
+2. 代码块
 
 你可以在你的代码上面和下面添加 ```来表示代码块。
-
 
 ```markdown
 student stu=new Student();
@@ -181,16 +184,17 @@ student stu=new Student();
 
 你可以给你的代码块添加任何一种语言的语法高亮
 
-例如，给 java 代码添加语法高亮：
+例如，给 java 代码添加语法高亮。只需要在```后面加上java即可。
 
 <pre>
+<code>
 ```java
 int i=0;
 Student stu=new Student();
 stu.add(i);
 ```
+</code>
 </pre>
-
 
 会得到下面的效果：
 
@@ -198,18 +202,18 @@ stu.add(i);
 int i=0;
 Student stu=new Student();
 stu.add(i);
-```
+``` 
 
 ## 任务列表
 
 ```markdown
-- [x] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported
+- [x] @mentions, #refs, **formatting**, and <del>tags</del> supported
 - [x] list syntax required (any unordered or ordered list supported)
 - [x] this is a complete item
 - [ ] this is an incomplete item
 ```
 
-- [x] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported
+- [x] @mentions, #refs, **formatting**, and <del>tags</del> supported
 - [x] list syntax required (any unordered or ordered list supported)
 - [x] this is a complete item
 - [ ] this is an incomplete item

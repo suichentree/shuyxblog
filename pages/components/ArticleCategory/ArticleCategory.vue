@@ -5,7 +5,7 @@
         v-for="category in categories" 
         :key="category.name" 
         class="item"
-        :class="{ 'active': activeCategory === category.name }"
+        :class="{ 'active': queryName === category.name }"
         @click="selectCategory(category.name)"
       >
         <span>{{ category.name }}</span>
@@ -15,12 +15,12 @@
       </div>
     </div>
     <div>
-      <ArticleList :filter-category="activeCategory" />
+      <ArticleList :filter-category="queryName" />
     </div>
   </div>
 </template>
 <script setup>
-import { ref} from 'vue';
+import { ref, onMounted } from 'vue';
 //引入文章列表组件
 import ArticleList from '/pages/components/ArticleList/ArticleList.vue';
 //引入js
@@ -46,18 +46,18 @@ if (!categories.value.find(category => category.name === '全部')) {
   });
 }
 
+
 //获取页面链接末尾的name参数值，否则设置为全部
 const queryName = ref('')
-queryName.value = new URLSearchParams(window.location.search).get('name') // 获取 name 参数值
-if (queryName.value === null){
-  queryName.value = '全部'
-}
-//当前选中的分类，默认为页面链接name参数值
-const activeCategory = ref(queryName.value);
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    queryName.value = new URLSearchParams(window.location.search).get('name') || '全部'; // 获取 name 参数值
+  }
+});
 
-// 点击分类时，将当前分类设置为 activeCategory
+// 点击分类时，将当前分类设置为 queryName
 function selectCategory(category) {
-  activeCategory.value = category === activeCategory.value ? '全部' : category;
+  queryName.value = category === queryName.value ? '全部' : category;
 }
 
 </script>

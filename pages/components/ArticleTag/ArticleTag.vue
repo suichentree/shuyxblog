@@ -5,7 +5,7 @@
         v-for="tag in tags" 
         :key="tag.name" 
         class="item"
-        :class="{ 'active': activeTag === tag.name }"
+        :class="{ 'active': queryName === tag.name }"
         @click="selectTag(tag.name)"
       >
           <span>{{ tag.name }}</span>
@@ -15,12 +15,12 @@
       </div>
     </div>
     <div>
-      <ArticleList :filter-tag="activeTag" />
+      <ArticleList :filter-tag="queryName" />
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ArticleList from '/pages/components/ArticleList/ArticleList.vue';
 import { data as rawData } from '/utils/statistics.data.js'
 import { getRandomBrightColor } from '/utils/common.js'
@@ -45,16 +45,15 @@ if (!tags.value.find(cat => cat.name === '全部')) {
 
 //获取页面链接末尾的name参数值，否则设置为全部
 const queryName = ref('')
-queryName.value = new URLSearchParams(window.location.search).get('name') // 获取 name 参数值
-if (queryName.value === null){
-  queryName.value = '全部'
-}
-//当前选中的分类，默认为页面链接name参数值
-const activeTag = ref(queryName.value);
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    queryName.value = new URLSearchParams(window.location.search).get('name') || '全部'; // 获取 name 参数值
+  }
+});
 
-// 点击分类时，将当前分类设置为 activeTag
+// 点击分类时，将当前分类设置为 queryName
 function selectTag(tag) {
-  activeTag.value = tag === activeTag.value ? '全部' : tag;
+  queryName.value = tag === queryName.value ? '全部' : tag;
 }
 
 </script>

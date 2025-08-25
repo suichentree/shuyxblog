@@ -248,7 +248,7 @@ spring.cloud.nacos.discovery.enabled=true
 # nacos注册中心地址
 spring.cloud.nacos.discovery.server‐addr=localhost:8848
 ```
-4. 启动当前项目，访问nacos管理页面http://localhost:8848/nacos上看到当前服务注册到nacos中
+4. 启动当前项目，访问nacos管理页面 ```http://localhost:8848/nacos``` 上看到当前服务注册到nacos中
 
 ![20220729150653.png](../blog_img/20220729150653.png)
 

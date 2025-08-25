@@ -6,15 +6,12 @@ import './style.css'
 //引入样式美化css
 import './beautiful.css'
 
-//引入看板娘插件
-import { useLive2d } from 'vitepress-theme-website'
 //引入不蒜子计数插件
 import { inBrowser } from 'vitepress'
 import busuanzi from 'busuanzi.pure.js'
 //引入路由进度条插件
 import { NProgress } from 'nprogress-v2/dist/index.js' // 进度条组件
 import 'nprogress-v2/dist/index.css' // 进度条样式
-
 
 //引入文章日期组件
 import ArticleDateInfo from '/pages/components/ArticleDateInfo/ArticleDateInfo.vue'
@@ -29,31 +26,11 @@ import Hero from "/pages/components/Hero/Hero.vue";
 //引入自定义的首页组件
 import HomePage from '/pages/HomePage.vue'
 
-
 /** @type {import('vitepress').Theme} */
 export default {
   extends: DefaultTheme,
   setup() {
-    //看板娘
-    useLive2d({
-      enable: true,
-      model: {
-        url: 'https://raw.githubusercontent.com/iCharlesZ/vscode-live2d-models/master/model-library/hibiki/hibiki.model.json'
-      },
-      display: {
-        position: 'right',
-        width: '135px',
-        height: '300px',
-        xOffset: '35px',
-        yOffset: '5px'
-      },
-      mobile: {
-        show: true
-      },
-      react: {
-        opacity: 0.8
-      }
-    })
+    
   },
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
@@ -73,8 +50,22 @@ export default {
       ],
     })
   },
-  enhanceApp({ app, router, siteData }) {
+  async enhanceApp({ app, router, siteData }) {
     // ...
+
+    // 引入live2d模型
+    if (!import.meta.env.SSR) {
+      const { loadOml2d } = await import('oh-my-live2d');
+      loadOml2d({
+        models: [
+          {
+            path: ['https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json']
+          }
+        ]
+      });
+    }
+
+
     //全局注册各个插件
     if (inBrowser) {
       NProgress.configure({ showSpinner: false })
