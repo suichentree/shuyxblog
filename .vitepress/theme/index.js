@@ -59,7 +59,9 @@ export default {
       loadOml2d({
         models: [
           {
-            path: ['https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json']
+            path: [
+                'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json',
+            ],
           }
         ]
       });

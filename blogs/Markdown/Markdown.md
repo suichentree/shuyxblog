@@ -187,13 +187,11 @@ student stu=new Student();
 例如，给 java 代码添加语法高亮。只需要在```后面加上java即可。
 
 <pre>
-<code>
 ```java
 int i=0;
 Student stu=new Student();
 stu.add(i);
 ```
-</code>
 </pre>
 
 会得到下面的效果：
