@@ -22,13 +22,13 @@ export default defineConfig({
     themeConfig: {
       //头部导航栏
       nav: [
-        { text: '首页', link: '/' },
-        { text: '分类',link: '/pages/views/ArticleCategory.md'},
-        { text: '标签',link: '/pages/views/ArticleTag.md'},
-        { text: '归档',link: '/pages/views/Archives.md'},
-        { text: '导航',link: '/pages/views/NavigationWebsite.md'},
+        { text: '🏠️ 首页', link: '/' },
+        { text: '🗂️ 分类',link: '/pages/views/ArticleCategory.md'},
+        { text: '🏷️ 标签',link: '/pages/views/ArticleTag.md'},
+        { text: '📑 归档',link: '/pages/views/Archives.md'},
+        { text: '🧭 导航',link: '/pages/views/NavigationWebsite.md'},
         {
-          text: '关于',
+          text: '🍉 关于',
           items: [
             { text: '关于我', link: '/blogs/个人项目/关于我.md' },
             { text: 'Github', link: 'https://github.com/suichentree' },
@@ -99,6 +99,20 @@ export default defineConfig({
       //     ]
       //   }
       // ],
+
+      //多语言
+      locales: {
+        //默认为中文
+        root: {
+          label: '简体中文',
+          lang: 'Zh_CN',
+        },
+        en: {
+          label: 'English',
+          lang: 'en',
+          link: '/en/',
+        },
+      },
 
       // 404页配置
       notFound:{ 
