@@ -5,7 +5,7 @@
         Shuyx Blog
       </div>
       <!-- 打字机效果容器 -->
-      <div>
+      <div style="margin: 0 20px;">
         <span class="typed-container" ref="container"></span>
       </div>
     </div>

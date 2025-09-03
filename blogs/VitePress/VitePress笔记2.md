@@ -131,11 +131,11 @@ tags:
 npm i vue
 ```
 
-### 使用组件
+### 组件的使用
 
 ① 创建一个组件。Mycomponent.vue
 
-```vue
+```html
 <script setup>
 // 这里是JavaScript
 </script>
@@ -196,25 +196,39 @@ Vitepress基于Vue3用到了`<slot>`插槽，在`<Layout/>`布局组件中预留
 
 不同的页面，可使用的插槽不同。下面是常用的几种插槽。更多的插槽请去官网查询。
 
-所有布局都可以使用的插槽如图所示。
+> 所有布局都可以使用的插槽如图所示。
 
 ![vitepress_20250812172534192.png](../blog_img/vitepress_20250812172534192.png)
 
-当 md文件中的 Frontmatter 配置 `layout: home` 时插槽及位置。如图所示
+> 当 md文件中的 Frontmatter 配置 `layout: home` 时插槽及位置。如图所示
+
 
 ![vitepress_20250812172039210.png](../blog_img/vitepress_20250812172039210.png)  
 
-当 md文件中的 Frontmatter 配置 `layout: doc`  时插槽及位置。如图所示
+> 当 md文件中的 Frontmatter 配置 `layout: doc`  时插槽及位置。如图所示
 
 ![vitepress_20250812171905537.png](../blog_img/vitepress_20250812171905537.png) 
 
-当 Frontmatter 配置 `layout: page` 时插槽及位置。如图所示
+> 当 Frontmatter 配置 `layout: page` 时插槽及位置。如图所示
 
 ![vitepress_20250812172208792.png](../blog_img/vitepress_20250812172208792.png)  
 
 除此之外还有一个not-found插槽。当页面不存在时，会使用这个插槽。如图所示
 
 ![vitepress_20250812172631137.png](../blog_img/vitepress_20250812172631137.png)
+
+
+<span style="color: red;">
+  <p>
+  当layout设置为不同的值的时候，该md文件转换为html的时候，vitepress会给该html页面添加不同的插槽区域。
+  
+  例如md文件中的formatter的layout: doc配置项，会在对应的html文件中有对应的插槽区域。
+
+  另外，插槽是全局生效的。也就是说，当你使用一个组件绑定"doc-top"插槽的时候，vitepress会给所有使用这个插槽的html页面添加上这个组件。
+
+  如果你想这个组件单独给某一个页面使用，而不是全局使用，你可以直接在md文件中导入该组件。而不是使用插槽的方式去间接导入到页面中。
+  </p>
+</span>
 
 
 ### 使用方式
@@ -348,6 +362,130 @@ export default {
 }
 
 ```
+
+
+## useRouter 路由
+
+vitepress内置了一个简单的路由。在自定义的页面中可以使用路由跳转到其他页面。
+
+例子
+```html
+<script setup>
+//引入vitepress内置的路由等
+import { useRouter,useRoute } from 'vitepress'
+const router = useRouter();
+const route = useRoute();
+
+//点击跳转到文章分类页面
+function toCategory(categoryName){
+  router.go('/pages/views/ArticleCategory?name='+categoryName)
+}
+//点击跳转到文章标签页面
+function toTag(tagName){
+  router.go('/pages/views/ArticleTag?name='+tagName)
+}
+</script>
+```
+
+## useData 全局数据
+
+当你在config.mjs中自定义某个属性。
+```js
+export default {
+  themeConfig:{
+    docCount:10,  //自定义docCount属性
+  }
+}
+```
+
+你可以在组件中使用useData函数获取全局数据。
+```js
+import { useData } from 'vitepress'
+const { theme } = useData()
+const docCount: number = theme.value.docCount; // 自定义属性
+```
+
+
+
+## 统计所有md文件中的formatter数据
+
+假如你想获取某个目录中所有md文件中的formatter数据。代码示例如下
+
+```js
+import { createContentLoader } from 'vitepress'
+
+//统计blogs目录中的所有md文件中的各个数据
+export default createContentLoader("blogs/**/*.md", {
+    transform(raw){
+        //定义blogData对象
+        const blogData = {
+            articles: [],           //所有的文章数据
+            tags: [],               //所有的标签数据,及其标签对应的文章数量
+            categories: [],         //所有的分类数据,及其分类对应的文章数量
+            tagsSumCount:0,         //所有的标签数据的总数
+            categoriesSumCount:0,   //所有的分类数据的总数
+            articlesSumCount:0,     //所有的文章数据的总数
+        };
+        //遍历raw数组
+        raw.forEach(({ url, frontmatter }) => {
+            //若md文件存在frontmatter
+            if(frontmatter){
+                // 标签
+                if (frontmatter.tags) {
+                    frontmatter.tags.forEach((tag) => {
+                        let existingTag = blogData.tags.find(t => t.name === tag);
+                        if (existingTag) {
+                            existingTag.count++;
+                        } else {
+                            blogData.tags.push({
+                                name: tag,
+                                count: 1
+                            });
+                        }
+                    });
+                }
+                // 分类
+                if (frontmatter.categories) {
+                    frontmatter.categories.forEach((category) => {
+                        let existingCategory = blogData.categories.find(c => c.name === category);
+                        if (existingCategory) {
+                            existingCategory.count++;
+                        } else {
+                            blogData.categories.push({
+                                name: category,
+                                count: 1
+                            });
+                        }
+                    });
+                }
+                //组装文章数据
+                blogData.articles.push({
+                    title: frontmatter.title,           //文章标题
+                    tags: frontmatter.tags,           //文章标签
+                    categories: frontmatter.categories,   //文章分类
+                    url,                                   //文章url
+                    date: frontmatter.date,             //文章创建日期
+                    lastUpdated: frontmatter.lastUpdated, //文章最后更新日期
+                    metadata:frontmatter,               //文章的元数据
+                });
+            }
+        });
+        //标签总数
+        blogData.tagsSumCount = blogData.tags.length;
+        //分类总数
+        blogData.categoriesSumCount = blogData.categories.length;
+        //文章总数
+        blogData.articlesSumCount = blogData.articles.length;
+        //对blogData.articles数据按照日期进行降序排序
+        blogData.articles.sort((a, b) => b.date - a.date);
+        //返回blogData对象
+        return blogData;
+    },
+});
+
+```
+
+
 
 
 ## 插件

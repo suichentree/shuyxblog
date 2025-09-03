@@ -26,11 +26,14 @@ import Hero from "/pages/components/Hero/Hero.vue";
 //引入自定义的首页组件
 import HomePage from '/pages/HomePage.vue'
 
-/** @type {import('vitepress').Theme} */
+//引入图片预览组件
+import imageViewer from 'vitepress-plugin-image-viewer'
+import vImageViewer from 'vitepress-plugin-image-viewer/lib/vImageViewer.vue'
+import { useRoute } from 'vitepress';
+
 export default {
   extends: DefaultTheme,
   setup() {
-    
   },
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
@@ -53,19 +56,8 @@ export default {
   async enhanceApp({ app, router, siteData }) {
     // ...
 
-    // 引入live2d模型
-    if (!import.meta.env.SSR) {
-      const { loadOml2d } = await import('oh-my-live2d');
-      loadOml2d({
-        models: [
-          {
-            path: 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json',
-            "position": [-10, 20]
-          }
-        ]
-      });
-    }
-
+    // 全局注册图片预览组件
+    app.component('vImageViewer', vImageViewer)
 
     //全局注册各个插件
     if (inBrowser) {
@@ -78,5 +70,10 @@ export default {
          NProgress.done() // 停止进度条显示
       }
     }
+  },
+  setup() {
+    // 使用图片预览插件（先获取路由）
+    const route = useRoute();
+    imageViewer(route);
   },
 }

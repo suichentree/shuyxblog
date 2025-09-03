@@ -45,10 +45,16 @@ export default defineConfig({
       siteTitle: 'Shuyx Blog',
       // 头部导航栏的社交链接部分
       socialLinks: [
-        { icon: 'github', link: 'https://github.com/suichentree' }
+        { icon: 'github', link: 'https://github.com/suichentree' },
+        {
+          icon: {
+            svg: '<svg t="1721906075888" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2472" width="256" height="256"><path d="M512 0C230.4 0 0 230.4 0 512s230.4 512 512 512 512-230.4 512-512S793.6 0 512 0z m284.8 313.6c0 12.8-12.8 25.6-25.6 25.6H416c-41.6 0-76.8 35.2-76.8 76.8v243.2c0 12.8 12.8 25.6 25.6 25.6h240c41.6 0 76.8-35.2 76.8-76.8v-12.8c0-12.8-12.8-25.6-25.6-25.6H480c-12.8 0-25.6-12.8-25.6-25.6v-64c0-12.8 12.8-25.6 25.6-25.6h291.2c12.8 0 25.6 12.8 25.6 25.6v144c0 92.8-76.8 169.6-169.6 169.6H252.8c-12.8 0-25.6-12.8-25.6-25.6V412.8C227.2 310.4 310.4 224 416 224h355.2c12.8 0 25.6 12.8 25.6 25.6v64z" fill="#B32225" p-id="2473"></path></svg>'
+          },
+          link: 'https://gitee.com/suichenTree'
+        }
       ],
       //手机端深浅模式默认显示 Appearance,可自定义
-      darkModeSwitchLabel: '深浅模式',
+      darkModeSwitchLabel: '日夜模式',
       //头部导航栏的本地搜索框
       search: {
         provider: 'local',
