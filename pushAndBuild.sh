@@ -154,7 +154,7 @@ push
 echo "开始打包并推送到博客页面仓库 -------------------"
 
 # 生成博客静态文件
-npm run build
+npm run docs:build
 
 # 进入生成的dist文件夹
 cd .vitepress/dist
