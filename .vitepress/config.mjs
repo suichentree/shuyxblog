@@ -4,7 +4,8 @@ import { defineConfig } from 'vitepress'
 // 网站元数据配置
 export default defineConfig({
     //网站部署的路径。默认为根目录 /
-    //若配置为目录 /vitepress/ 则需要部署到网站的vitepress目录中
+    //如果你的代码仓库是xxx.github.io，则base应设为'/'
+    //如果你的代码仓库是xxx.github.io/xxx，则base应设为'/xxx/'。例如若配置为目录 /vitepress/ 则需要部署到项目的vitepress目录中。
     //另外如果配置为非根目录，则图片的访问路径也要改变。例如从 /aaa.png -> /vitepress/aaa.png
     base: '/',
     lang: 'zh-CN',
