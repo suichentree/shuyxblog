@@ -123,6 +123,25 @@ tags:
 
 ```
 
+
+
+### 配置插件
+
+```js
+/* .vitepress/config.js */
+import { defineConfig } from 'vitepress'
+import demoPlugin from '@vitepress-demo-preview/plugin'
+
+export default defineConfig({
+  // ...
+  plugins: [
+    demoPlugin({
+      // 配置选项
+    })
+  ]
+})
+```
+
 ## 组件
 
 在这里组件通常是指一个将HTML、CSS以及JavaScript封装的 *.vue 文件。使用组件之前，我们需要先安装一下vue。
@@ -149,10 +168,9 @@ npm i vue
 </style>
 ```
 
-② 在theme/index.js文件中将这个组件注册为全局组件。
+② 在`.vitepress/theme/index.js`文件中将这个组件注册为全局组件。
 
 ```js
-/* .vitepress/theme/index.js */
 import Mycomponent from "./components/Mycomponent.vue"
 
 export default {
@@ -162,7 +180,6 @@ export default {
     app.component('Mycomponent' , Mycomponent)
   }
 }
-
 ```
 
 ③ 使用组件
@@ -179,14 +196,14 @@ export default {
 
 ### 在markdown中使用组件
 
-<Mycomponent />
+<Mycomponent/>
 
 ```
 
 
 ## 布局插槽
 
-Vitepress基于Vue3用到了`<slot>`插槽，在`<Layout/>`布局组件中预留了一些插槽，可以对页面布局进行自定义修改。
+Vitepress基于Vue3用到了`<slot/>`插槽，在`<Layout/>`布局组件中预留了一些插槽，可以对页面布局进行自定义修改。
 
 > 插槽与组件的区别
 - 插槽：在页面中有固定的孔位，适用于需要频繁显示的内容，比如：广告
@@ -219,15 +236,13 @@ Vitepress基于Vue3用到了`<slot>`插槽，在`<Layout/>`布局组件中预留
 
 
 <span style="color: red;">
-  <p>
-  当layout设置为不同的值的时候，该md文件转换为html的时候，vitepress会给该html页面添加不同的插槽区域。
-  
-  例如md文件中的formatter的layout: doc配置项，会在对应的html文件中有对应的插槽区域。
+<p>当layout设置为不同的值的时候，该md文件转换为html的时候，vitepress会给该html页面添加不同的插槽区域。</p>
 
-  另外，插槽是全局生效的。也就是说，当你使用一个组件绑定"doc-top"插槽的时候，vitepress会给所有使用这个插槽的html页面添加上这个组件。
+<p>例如md文件中的formatter的layout: doc配置项，会在对应的html文件中有对应的插槽区域。</p>   
 
-  如果你想这个组件单独给某一个页面使用，而不是全局使用，你可以直接在md文件中导入该组件。而不是使用插槽的方式去间接导入到页面中。
-  </p>
+<p>另外，插槽是全局生效的。也就是说，当你使用一个组件绑定"doc-top"插槽的时候，vitepress会给所有使用这个插槽的html页面添加上这个组件。</p>
+
+<p>如果你想这个组件单独给某一个页面使用，而不是全局使用，你可以直接在md文件中导入该组件。而不是使用插槽的方式去间接导入到页面中。</p>
 </span>
 
 
@@ -329,7 +344,7 @@ MyLayout组件会代替默认的Layout组件。
 
 #### h函数
 
-由于h函数是Vue渲染层的底层 API，不需要写入`<slot>`插槽。因此可以直接导入现成的vue组件，在 `.vitepress/theme/index.js`文件中引入生效
+由于h函数是Vue渲染层的底层 API，不需要写入`<slot/>`插槽。因此可以直接导入现成的vue组件，在 `.vitepress/theme/index.js`文件中引入生效
 
 ```js
 // .vitepress/theme/index.ts
@@ -492,7 +507,7 @@ export default createContentLoader("blogs/**/*.md", {
 
 下面是一些比较好用的插件
 
-### 浏览量插件
+### 浏览量插件 - busuanzi.pure.js库
 
 浏览量插件使用的是不蒜子，免费的且足够好用。
 
@@ -526,11 +541,11 @@ export default {
 然后直接在任何一个页面中引入下面代码即可使用。注意本地开发出现数字就算成功，等你部署后会显示正确的数值
 
 ```html
-本站总访问量 <span id="busuanzi_value_site_pv" /> 次
-本站访客数 <span id="busuanzi_value_site_uv" /> 人次
+本站总访问量 <span id="busuanzi_value_site_pv"/> 次
+本站访客数 <span id="busuanzi_value_site_uv"/> 人次
 ```
 
-### 禁用F12插件
+### 禁用F12插件 - vitepress-protect-plugin库
 
 下载
 ```sh
@@ -557,7 +572,7 @@ export default defineConfig({
 })
 ```
 
-### 看板娘插件
+### 看板娘插件 - vitepress-theme-website库
 
 看板娘其实就是在首页右下角有个二次元的人物，类似电子宠物。
 
@@ -603,7 +618,7 @@ export default {
 }
 ```
 
-### 切换路由进度条
+### 切换路由进度条 - nprogress-v2库
 
 当你切换页面，顶部会显示进度条，类似github的进度条。
 
@@ -628,5 +643,46 @@ if (inBrowser) {
       }
 }
 ```
+
+### 图片预览放大插件 - vitepress-plugin-image-viewer库
+
+在vitepress中，markdown文章中的图片默认是不支持图片预览放大的。但是我们可以通过插件来实现这个功能。
+
+安装插件
+
+```bash
+# npm 
+npm i vitepress-plugin-image-viewer
+
+# pnpm 提示：如果使用 pnpm 安装，还需要额外安装 viewerjs
+pnpm add vitepress-plugin-image-viewer
+pnpm add viewerjs
+```
+
+在`.vitepress/theme/index.js`文件中引入插件。
+
+```js
+//引入图片预览组件
+import imageViewer from 'vitepress-plugin-image-viewer'
+import vImageViewer from 'vitepress-plugin-image-viewer/lib/vImageViewer.vue'
+import { useRoute } from 'vitepress';
+
+export default {
+  extends: DefaultTheme,
+  async enhanceApp({ app, router, siteData }) {
+    //...............
+    // 全局注册图片预览组件
+    app.component('vImageViewer', vImageViewer)
+  },
+  setup() {
+    //...............
+    // 使用图片预览插件（先获取路由）
+    const route = useRoute();
+    imageViewer(route);
+  },
+}
+
+```
+
 
 

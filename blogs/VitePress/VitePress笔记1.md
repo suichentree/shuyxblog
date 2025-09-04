@@ -420,6 +420,60 @@ export default defineConfig({
 如图
 ![vitepress_20250811225004.png](../blog_img/vitepress_20250811225004.png)
 
+#### 特定目录下显示侧边栏
+
+在 VitePress 中，若需仅在特定文章中（如 /面试/ 目录下的文章）显示侧边栏，而非全局启用。可通过 config.mjs 中的侧边栏配置实现。
+
+1. 修改 config.mjs 侧边栏配置
+
+例如只有面试目录下文章才显示侧边栏。其余文章默认不显示。
+
+```js
+export default defineConfig({
+  themeConfig: {
+    //侧边栏的配置
+      //希望侧边栏根据页面路径显示不同的侧边栏。
+      //例如默认情况下不显示侧边栏，但在特定的文章目录下显示侧边栏
+      sidebar: {
+        //当访问的页面路径以 /blogs/面试/ 开头时，文章页面显示侧边栏
+        '/blogs/面试/':[
+          {
+            text: '面试总结',
+            items: [
+              { text: 'README', link: '/blogs/面试/README.md' },
+              {
+                text:'MySql面试题',
+                collapsed: false,  //可折叠选项
+                items:[
+                  { text: 'MySql笔试题总结1', link: '/blogs/面试/MySql笔试题总结1.md' },
+                  { text: 'MySql面试题总结1', link: '/blogs/面试/MySql面试题总结1.md' },
+                  { text: 'MySql面试题总结2', link: '/blogs/面试/MySql面试题总结2.md' },
+                ]
+              },
+            ]
+          }
+        ],
+        // 可添加多个目录配置（如 "/前端/" 目录）
+        '/前端/': [
+          {
+            text: 'Vue相关',
+            items: [
+              { text: 'Vuex基础', link: '/前端/Vuex.md' },
+            ]
+          }
+        ]
+      },
+      //侧边栏文字更改(移动端)
+      sidebarMenuLabel:'侧边栏',
+  }
+})
+
+```
+
+2. 配置说明
+
+默认情况下的文章显示页面不显示侧边栏。但是当页面路径包含`/blogs/面试/`的时候，会在页面左边显示侧边栏。
+
 ## Frontmatter
 
 Frontmatter可以看作markdown文件的元数据。它包含了markdown文件的一些信息。例如标题、描述、标签、分类等。
@@ -542,6 +596,48 @@ aside: left
 footer: false
 ---
 ```
+
+
+## 部署vitepress博客
+
+当我们的博客写好之后，通常会把打包后的静态页面文件部署到服务器上。
+
+github 提供一个github pages服务，我们可以把打包后的静态页面文件部署到github pages上。
+
+### Base 配置
+
+base必须配置，配置的是打包后的静态页面文件的基础路径。否则打包会丢失css样式和图片等资源。
+
+`.vitepress/config.mjs`文件中配置Base
+
+```js
+export default defineConfig({
+    //网站部署的路径。默认为根目录 /
+    //如果你的代码仓库是xxx.github.io，则base应设为'/'
+    //如果你的代码仓库是xxx.github.io/xxx，则base应设为'/xxx/'。例如若配置为目录 /vitepress/ 则需要部署到项目的vitepress目录中。
+    //另外如果配置为非根目录，则图片的访问路径也要改变。例如从 /aaa.png -> /vitepress/aaa.png
+    base: '/',
+})
+```
+
+<span style="color: red;">
+  对于public目录中的图片，默认可以直接通过 `/aaa.png` 访问。如果直接写明public目录，即`/public/aaa.png` 访问。那么在项目打包后产生的静态文件中会报找不到图片的错误。
+</span>
+
+### 部署到github上
+
+1. 在github中创建一个空白的仓库。
+2. 执行打包命令`npm run docs:build`。默认打包产生的静态文件会在`.vitepress/dist`目录下。
+3. 将生成的静态资源文件上传到github仓库中。
+4. 上传成功后，在GitHub仓库 - 设置 - page里把分支改成main，默认root，保存
+4. 在github仓库中开启github pages服务。等待一会儿即可获得访问链接。
+5. 访问`https://<username>.github.io/<repo-name>` 即可访问到部署好的博客页面。
+
+
+
+
+
+
 
 
 

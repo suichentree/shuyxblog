@@ -19,6 +19,20 @@ export default defineConfig({
     sitemap: {
       hostname: 'https://suichentree.github.io',
     },
+    //多语言
+    locales: {
+      //默认为中文
+      root: {
+        label: '简体中文',
+        lang: 'Zh_CN',
+      },
+      //英文
+      en: {
+        label: 'English',
+        lang: 'en',
+        link: '/en/',
+      },
+    },
     //主题相关配置
     themeConfig: {
       //头部导航栏
@@ -28,6 +42,7 @@ export default defineConfig({
         { text: '🏷️ 标签',link: '/pages/views/ArticleTag.md'},
         { text: '📑 归档',link: '/pages/views/Archives.md'},
         { text: '🧭 导航',link: '/pages/views/NavigationWebsite.md'},
+        { text: '🧑🏻‍💻 面试',link: '/blogs/面试/README.md'},
         {
           text: '🍉 关于',
           items: [
@@ -90,37 +105,84 @@ export default defineConfig({
         label: '文章大纲目录' // 文字显示
       },
 
-      //文章展示页面的底部的 Carbon 广告展示，暂时不用
-      // carbonAds: {
-      //   code: 'your-carbon-code',
-      //   placement: 'your-carbon-placement',
-      // },
-
-      //注释侧边栏，暂时不用
-      // sidebar: [
-      //   {
-      //     text: 'Examples',
-      //     items: [
-      //       { text: 'Markdown Examples', link: '/markdown-examples' },
-      //       { text: 'Runtime API Examples', link: '/api-examples' }
-      //     ]
-      //   }
-      // ],
-
-      //多语言
-      locales: {
-        //默认为中文
-        root: {
-          label: '简体中文',
-          lang: 'Zh_CN',
-        },
-        en: {
-          label: 'English',
-          lang: 'en',
-          link: '/en/',
-        },
+      //侧边栏的配置
+      //希望侧边栏根据页面路径显示不同的侧边栏。
+      //例如默认情况下不显示侧边栏，但在特定的文章目录下显示侧边栏
+      sidebar: {
+        //当访问的页面路径以 /blogs/面试/ 开头时，文章页面显示侧边栏
+        '/blogs/面试/':[
+          {
+            text: '面试总结',
+            items: [
+              { text: 'README', link: '/blogs/面试/README.md' },
+              {
+                text:'Java面试题',
+                collapsed: false,  //可折叠选项
+                items:[
+                  { text: '项目经验面试题总结', link: '/blogs/面试/项目经验面试题总结.md' },    // 具体文章路径
+                  { text: '什么是应用程序上下文', link: '/blogs/面试/什么是应用程序上下文.md' }, 
+                  { text: 'Java面试题总结-基础1', link: '/blogs/面试/Java面试题总结-基础1.md' }, 
+                  { text: 'Java面试题总结-集合1', link: '/blogs/面试/Java面试题总结-集合1.md' },
+                  { text: 'Java面试题总结-设计模式', link: '/blogs/面试/Java面试题总结-设计模式.md' },
+                  { text: 'Java面试题总结-事务1', link: '/blogs/面试/Java面试题总结-事务1.md' },
+                  { text: 'Java面试题总结-锁1', link: '/blogs/面试/Java面试题总结-锁1.md' },
+                  { text: 'Java面试题总结-线程1', link: '/blogs/面试/Java面试题总结-线程1.md' },
+                  { text: 'Java面试题总结-JavaWeb', link: '/blogs/面试/Java面试题总结-JavaWeb.md' },
+                  { text: 'Java面试题总结-JVM', link: '/blogs/面试/Java面试题总结-JVM.md' },
+                ]
+              },
+              {
+                text:'MySql面试题',
+                collapsed: false,
+                items:[
+                  { text: 'MySql笔试题总结1', link: '/blogs/面试/MySql笔试题总结1.md' },
+                  { text: 'MySql面试题总结1', link: '/blogs/面试/MySql面试题总结1.md' },
+                  { text: 'MySql面试题总结2', link: '/blogs/面试/MySql面试题总结2.md' },
+                ]
+              },
+              {
+                text:'Redis面试题',
+                collapsed: false,
+                items:[
+                  { text: 'Redis面试题总结1', link: '/blogs/面试/Redis面试题总结1.md' },
+                ]
+              },
+              {
+                text:'Mybatis面试题',
+                collapsed: false,
+                items:[
+                  { text: 'Mybatis面试题总结', link: '/blogs/面试/Mybatis面试题总结.md' },
+                ]
+              },
+              {
+                text:'Spring面试题',
+                collapsed: false,
+                items:[
+                  { text: 'Spring面试题总结1', link: '/blogs/面试/Spring面试题总结1.md' },
+                  { text: 'SpringMVC面试题总结', link: '/blogs/面试/SpringMVC面试题总结.md' },
+                  { text: 'SpringBoot面试题总结', link: '/blogs/面试/SpringBoot面试题总结.md' },
+                  { text: 'SpringCloud面试题总结', link: '/blogs/面试/SpringCloud面试题总结.md' },
+                  { text: 'SpringCloudGateway面试题总结', link: '/blogs/面试/SpringCloudGateway面试题总结.md' },
+                ]
+              },
+              {
+                text:'微服务面试题',
+                collapsed: false,
+                items:[
+                  { text: '微服务面试题总结', link: '/blogs/面试/微服务面试题总结.md' },
+                  { text: '消息队列面试题总结', link: '/blogs/面试/消息队列面试题总结.md' },
+                  { text: 'MQ面试题总结', link: '/blogs/面试/MQ面试题总结.md' },
+                  { text: 'Ribbon面试题总结', link: '/blogs/面试/Ribbon面试题总结.md' },
+                  { text: 'Seata面试题总结', link: '/blogs/面试/Seata面试题总结.md' },
+                  { text: 'Sentinal面试题总结', link: '/blogs/面试/Sentinal面试题总结.md' },
+                ]
+              }
+            ]
+          }
+        ]
       },
-
+      //侧边栏文字更改(移动端)
+      sidebarMenuLabel:'侧边栏', 
       // 404页配置
       notFound:{ 
         title: '未找到页面，迷路了~',
