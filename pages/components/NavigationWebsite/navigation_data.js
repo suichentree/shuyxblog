@@ -79,7 +79,7 @@ export const NavData = [
     ]
   },
   {
-    title: 'AI 导航',
+    title: 'AI',
     items: [
       {
         title: 'ChatGPT（最强）',
