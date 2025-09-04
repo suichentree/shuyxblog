@@ -1,5 +1,9 @@
 <!-- HomePage页面用于在首页展示文章列表和文章信息组件页面。 -->
 <template>
+    <!-- 贡献统计日历图组件 -->
+    <D3ContributionCalendar/>
+    <!-- 网站访问统计组件 -->
+    <DataPanel/>
     <div class="panel">
       <div class="container">
           <div class="row">
@@ -16,6 +20,10 @@
     </div>
 </template>
 <script setup>
+//引入站点数据统计组件(不蒜子统计)
+import DataPanel from '/pages/components/DataPanel/DataPanel.vue'
+//引入贡献统计日历图组件
+import D3ContributionCalendar from "/pages/components/D3ContributionCalendar/D3ContributionCalendar.vue";
 //引入文章列表和作者信息组件
 import ArticleList from '/pages/components/ArticleList/ArticleList.vue';
 import AuthorInfo from '/pages/components/AuthorInfo/AuthorInfo.vue';

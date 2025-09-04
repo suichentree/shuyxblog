@@ -10,17 +10,13 @@ import './beautiful.css'
 import { inBrowser } from 'vitepress'
 import busuanzi from 'busuanzi.pure.js'
 //引入路由进度条插件
-import { NProgress } from 'nprogress-v2/dist/index.js' // 进度条组件
+import { NProgress } from 'nprogress-v2/dist/index.js' // 进度条组件，用于路由切换时显示进度条
 import 'nprogress-v2/dist/index.css' // 进度条样式
 
 //引入文章日期组件
 import ArticleDateInfo from '/pages/components/ArticleDateInfo/ArticleDateInfo.vue'
 //引入回到顶部组件
 import Backtotop from '/pages/components/Backtotop/Backtotop.vue'
-//引入站点数据统计组件
-import DataPanel from '/pages/components/DataPanel/DataPanel.vue'
-//引入贡献统计日历图组件
-import D3ContributionCalendar from "/pages/components/D3ContributionCalendar/D3ContributionCalendar.vue";
 //引入自定义的Hero组件
 import Hero from "/pages/components/Hero/Hero.vue";
 //引入自定义的首页组件
@@ -38,17 +34,17 @@ export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
       // https://vitepress.dev/guide/extending-default-theme#layout-slots
-
       // 指定组件使用doc-before插槽
       'doc-before': () => h(ArticleDateInfo),
       // 指定组件使用layout-bottom插槽
       'layout-bottom': () => h(Backtotop),
       // 指定组件使用home-hero-after插槽
-      'home-hero-after': () => h(Hero),
+      'home-hero-after': () => [
+        h(Hero),
+        //...还可以引入其他组件
+      ],
       // 指定组件使用home-features-after插槽
       'home-features-after': () => [
-        h(D3ContributionCalendar),
-        h(DataPanel),
         h(HomePage),
       ],
     })

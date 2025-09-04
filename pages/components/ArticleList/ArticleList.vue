@@ -1,5 +1,4 @@
 <template>
-  <div>
     <!-- 文章列表 -->
     <div class="article-items">
       <!--文章卡片-->
@@ -47,7 +46,6 @@
       :total="total"
       :pageSize="pageSize"
     />
-  </div>
 </template>
 
 <script setup>
