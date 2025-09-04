@@ -26,18 +26,18 @@ export function getRandomBrightColor() {
 export function random_cover_image(){
   // 文章封面cover数组
   let cover_image_urls = [
-    '/public/cover1.jpg',
-    '/public/cover2.jpg',
-    '/public/cover3.jpg',
-    '/public/cover4.png',
-    '/public/cover5.jpeg',
-    '/public/cover6.jpeg',
-    '/public/cover7.png',
-    '/public/cover8.jpg',
-    '/public/cover9.jpeg',
-    '/public/cover10.jpg',
-    '/public/cover11.jpeg',
-    '/public/cover12.jpeg',
+    '/cover1.jpg',   // 会默认读取public目录下的静态文件
+    '/cover2.jpg',
+    '/cover3.jpg',
+    '/cover4.png',
+    '/cover5.jpeg',
+    '/cover6.jpeg',
+    '/cover7.png',
+    '/cover8.jpg',
+    '/cover9.jpeg',
+    '/cover10.jpg',
+    '/cover11.jpeg',
+    '/cover12.jpeg',
   ];
   let randomIndex = Math.floor(Math.random() * cover_image_urls.length);
   return cover_image_urls[randomIndex];

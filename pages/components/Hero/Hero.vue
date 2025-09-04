@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-      <img :src="headimg" style="width: 200px; height: auto;" />
+      <img src="/logo.png" style="width: 200px; height: auto;" />
       <div class="title">
         Shuyx Blog
       </div>
@@ -13,8 +13,6 @@
 <script setup>
 import { onMounted, ref, onUnmounted } from 'vue'
 import Typed from 'typed.js' // 导入 typed.js
-//图片
-const headimg = ref('/public/logo.png')
 
 const container = ref(null)
 const typedInstance = ref(null)
@@ -58,7 +56,7 @@ onUnmounted(() => {
 <style scoped>
 .main {
   height: 90vh;
-  background: url('/public/bg.svg') center/cover no-repeat;
+  background: url('/bg.svg') center/cover no-repeat;
   overflow: hidden;
   display: flex;
   flex-direction: column;

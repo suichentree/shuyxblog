@@ -84,10 +84,10 @@ import { data as rawData } from '/utils/statistics.data.js'
 import { getRandomBrightColor } from '/utils/common.js'
 const blogData = ref(rawData); // 使用ref包装原始数据
 
-// 模拟作者数据
+// 作者数据
 const author = ref({
   name: 'suichentree',
-  avatar: '/public/logo.png',
+  avatar: '/logo.png',   // 会默认读取public目录下的静态文件
   bio: '全栈开发工程师，热爱记录技术心得和学习经验',
   articlesSumCount: blogData.value.articlesSumCount,
   categoriesSumCount: blogData.value.categoriesSumCount,

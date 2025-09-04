@@ -22,9 +22,9 @@
 import { ref, onMounted } from 'vue';
 
 // 定义动图URL数组，可根据实际图片添加或修改
-const gifUrls = [
-  '/public/cat.gif',
-  '/public/pikaqiu_run.gif',
+const gifUrls = [ 
+  '/cat.gif', // 会默认读取public目录下的静态文件
+  '/pikaqiu_run.gif',
 ];
 // 当前显示的动图URL
 const currentGif = ref('');

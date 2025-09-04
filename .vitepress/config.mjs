@@ -17,7 +17,7 @@ export default defineConfig({
     ],
     // 站点地图
     sitemap: {
-      hostname: 'https://你的网址.com',
+      hostname: 'https://suichentree.github.io',
     },
     //主题相关配置
     themeConfig: {
