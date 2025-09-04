@@ -28,8 +28,8 @@ BUILD_DIR=".vitepress/dist"
 BUILD_COMMAND="npm run docs:build"
 
 # 重试配置
-MAX_RETRIES=3
-RETRY_DELAY=5
+MAX_RETRIES=100
+RETRY_DELAY=3
 
 # ============================= 工具函数 =======================================
 # 日志输出函数 (带时间戳和颜色)
