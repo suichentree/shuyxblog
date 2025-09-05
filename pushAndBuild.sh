@@ -41,15 +41,6 @@ PAGE_REMOTE_GITEE_URL="https://gitee.com/suichentree/suichentree.git"
 PAGE_REMOTE_GITHUB_NAME="github_page_origin"
 PAGE_REMOTE_GITHUB_URL="https://github.com/suichentree/suichentree.github.io.git"
 
-# VITEPRESS构建配置
-BUILD_DIR=".vitepress/dist"
-# 构建命令
-BUILD_COMMAND="npm run docs:build"
-
-# 重试配置
-MAX_RETRIES=50  # 重试次数
-RETRY_DELAY=3    # 重试间隔(秒)
-
 # ============================= 各个工具函数 =======================================
 
 # -------------------------- 彩色日志输出函数（带时间戳和颜色，让信息更易读） ---------------------------
@@ -175,8 +166,8 @@ push_code() {
     # 使用execute_with_retry函数，执行git push命令。并设置该命令最多重试3次，每次间隔5秒
     execute_with_retry 3 5 "git push $REMOTE_GITEE_NAME $BRANCH_NAME"
     
-    # 推送到 GitHub 远程仓库。最多重试20次，间隔5秒。
-    execute_with_retry 20 5 "git push $REMOTE_GITHUB_NAME $BRANCH_NAME"
+    # 推送到 GitHub 远程仓库。最多重试30次，间隔5秒。
+    execute_with_retry 30 5 "git push $REMOTE_GITHUB_NAME $BRANCH_NAME"
 }
 
 # -------------------------- 页面部署函数 ---------------------------
@@ -208,7 +199,7 @@ deploy_blog_page() {
     # 使用execute_with_retry函数，执行强制提交命令，将代码强制提交到仓库中。并设置该命令最多重试3次，每次间隔5秒
     execute_with_retry 3 5 "git push $PAGE_REMOTE_GITEE_NAME $BRANCH_NAME -f"
 
-    execute_with_retry 20 5 "git push $PAGE_REMOTE_GITHUB_NAME $BRANCH_NAME -f"
+    execute_with_retry 30 5 "git push $PAGE_REMOTE_GITHUB_NAME $BRANCH_NAME -f"
 
     # 返回原目录
     cd - > /dev/null || exit

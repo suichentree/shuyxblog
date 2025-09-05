@@ -21,16 +21,20 @@
                 <span class="meta-text">{{ article.date }}</span>
               </span>
               <!-- 分类 -->
-              <span class="meta-item">
-                <span class="meta-icon">🗂️</span>
-                <span v-for="category in article.categories" class="meta-text">{{ category }}</span>
-              </span>
+              <div v-if="article.categories.length > 0">
+                  <span class="meta-item">
+                    <span class="meta-icon">🗂️</span>
+                    <span v-for="category in article.categories" class="meta-text">{{ category }}</span>
+                  </span> 
+              </div>
             </div>
             <!-- 标签 -->
-            <div class="article-tags">
-              <span v-for="tag in article.tags" class="tag-item">
-                <span class="meta-icon">🏷️</span>{{ tag }}
-              </span>
+            <div v-if="article.tags.length > 0">
+                <div class="article-tags">
+                  <span v-for="tag in article.tags" class="tag-item">
+                    <span class="meta-icon">🏷️</span>{{ tag }}
+                  </span>
+                </div>
             </div>
           </div>
           <!-- 右侧图片区域 -->
@@ -54,7 +58,7 @@ import { ref,computed} from 'vue';
 import Pagination from '/pages/components/Pagination/Pagination.vue';
 //引入统计数据
 import { data as rawData } from '/utils/statistics.data.js'
-// 引入js
+// 引入common js 工具函数
 import { random_cover_image } from '/utils/common.js'
 
 const blogData = ref(rawData); // 使用ref包装原始数据
