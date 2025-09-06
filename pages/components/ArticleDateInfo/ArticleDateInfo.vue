@@ -1,5 +1,17 @@
 
 <template>
+  <div class="fdate"> 
+    <div v-if="frontmatter.categories">
+      🗂️ 文章分类：
+      <span v-for="category in frontmatter.categories">{{ category }} &nbsp;</span>
+    </div>
+  </div>
+  <div class="fdate">
+    <div v-if="frontmatter.tags">
+      🏷️ 文章标签： 
+      <span v-for="tag in frontmatter.tags">{{ tag }} &nbsp;</span>
+    </div>
+  </div>
   <div class="fdate">📝 文章创建时间： {{ format_date(frontmatter.date) }} </div>
   <div class="fdate">🔥 文章最后更新时间：{{ format_date(frontmatter.lastUpdated) }}</div>
 </template>
